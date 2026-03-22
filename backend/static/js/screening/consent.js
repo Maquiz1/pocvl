@@ -1,34 +1,50 @@
 $(document).ready(function () {
 
-    const YES = "1";
-    const NO = "2";
+    // =========================
+    // HELPERS (SAFE FK HANDLING)
+    // =========================
+    function isYes(val) {
+        return val === "1";
+    }
+
+    function isNo(val) {
+        return val === "2";
+    }
 
     // =========================
-    // ✅ CONSENT DATE + REASONS
+    // CONSENT DATE + REASONS
     // =========================
     function toggleConsentFields() {
+
         const val = $("#id_consent").val();
 
         // ✅ Show date if YES
-        if (val === YES) {
+        if (isYes(val)) {
             $("#consent-date-wrapper").show();
         } else {
             $("#consent-date-wrapper").hide();
+            // optional reset:
             // $("#id_consent_date").val("");
         }
 
         // ✅ Show reasons if NO
-        if (val === NO) {
+        if (isNo(val)) {
             $("#consent-reasons-wrapper").show();
         } else {
             $("#consent-reasons-wrapper").hide();
+            // optional reset:
             // $("#id_consent_reasons").val("");
         }
     }
 
+    // =========================
+    // EVENTS
+    // =========================
     $("#id_consent").on("change", toggleConsentFields);
 
-    // Initial run
+    // =========================
+    // INITIAL LOAD
+    // =========================
     toggleConsentFields();
 
 });

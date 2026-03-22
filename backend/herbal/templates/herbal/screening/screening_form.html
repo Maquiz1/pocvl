@@ -23,16 +23,17 @@
 
             <form method="post" novalidate>
                 {% csrf_token %}
-                <!-- SEX (hidden but available for JS) -->
+
+                <!-- SEX (for JS) -->
                 <input type="hidden" id="subject-sex" value="{{ subject.sex_id }}">
 
                 <!-- GLOBAL ERRORS -->
                 {% for field in form %}
-                {% if field.errors %}
-                <div class="alert alert-danger">
-                    <strong>{{ field.label }}:</strong> {{ field.errors|striptags }}
-                </div>
-                {% endif %}
+                    {% if field.errors %}
+                        <div class="alert alert-danger">
+                            <strong>{{ field.label }}:</strong> {{ field.errors|striptags }}
+                        </div>
+                    {% endif %}
                 {% endfor %}
 
                 <!-- ===================== -->
@@ -42,7 +43,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         {{ form.screening_date.label_tag }}
-                        {{ form.screening_date }}
+                        {{ form.screening_date|add_class:"form-control" }}
                     </div>
                 </div>
 
@@ -55,30 +56,33 @@
                 <div class="row">
                     <div class="col-md-3">
                         {{ form.consent.label_tag }}
-                        {{ form.consent }}
+                        {{ form.consent|add_class:"form-select" }}
                     </div>
-                    <div class="col-md-3" id="consent-date-wrapper">
+
+                    <div class="col-md-3" id="consent-date-wrapper" style="display:none;">
                         {{ form.consent_date.label_tag }}
-                        {{ form.consent_date }}
+                        {{ form.consent_date|add_class:"form-control" }}
                     </div>
+
                     <div class="col-md-3">
                         {{ form.consent_nimregenin.label_tag }}
-                        {{ form.consent_nimregenin }}
+                        {{ form.consent_nimregenin|add_class:"form-select" }}
                     </div>
-                    <div class="col-md-3 mt-2" id="nimregenin-date-wrapper">
+
+                    <div class="col-md-3 mt-2" id="nimregenin-date-wrapper" style="display:none;">
                         {{ form.nimregenin_date.label_tag }}
-                        {{ form.nimregenin_date }}
+                        {{ form.nimregenin_date|add_class:"form-control" }}
                     </div>
                 </div>
 
-                <div class="mt-2" id="consent-reasons-wrapper">
+                <div class="mt-2" id="consent-reasons-wrapper" style="display:none;">
                     {{ form.consent_reasons.label_tag }}
-                    {{ form.consent_reasons }}
+                    {{ form.consent_reasons|add_class:"form-control" }}
                 </div>
 
-                <div class="mt-2" id="nimregenin-reasons-wrapper">
+                <div class="mt-2" id="nimregenin-reasons-wrapper" style="display:none;">
                     {{ form.nimregenin_reasons.label_tag }}
-                    {{ form.nimregenin_reasons }}
+                    {{ form.nimregenin_reasons|add_class:"form-control" }}
                 </div>
 
                 <hr>
@@ -91,47 +95,51 @@
                 <div class="row">
                     <div class="col-md-3">
                         {{ form.age_18.label_tag }}
-                        {{ form.age_18 }}
+                        {{ form.age_18|add_class:"form-select" }}
                     </div>
                     <div class="col-md-3">
                         {{ form.biopsy.label_tag }}
-                        {{ form.biopsy }}
+                        {{ form.biopsy|add_class:"form-select" }}
                     </div>
                 </div>
 
                 <div class="row mt-2">
                     <div class="col-md-3" id="breast-wrapper">
                         {{ form.breast_cancer.label_tag }}
-                        {{ form.breast_cancer }}
+                        {{ form.breast_cancer|add_class:"form-select" }}
                     </div>
+
                     <div class="col-md-3">
                         {{ form.brain_cancer.label_tag }}
-                        {{ form.brain_cancer }}
+                        {{ form.brain_cancer|add_class:"form-select" }}
                     </div>
+
                     <div class="col-md-3" id="cervical-wrapper">
                         {{ form.cervical_cancer.label_tag }}
-                        {{ form.cervical_cancer }}
+                        {{ form.cervical_cancer|add_class:"form-select" }}
                     </div>
+
                     <div class="col-md-3" id="prostate-wrapper">
                         {{ form.prostate_cancer.label_tag }}
-                        {{ form.prostate_cancer }}
+                        {{ form.prostate_cancer|add_class:"form-select" }}
                     </div>
-                    <div class="col-md-3">
+
+                    <div class="col-md-3 mt-3">
                         <label class="form-label">{{ form.cancer_types.label }}</label>
 
                         {% for checkbox in form.cancer_types %}
-                        <div class="form-check">
-                            {{ checkbox.tag }}
-                            <label class="form-check-label">
-                                {{ checkbox.choice_label }}
-                            </label>
-                        </div>
+                            <div class="form-check">
+                                {{ checkbox.tag|add_class:"form-check-input" }}
+                                <label class="form-check-label">
+                                    {{ checkbox.choice_label }}
+                                </label>
+                            </div>
                         {% endfor %}
 
                         {% if form.cancer_types.errors %}
-                        <div class="text-danger">
-                            {{ form.cancer_types.errors }}
-                        </div>
+                            <div class="text-danger">
+                                {{ form.cancer_types.errors }}
+                            </div>
                         {% endif %}
                     </div>
                 </div>
@@ -146,19 +154,22 @@
                 <div class="row">
                     <div class="col-md-3" id="pregnant-wrapper">
                         {{ form.pregnant.label_tag }}
-                        {{ form.pregnant }}
+                        {{ form.pregnant|add_class:"form-select" }}
                     </div>
+
                     <div class="col-md-3" id="breastfeeding-wrapper">
                         {{ form.breast_feeding.label_tag }}
-                        {{ form.breast_feeding }}
+                        {{ form.breast_feeding|add_class:"form-select" }}
                     </div>
+
                     <div class="col-md-3">
                         {{ form.ckd.label_tag }}
-                        {{ form.ckd }}
+                        {{ form.ckd|add_class:"form-select" }}
                     </div>
+
                     <div class="col-md-3">
                         {{ form.liver_disease.label_tag }}
-                        {{ form.liver_disease }}
+                        {{ form.liver_disease|add_class:"form-select" }}
                     </div>
                 </div>
 
@@ -168,7 +179,7 @@
                 <!-- NOTES -->
                 <!-- ===================== -->
                 <h5>Remarks</h5>
-                {{ form.remarks }}
+                {{ form.remarks|add_class:"form-control" }}
 
                 <br><br>
 

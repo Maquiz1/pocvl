@@ -1,34 +1,46 @@
 $(document).ready(function () {
 
-    const sex = parseInt($("#subject-sex").val()); // 1=Male, 2=Female
+    // =========================
+    // SAFE SEX VALUE
+    // =========================
+    const sexVal = $("#subject-sex").val();
+    const sex = sexVal ? parseInt(sexVal) : null; // 1=Male, 2=Female
 
     // =========================
-    // ✅ SEX-BASED LOGIC
+    // HELPERS
+    // =========================
+    function clearField(selector) {
+        $(selector).val("").trigger("change");
+    }
+
+    function hideAndClear(wrapper, field) {
+        $(wrapper).hide();
+        clearField(field);
+    }
+
+    // =========================
+    // SEX-BASED LOGIC
     // =========================
     function handleSexUI() {
 
         if (sex === 1) { // 👨 Male
 
             // Hide female-only fields
-            $("#cervical-wrapper").hide();
-            $("#pregnant-wrapper").hide();
-            $("#breastfeeding-wrapper").hide();
-
-            // Clear values (IMPORTANT → backend will set NULL)
-            $("#id_cervical_cancer").val("").trigger("change");
-            $("#id_pregnant").val("").trigger("change");
-            $("#id_breast_feeding").val("").trigger("change");
+            hideAndClear("#cervical-wrapper", "#id_cervical_cancer");
+            hideAndClear("#pregnant-wrapper", "#id_pregnant");
+            hideAndClear("#breastfeeding-wrapper", "#id_breast_feeding");
 
         } else if (sex === 2) { // 👩 Female
 
             // Hide male-only field
-            $("#prostate-wrapper").hide();
+            hideAndClear("#prostate-wrapper", "#id_prostate_cancer");
 
-            // Clear value
-            $("#id_prostate_cancer").val("").trigger("change");
         }
     }
 
+    // =========================
+    // INIT
+    // =========================
     handleSexUI();
 
 });

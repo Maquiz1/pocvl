@@ -1,7 +1,0 @@
-.env
-
-
-# Virtual environments
-venv/
-env/
-.venv/
