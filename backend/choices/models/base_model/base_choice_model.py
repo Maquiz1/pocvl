@@ -15,4 +15,4 @@ class BaseChoiceModel(AuditModel):
         ordering = ["id"]
 
     def __str__(self):
-        return self.name or ""
+        return f"{self.code} - ({self.name})"

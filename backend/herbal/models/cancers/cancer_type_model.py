@@ -7,6 +7,3 @@ class CancerType(BaseChoiceModel):
     class Meta:
         verbose_name = "Cancer Type"
         verbose_name_plural = "Cancer Types"
-
-    # def __str__(self):
-    #     return f"{self.name} ({self.code})"

@@ -4,7 +4,6 @@ from django.db import models
 from ..base_model import BaseChoiceModel
 
 class Region(BaseChoiceModel):
-    name = models.CharField(max_length=100)
     
     class Meta:
         verbose_name = "Region"
