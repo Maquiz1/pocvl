@@ -1,14 +1,12 @@
 # sites/models/site_model.py
 
-from django.db import models
-from datetime import date
+from choices.models import BaseChoiceModel
 
-class Site(models.Model):
+class Site(BaseChoiceModel):
 
-    name = models.CharField(max_length=100)
-    code = models.CharField(max_length=4)  
-    value = models.IntegerField(blank=True, null=True)
-    label = models.CharField(max_length=255, blank=True, null=True)
+    class Meta:
+        verbose_name = "Site"
+        verbose_name_plural = "Sites"
     
     def __str__(self):
         return f"{self.name} - {self.label}"
