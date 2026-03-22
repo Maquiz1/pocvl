@@ -20,22 +20,29 @@ from tzlocal import get_localzone  # make sure tzlocal is installed in your venv
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Load Environment Variables
-env = environ.Env() 
+# Initialize environ
+env = environ.Env()
 env.read_env(BASE_DIR / ".env")
 
+# Security
+SECRET_KEY = env("SECRET_KEY")
+DEBUG = env.bool("DEBUG", default=False)
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ["127.0.0.1","192.168.35.40","0.0.0.0"]
-
+if DEBUG:
+    # For development, allow localhost and 127.0.0.1
+    ALLOWED_HOSTS = ast.literal_eval(env("ALLOWED_HOSTS", default="[]"))
+else:
+    ALLOWED_HOSTS = [
+    host.strip()
+    for host in env("ALLOWED_HOSTS", default="").split(",")
+    if host.strip()
+]
+    
+CSRF_TRUSTED_ORIGINS = [
+    origin.strip()
+    for origin in env("CSRF_TRUSTED_ORIGINS", default="").split(",")
+    if origin.strip()
+]
 
 # Application definition
 
@@ -102,8 +109,12 @@ WSGI_APPLICATION = 'src.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT'),
     }
 }
 
@@ -128,29 +139,19 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # Internationalization
-# https://docs.djangoproject.com/en/4.2/topics/i18n/
-
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
-
+LANGUAGE_CODE = env('LANGUAGE_CODE', default='en-us')
+TIME_ZONE = env('TIME_ZONE', default=str(get_localzone()))  # server's timezone as fallback
 USE_I18N = True
-
 USE_TZ = True
 
+CELERY_TIMEZONE = "Africa/Dar_es_Salaam"
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
-
-TEMPLATES[0]['DIRS'] = [BASE_DIR / "templates"]
-
-STATIC_URL = '/static/'
-
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
-
-STATIC_ROOT = BASE_DIR / "staticfiles"
+# Static and media files
+STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [BASE_DIR / 'static']
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'uploads'
 
 
 # Default primary key field type
@@ -173,3 +174,113 @@ STUDY_TARGET_ENROLLMENT = 256
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
+
+
+
+# Email settings
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+    EMAIL_FILE_PATH = BASE_DIR / 'sent_emails'
+
+else:
+    EMAIL_BACKEND = env("EMAIL_BACKEND")
+    EMAIL_HOST = env("EMAIL_HOST")
+    EMAIL_PORT = env.int("EMAIL_PORT")
+    EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS")
+    EMAIL_HOST_USER = env("EMAIL_HOST_USER")
+    EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
+    DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL")
+
+REPORT_CC = env("REPORT_CC", default="").split(",")  # list of emails
+REPORT_BCC = env("REPORT_BCC", default="").split(",")
+LOGBOOK_URL = env("LOGBOOK_URL", default="http://localhost:8000")
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "filters": {
+        "neutralize_path": {
+            "()": "src.logging_filters.NeutralizePath"
+        },
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "filters": ["neutralize_path"],
+        },
+    },
+    "loggers": {
+        "django.server": {
+            "handlers": ["console"],
+            "level": "INFO",
+            "propagate": False,
+        },
+    },
+}
+
+
+# Message tags for Bootstrap compatibility
+MESSAGE_TAGS = {
+    messages.DEBUG: 'secondary',
+    messages.INFO: 'info',
+    messages.SUCCESS: 'success',
+    messages.WARNING: 'warning',
+    messages.ERROR: 'danger',
+}
+
+# External API keys
+AT_USERNAME = env("AT_USERNAME")
+AT_API_KEY = env("AT_API_KEY")
+
+
+
+SITE_URL = LOGBOOK_URL
+
+
+# INSTALLED_APPS += ["django_celery_beat"]
+
+CELERY_BROKER_URL = 'redis://localhost:6379/0'  # or your Redis server
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+# CELERY_TIMEZONE = 'Africa/Dar_es_Salaam'
+
+
+# settings.py
+ADMIN_EMAILS = [
+    # "admin1@example.com",
+    # "admin2@example.com",
+]
+
+# Default BCC for audit / monitoring
+DEFAULT_EMAIL_BCC = ["audit@logbook.org"]
+
+# Optional CC for mentor notifications
+MENTOR_NOTIFICATION_CC = ["admin@logbook.org"]
+
+# For production email links
+if DEBUG:
+    # Local development
+    DOMAIN_NAME = "127.0.0.1:8000"
+    PROTOCOL = "http"
+else:
+    # Production
+    DOMAIN_NAME = "logbook.apps.nimr.or.tz"
+    PROTOCOL = "https"
+    
+
+if not DEBUG:
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    X_FRAME_OPTIONS = "DENY"
+
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+
+    SECURE_SSL_REDIRECT = True
+else:
+    # Local development (HTTP)
+    CSRF_COOKIE_SECURE = False
+    SESSION_COOKIE_SECURE = False
+    SECURE_SSL_REDIRECT = False
