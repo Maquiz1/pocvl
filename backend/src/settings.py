@@ -206,7 +206,7 @@ LOGGING = {
     "handlers": {
         "console": {
             "class": "logging.StreamHandler",
-            "filters": ["neutralize_path"],
+            # "filters": ["neutralize_path"],
         },
     },
     "loggers": {
