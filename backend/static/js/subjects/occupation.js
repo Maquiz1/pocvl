@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", function () {
     function toggleOccupation() {
 
         const value = String(Occupation?.value || "");
-
         if (value === "7") {
             otherOccupationWrapper.style.display = "block";
         } else {

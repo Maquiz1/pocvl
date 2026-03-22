@@ -4,7 +4,6 @@ from django.db import models
 from sites.models import Site
 from herbal.models import CancerType
 
-
 class StudyTarget(models.Model):
 
     site = models.ForeignKey(Site, on_delete=models.CASCADE)

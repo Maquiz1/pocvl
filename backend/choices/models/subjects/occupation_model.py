@@ -1,17 +1,10 @@
 # choices/models/occupation_model.py
 
-from django.db import models
+from ..base_model import BaseChoiceModel
 
 
-class Occupation(models.Model):
-    value = models.CharField(max_length=20, blank=True, null=True)
-    code = models.CharField(max_length=20, blank=True, null=True)
-    name = models.CharField(max_length=150, unique=True)
+class Occupation(BaseChoiceModel):
 
     class Meta:
         verbose_name = "Occupation"
         verbose_name_plural = "Occupations"
-        ordering = ['id']
-
-    def __str__(self):
-        return self.name
