@@ -5,33 +5,83 @@
 <div class="container">
 
     <h3>
-
         {% if is_update %}
-        Edit CRF2
+            Edit CRF2
         {% else %}
-        Create CRF2
+            Create CRF2
         {% endif %}
-
         — {{ visit.get_visit_day_display }}
-
     </h3>
 
-    <form method="post">
+    <!-- ✅ Step Indicator -->
+    <p class="text-muted">
+        Step {{ step }} of {{ total_steps }}
+    </p>
 
+    <!-- ✅ Progress Bar -->
+    <div class="progress mb-3" style="height: 20px;">
+        <div class="progress-bar" role="progressbar"
+             style="width: {{ step|floatformat:0|add:'0'|floatformat:0 }}%;">
+        </div>
+    </div>
+
+    <form method="post">
         {% csrf_token %}
 
-        {{ form.as_p }}
+        <div class="card p-3 mb-3">
+            {{ form.as_p }}
+        </div>
 
-        <button class="btn btn-success">
-            Save
-        </button>
+        <div class="d-flex justify-content-between">
 
-        <a href="{% url 'herbal:subjects-detail' visit.subject.pk %}" class="btn btn-secondary">
-            Cancel
-        </a>
+            <!-- 🔙 BACK -->
+            {% if step > 1 %}
+                <a href="?step={{ step|add:-1 }}" class="btn btn-secondary">
+                    ← Back
+                </a>
+            {% else %}
+                <span></span>
+            {% endif %}
+
+            <div>
+                <!-- ❌ Cancel always available -->
+                <a href="{% url 'herbal:subjects-detail' visit.subject.pk %}" 
+                   class="btn btn-outline-secondary">
+                    Cancel
+                </a>
+
+                <!-- 🔥 NEXT / SUBMIT -->
+                <button class="btn btn-success">
+                    {% if step == total_steps %}
+                        Submit
+                    {% else %}
+                        Next →
+                    {% endif %}
+                </button>
+            </div>
+
+        </div>
 
     </form>
 
 </div>
 
+{% endblock %}
+
+
+{% block extra_js %}
+<script>
+document.addEventListener("input", function () {
+    let h = parseFloat(document.getElementById("id_height")?.value);
+    let w = parseFloat(document.getElementById("id_weight")?.value);
+
+    if (h && w) {
+        let bmi = w / ((h / 100) ** 2);
+        let bmiField = document.getElementById("id_bmi");
+        if (bmiField) {
+            bmiField.value = bmi.toFixed(2);
+        }
+    }
+});
+</script>
 {% endblock %}

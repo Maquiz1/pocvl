@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
 from herbal.models import VisitSchedule
-from herbal.forms.crfs.crf2_form import CRF2Form
+from herbal.forms import CRF2Form
 from herbal.services.visit_completion import update_visit_status
 
 @login_required

@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 
 from herbal.models import VisitSchedule
 from herbal.models.crfs.crf2.crf2_model import CRF2
-from herbal.forms.crfs.crf2_form import CRF2Form
+from herbal.forms import CRF2Form
 
 
 @login_required
