@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const value = String(IdType?.value || "");
 
-        if (value === "3") {
+        if (value === "5") {
             otherIdTypeWrapper.style.display = "block";
         } else {
             otherIdTypeWrapper.style.display = "none";
