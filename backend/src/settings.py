@@ -199,9 +199,9 @@ LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
     "filters": {
-        "neutralize_path": {
-            "()": "src.logging_filters.NeutralizePath"
-        },
+        # "neutralize_path": {
+        #     "()": "src.logging_filters.NeutralizePath"
+        # },
     },
     "handlers": {
         "console": {
