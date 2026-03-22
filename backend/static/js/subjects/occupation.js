@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const value = String(Occupation?.value || "");
 
-        if (value === "96") {
+        if (value === "7") {
             otherOccupationWrapper.style.display = "block";
         } else {
             otherOccupationWrapper.style.display = "none";
