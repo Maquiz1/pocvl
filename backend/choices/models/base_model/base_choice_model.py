@@ -12,7 +12,7 @@ class BaseChoiceModel(AuditModel):
 
     class Meta:
         abstract = True
-        ordering = ["id"]
+        ordering = ["id","code"]
 
     def __str__(self):
         return f"{self.code} - ({self.name})"
