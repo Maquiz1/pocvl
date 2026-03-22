@@ -45,3 +45,8 @@ sent_emails/
 # MacOS/Windows clutter
 .DS_Store
 Thumbs.db
+
+
+# static files
+staticfiles/
+backend/staticfiles/
