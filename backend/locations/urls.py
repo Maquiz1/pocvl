@@ -1,12 +1,12 @@
+# locations/urls.py
 from django.urls import path
 from . import views
 
-app_name = 'locations'
+
+app_name="locations"
 
 urlpatterns = [
-    path('countries/', views.CountryListView.as_view(), name='country-list'),
-    path('countries/<int:pk>/', views.CountryDetailView.as_view(), name='country-detail'),
-    path('regions/<int:pk>/', views.RegionDetailView.as_view(), name='region-detail'),
-    path('districts/<int:pk>/', views.DistrictDetailView.as_view(), name='district-detail'),
-    path('sites/<int:pk>/', views.SiteDetailView.as_view(), name='site-detail'),
+    path("regions/", views.search_regions, name="search_regions"),
+    path("districts/", views.search_districts, name="search_districts"),
+    path("wards/", views.search_wards, name="search_wards"),
 ]

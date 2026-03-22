@@ -1,0 +1,49 @@
+<form method="get" class="row mb-3">
+
+    <div class="col-md-3">
+
+        <input type="text" name="search" class="form-control" placeholder="Search Subject ID"
+            value="{{ search|default:'' }}">
+
+
+    </div>
+
+    <div class="col-md-3">
+
+        <select name="site" class="form-control">
+
+            <option value="">All Sites</option>
+
+            {% for site in sites %}
+            <option value="{{ site.id }}" {% if request.GET.site == site.id|stringformat:"s" %} selected {% endif %}>
+                {{ site.name }}
+            </option>
+            {% endfor %}
+
+        </select>
+    </div>
+
+    <div class="col-md-3">
+
+        <select name="status" class="form-control">
+
+            <option value="">All Status</option>
+
+            <option value="registered">Registered</option>
+            <option value="screened">Screened</option>
+            <option value="enrolled">Enrolled</option>
+            <option value="completed">Completed</option>
+
+        </select>
+
+    </div>
+
+    <div class="col-md-3">
+
+        <button class="btn btn-primary">
+            Filter
+        </button>
+
+    </div>
+
+</form>

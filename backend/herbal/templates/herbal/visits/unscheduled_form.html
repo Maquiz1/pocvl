@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+
+    <h4 class="mb-3">
+        {% if is_update %}
+            Update Unscheduled Visit
+        {% else %}
+            Add Unscheduled Visit
+        {% endif %}
+    </h4>
+
+    <div class="card">
+        <div class="card-body">
+
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label>Date</label>
+                    {{ form.visit_date }}
+                </div>
+
+                <div class="mb-3">
+                    <label>After Visit</label>
+                    {{ form.after_visit }}
+                </div>
+
+                <div class="mb-3">
+                    <label>Reason</label>
+                    {{ form.reason }}
+                </div>
+
+                <div class="mb-3">
+                    <label>Notes</label>
+                    {{ form.notes }}
+                </div>
+
+                <button type="submit" class="btn btn-success">
+                    Save
+                </button>
+
+                <a href="{% url 'herbal:subjects-detail' subject.pk %}" 
+                   class="btn btn-secondary">
+                    Cancel
+                </a>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

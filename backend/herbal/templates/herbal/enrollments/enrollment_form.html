@@ -1,0 +1,221 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <!-- ===================== -->
+    <!-- SUBJECT HEADER -->
+    <!-- ===================== -->
+    <div class="card shadow-sm mb-4 border-0">
+        <div class="card-body d-flex justify-content-between align-items-center">
+            <div>
+                <h5 class="mb-1 text-primary">
+                    <i class="bi bi-person-badge"></i> Subject Information
+                </h5>
+                <small class="text-muted">
+                    ID: <strong>{{ subject.subject_id }}</strong> |
+                    Site: <strong>{{ request.user.staff_profile.site }}</strong> |
+                    Sex: <strong>{{ subject.sex.name }}</strong>
+                </small>
+            </div>
+
+            <div>
+                <span class="badge bg-{% if is_update %}warning{% else %}success{% endif %}">
+                    {% if is_update %}Update Mode{% else %}New Enrollment{% endif %}
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== -->
+    <!-- FORM CARD -->
+    <!-- ===================== -->
+    <div class="card shadow border-0">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">
+                {% if is_update %}
+                    <i class="bi bi-pencil-square"></i> Update Enrollment
+                {% else %}
+                    <i class="bi bi-plus-circle"></i> Create Enrollment
+                {% endif %}
+            </h5>
+        </div>
+
+        <div class="card-body">
+
+            <form method="post" novalidate>
+                {% csrf_token %}
+
+                <!-- GLOBAL ERRORS -->
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+
+                {% for field in form %}
+                    {% if field.errors %}
+                        <div class="alert alert-danger py-2">
+                            <strong>{{ field.label }}:</strong> {{ field.errors|striptags }}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+
+                <!-- ===================== -->
+                <!-- ENROLLMENT INFO -->
+                <!-- ===================== -->
+                <div class="card mb-4 border-0 shadow-sm">
+                    <div class="card-header bg-light">
+                        <strong>📋 Enrollment Information</strong>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                {{ form.enrollment_date.label_tag }}
+                                {{ form.enrollment_date|add_class:"form-control" }}
+                            </div>
+
+                            <div class="col-md-4">
+                                {{ form.pt_category.label_tag }}
+                                {{ form.pt_category|add_class:"form-select" }}
+                            </div>
+
+                            <div class="col-md-4">
+                                {{ form.pt_type.label_tag }}
+                                {{ form.pt_type|add_class:"form-select" }}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- ===================== -->
+                <!-- NEW TREATMENT -->
+                <!-- ===================== -->
+                <div id="new-section" class="card mb-4 border-0 shadow-sm">
+                    <div class="card-header bg-light">
+                        <strong>💊 New Treatment</strong>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row g-3">
+
+                            <div class="col-md-4">
+                                {{ form.treatment_type.label_tag }}
+                                {{ form.treatment_type|add_class:"form-select" }}
+                            </div>
+
+                            <div class="col-md-4" id="new-date-wrapper">
+                                {{ form.treatment_date.label_tag }}
+                                {{ form.treatment_date|add_class:"form-control" }}
+                            </div>
+
+                            <div class="col-md-4" id="new-other-wrapper">
+                                {{ form.treatment_other.label_tag }}
+                                {{ form.treatment_other|add_class:"form-control" }}
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===================== -->
+                <!-- PREVIOUS TREATMENT -->
+                <!-- ===================== -->
+                <div id="previous-section" class="card mb-4 border-0 shadow-sm">
+                    <div class="card-header bg-light">
+                        <strong>🕘 Previous Treatment</strong>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row g-3">
+
+                            <div class="col-md-4">
+                                {{ form.previous_treatment.label_tag }}
+                                {{ form.previous_treatment|add_class:"form-select" }}
+                            </div>
+
+                            <div class="col-md-4" id="previous-date-wrapper">
+                                {{ form.previous_date.label_tag }}
+                                {{ form.previous_date|add_class:"form-control" }}
+                            </div>
+
+                            <div class="col-md-4" id="previous-other-wrapper">
+                                {{ form.previous_other.label_tag }}
+                                {{ form.previous_other|add_class:"form-control" }}
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===================== -->
+                <!-- CYCLES -->
+                <!-- ===================== -->
+                <div id="cycle-section" class="card mb-4 border-0 shadow-sm">
+                    <div class="card-header bg-light">
+                        <strong>🔄 Treatment Cycles</strong>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row g-3">
+
+                            <div class="col-md-6">
+                                {{ form.total_cycle.label_tag }}
+                                {{ form.total_cycle|add_class:"form-control" }}
+                            </div>
+
+                            <div class="col-md-6">
+                                {{ form.cycle_number.label_tag }}
+                                {{ form.cycle_number|add_class:"form-control" }}
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===================== -->
+                <!-- REMARKS -->
+                <!-- ===================== -->
+                <div class="card mb-4 border-0 shadow-sm">
+                    <div class="card-header bg-light">
+                        <strong>📝 Remarks</strong>
+                    </div>
+
+                    <div class="card-body">
+                        {{ form.remarks.label_tag }}
+                        {{ form.remarks|add_class:"form-control" }}
+                    </div>
+                </div>
+
+                <!-- ===================== -->
+                <!-- ACTION BUTTONS -->
+                <!-- ===================== -->
+                <div class="d-flex justify-content-between">
+                    <a href="{% url 'herbal:subjects-detail' subject.pk %}" class="btn btn-outline-secondary">
+                        ← Cancel
+                    </a>
+
+                    <button class="btn btn-success px-4">
+                        {% if is_update %} Update {% else %} Save {% endif %}
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/enrollments/pt_type.js' %}"></script>
+<script src="{% static 'js/enrollments/treatment_type.js' %}"></script>
+<script src="{% static 'js/enrollments/previous_treatment.js' %}"></script>
+{% endblock %}

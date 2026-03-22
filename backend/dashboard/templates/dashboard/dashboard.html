@@ -1,0 +1,259 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container-fluid">
+
+    <h3 class="mb-4">Clinical Trial Dashboard</h3>
+
+    <!-- KPI -->
+    <div class="row g-3">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white text-center">
+                <div class="card-body">
+                    <h2>{{ total_subjects }}</h2>
+                    <p>Total Subjects</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-info text-white text-center">
+                <div class="card-body">
+                    <h2>{{ screened_subjects }}</h2>
+                    <p>Screened</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-success text-white text-center">
+                <div class="card-body">
+                    <h2>{{ enrolled_subjects }}</h2>
+                    <p>Enrolled</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-warning text-white text-center">
+                <div class="card-body">
+                    <h2>{{ adverse_events }}</h2>
+                    <p>Adverse Events</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- OVERALL -->
+    <h4>Overall Progress</h4>
+    <div class="progress mb-4" style="height:25px;">
+        <div class="progress-bar bg-success" style="width: {{ overall_percent }}%;">
+            {{ overall_percent }}% ({{ enrolled_subjects }}/{{ total_target }})
+        </div>
+    </div>
+
+    <!-- SITE -->
+    <h4>Progress per Site</h4>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Site</th>
+                <th>Enrolled</th>
+                <th>Target</th>
+                <th>Progress</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in site_progress %}
+            <tr>
+                <td>{{ row.site__name }}</td>
+                <td>{{ row.enrolled }}</td>
+                <td>{{ row.target }}</td>
+                <td>
+                    <div class="progress">
+                        <div class="progress-bar bg-info" style="width: {{ row.percent }}%;">
+                            {{ row.percent }}%
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">No data</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- CANCER -->
+    <h4>Progress per Cancer Type</h4>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Cancer</th>
+                <th>Enrolled</th>
+                <th>Target</th>
+                <th>Progress</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in cancer_progress %}
+            <tr>
+                <td>{{ row.cancer_type__name }}</td>
+                <td>{{ row.enrolled }}</td>
+                <td>{{ row.target }}</td>
+                <td>
+                    <div class="progress">
+                        <div class="progress-bar bg-warning" style="width: {{ row.percent }}%;">
+                            {{ row.percent }}%
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">No data</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- SITE × CANCER -->
+    <h4>Site × Cancer Progress</h4>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Site</th>
+                <th>Cancer</th>
+                <th>Enrolled</th>
+                <th>Target</th>
+                <th>Progress</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in detailed_progress %}
+            <tr>
+                <td>{{ row.site__name }}</td>
+                <td>{{ row.cancer_type__name }}</td>
+                <td>{{ row.enrolled }}</td>
+                <td>{{ row.target_enrollment }}</td>
+                <td>
+                    <div class="progress">
+                        <div class="progress-bar 
+                            {% if row.percent < 30 %}bg-danger
+                            {% elif row.percent < 70 %}bg-warning
+                            {% else %}bg-success{% endif %}" style="width: {{ row.percent }}%;">
+                            {{ row.percent }}%
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No data</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <hr>
+
+    <!-- PATIENT CATEGORY -->
+    <h4>Enrollment by Patient Category</h4>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th>Progress</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in patient_category_stats %}
+            <tr>
+                <td>
+                    {% if row.pt_category__code == 'INT' %}
+                    <span class="badge bg-success">Intervention</span>
+                    {% elif row.pt_category__code == 'CNT' %}
+                    <span class="badge bg-secondary">Control</span>
+                    {% else %}
+                    {{ row.pt_category__name }}
+                    {% endif %}
+                </td>
+                <td>
+                    <div class="progress">
+                        <div class="progress-bar bg-success" style="width: {{ row.percent }}%;">
+                            {{ row.percent }}% ({{ row.total }})
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2">No data</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- CATEGORY × TYPE -->
+    <h4>Patient Category × Type</h4>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th>Type</th>
+                <th>Progress</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in patient_combined_stats %}
+            <tr>
+                <td>{{ row.pt_category__name }}</td>
+                <td>{{ row.pt_type__name }}</td>
+                <td>
+                    <div class="progress">
+                        <div class="progress-bar bg-primary" style="width: {{ row.percent }}%;">
+                            {{ row.percent }}% ({{ row.total }})
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3">No data</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <hr>
+
+    <!-- LATEST -->
+    <h4>Latest Subjects</h4>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Site</th>
+                <th>Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for subject in latest_subjects %}
+            <tr>
+                <td>{{ subject.subject_id }}</td>
+                <td>{{ subject.site }}</td>
+                <td>{{ subject.created_at }}</td>
+                <td>{{ subject.status }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">No subjects</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+{% endblock %}

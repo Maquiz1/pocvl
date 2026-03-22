@@ -1,0 +1,48 @@
+# Virtual environments
+venv/
+env/
+.venv/
+venv-eapocvl/
+
+# Python cache and compiled files
+__pycache__/
+*.py[cod]
+*.pyo
+# Ignore Python bytecode
+*.pyc
+
+# Django migrations (optional – only ignore if you regenerate them often)
+# **Uncomment if needed**
+# */migrations/
+# !*/migrations/__init__.py
+
+# Environment variables or secrets
+.env
+*.env
+
+# SQLite DB (optional)
+*.sqlite3
+db.sqlite3
+
+# VSCode/IDE files
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Ignore collected static files
+staticfiles/
+
+# Ignore user uploads
+uploads/
+media/
+
+# Ignore locally saved sent emails
+sent_emails/
+
+
+# MacOS/Windows clutter
+.DS_Store
+Thumbs.db
+

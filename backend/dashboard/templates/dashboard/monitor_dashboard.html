@@ -1,0 +1,212 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h3>Subject Monitoring</h3>
+
+<div class="row mb-4">
+
+<div class="col-md-4">
+<div class="card bg-success text-white">
+<div class="card-body text-center">
+<h3>{{ active_subjects }}</h3>
+Active Subjects
+</div>
+</div>
+</div>
+
+<div class="col-md-4">
+<div class="card bg-danger text-white">
+<div class="card-body text-center">
+<h3>{{ terminated_subjects }}</h3>
+Terminated
+</div>
+</div>
+</div>
+
+<div class="col-md-4">
+<div class="card bg-dark text-white">
+<div class="card-body text-center">
+<h3>{{ lost_subjects }}</h3>
+Lost to Follow-up
+</div>
+</div>
+</div>
+
+</div>
+
+
+
+
+<h4>Overdue Visits</h4>
+
+<table class="table table-bordered">
+
+<thead>
+<tr>
+<th>Subject</th>
+<th>Visit</th>
+<th>Scheduled Date</th>
+<th>Site</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for visit in overdue_visits %}
+
+<tr>
+
+<td>{{ visit.enrollment.screening.subject.subject_id }}</td>
+
+<td>{{ visit.get_visit_day_display }}</td>
+
+<td>{{ visit.scheduled_date }}</td>
+
+<td>{{ visit.enrollment.screening.subject.site }}</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+<td colspan="4">No overdue visits</td>
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+
+
+
+
+
+
+
+
+
+<h4>Missed Visits</h4>
+
+<table class="table table-bordered">
+
+<thead>
+<tr>
+<th>Subject</th>
+<th>Visit</th>
+<th>Reason</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for visit in missed_visits %}
+
+<tr>
+
+<td>{{ visit.enrollment.screening.subject.subject_id }}</td>
+
+<td>{{ visit.get_visit_day_display }}</td>
+
+<td>{{ visit.missed_reason }}</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+<td colspan="3">No missed visits</td>
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+
+
+
+
+
+
+
+<h4>Adverse Events</h4>
+
+<table class="table table-bordered">
+
+<thead>
+<tr>
+<th>Subject</th>
+<th>Event</th>
+<th>Severity</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for ae in adverse_events %}
+
+<tr>
+
+<td>{{ ae.enrollment.screening.subject.subject_id }}</td>
+
+<td>{{ ae.event_name }}</td>
+
+<td>{{ ae.severity }}</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+<td colspan="3">No adverse events</td>
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+
+
+
+
+
+
+
+<h4>Site Performance</h4>
+
+<table class="table table-bordered">
+
+<thead>
+<tr>
+<th>Site</th>
+<th>Total Subjects</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for site in site_summary %}
+
+<tr>
+
+<td>{{ site.name }}</td>
+
+<td>{{ site.total_subjects }}</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+
+
+{% endblock %}

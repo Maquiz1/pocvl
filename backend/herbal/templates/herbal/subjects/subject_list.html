@@ -1,0 +1,208 @@
+{% extends "base.html" %}
+{% load querystring %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <div class="row mb-3">
+
+        <!-- REGISTERED (TOTAL) -->
+        <div class="col-md-2">
+            <div class="card text-center bg-light">
+                <div class="card-body">
+                    <h4>{{ total_subjects }}</h4>
+                    <p>Registered</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCREENED -->
+        <div class="col-md-2">
+            <div class="card text-center bg-warning text-dark">
+                <div class="card-body">
+                    <h4>{{ screened_count }}</h4>
+                    <p>Screened</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ELIGIBLE -->
+        <div class="col-md-2">
+            <div class="card text-center bg-info text-white">
+                <div class="card-body">
+                    <h4>{{ eligible_count }}</h4>
+                    <p>Eligible</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ENROLLED -->
+        <div class="col-md-2">
+            <div class="card text-center bg-success text-white">
+                <div class="card-body">
+                    <h4>{{ enrolled_count }}</h4>
+                    <p>Enrolled</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TERMINATED -->
+        <div class="col-md-2">
+            <div class="card text-center bg-danger text-white">
+                <div class="card-body">
+                    <h4>{{ terminated_count }}</h4>
+                    <p>Terminated</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="card text-center bg-dark text-white">
+                <div class="card-body">
+                    <h4>{{ ltf_count }}</h4>
+                    <p>LTFU</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    {% include "includes/_filters/_form_filters.html" %}
+
+    <h3>Subjects</h3>
+
+    <div class="card">
+        <a href="{% url 'herbal:subject-create' %}" class="btn btn-success mb-3">
+
+            Add Subject
+
+        </a>
+
+        <div class="card-body">
+            <div class="mb-3">
+
+                <a href="?{% querystring request status='all' %}" class="btn btn-outline-dark btn-sm">
+                    All ({{ total_subjects }})
+                </a>
+
+                <a href="?{% querystring request status='registered' %}" class="btn btn-outline-secondary btn-sm">
+                    Registered ({{ total_subjects }})
+                </a>
+
+                <a href="?{% querystring request status='screened' %}" class="btn btn-outline-warning btn-sm">
+                    Screened ({{ screened_count }})
+                </a>
+
+                <a href="?{% querystring request status='eligible' %}" class="btn btn-outline-info btn-sm">
+                    Eligible ({{ eligible_count }})
+                </a>
+
+                <a href="?{% querystring request status='enrolled' %}" class="btn btn-outline-success btn-sm">
+                    Enrolled ({{ enrolled_count }})
+                </a>
+
+                <a href="?{% querystring request status='terminated' %}" class="btn btn-outline-danger btn-sm">
+                    Terminated ({{ terminated_count }})
+                </a>
+                <a href="?{% querystring request status='ltf' %}" class="btn btn-outline-dark btn-sm">
+                    LTFU ({{ ltf_count }})
+                </a>
+            </div>
+            <table class="table table-striped table-bordered">
+
+                <thead>
+
+                    <tr>
+                        <th>Subject ID</th>
+                        <th>Site</th>
+                        <th>Date Registered</th>
+                        <th>Status</th>
+                        <th>Progress</th>
+                        <th>Actions</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for subject in page_obj %}
+
+                    <tr>
+
+                        <td>{{ subject.subject_id }}</td>
+
+                        <td>{{ subject.site }}</td>
+
+                        <td>{{ subject.reg_date }}</td>
+                        <td>
+
+                            {% if subject.screening and subject.screening.enrollment and  subject.screening.enrollment.termination %}
+                            <span class="badge bg-danger">Terminated</span>
+
+                            {% elif subject.progress_percent == 100 %}
+                            <span class="badge bg-success">Enrolled</span>
+
+                            {% elif subject.screening and subject.screening.eligible %}
+                            <span class="badge bg-info">Eligible</span>
+
+                            {% elif subject.progress_percent == 60 %}
+                            <span class="badge bg-warning text-dark">Screened</span>
+
+                            {% else %}
+                            <span class="badge bg-secondary">Registered</span>
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+                            <div class="progress" style="height: 18px;">
+                                <div class="progress-bar
+                                    {% if subject.progress_percent == 100 %}bg-success
+                                    {% elif subject.progress_percent == 60 %}bg-warning
+                                    {% else %}bg-secondary
+                                    {% endif %}" style="width: {{ subject.progress_percent }}%;">
+
+                                    {{ subject.progress_percent }}%
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>
+
+                            <a class="btn btn-sm btn-primary"
+                                href="{% url 'herbal:subjects-detail' subject.pk %}?{{ request.GET.urlencode }}">
+                                View
+                            </a>
+
+                            <a class="btn btn-sm btn-warning" href="{% url 'herbal:subject-update' subject.pk %}">
+                                Edit
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+                        <td colspan="6" class="text-center">
+                            No subjects found
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+    {% include "includes/_filters/_paginator.html" %}
+
+</div>
+
+{% endblock %}

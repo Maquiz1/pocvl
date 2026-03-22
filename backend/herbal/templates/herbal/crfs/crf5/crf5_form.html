@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+
+    <h3>
+
+        {% if is_update %}
+            Edit Adverse Event (CRF5)
+        {% else %}
+            Record Adverse Event (CRF5)
+        {% endif %}
+
+        — Subject {{ enrollment.screening.subject.subject_id }}
+
+    </h3>
+
+    <hr>
+
+    <form method="post">
+
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit" class="btn btn-success">
+            Save
+        </button>
+
+        <a href="{% url 'herbal:subjects-detail' enrollment.screening.subject.pk %}"
+           class="btn btn-secondary">
+            Cancel
+        </a>
+
+    </form>
+
+</div>
+
+{% endblock %}

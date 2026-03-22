@@ -1,49 +1,49 @@
-from django.views.generic import ListView, DetailView
-from .models import Country, Region, District, Site
+from django.http import JsonResponse
+from .models import Region, District, Ward
 
-class CountryListView(ListView):
-    model = Country
-    template_name = 'locations/country_list.html'
 
-class CountryDetailView(DetailView):
-    model = Country
-    template_name = 'locations/country_detail.html'
+def search_regions(request):
+    q = request.GET.get("q", "")
+    data = Region.objects.filter(name__icontains=q)[:20]
+    return JsonResponse([
+        {"id": r.id, "text": r.name} for r in data
+    ], safe=False)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['regions'] = Region.objects.filter(country=self.object)
-        return context
 
-class RegionDetailView(DetailView):
-    model = Region
-    template_name = 'locations/region_detail.html'
+def search_districts(request):
+    q = request.GET.get("q", "")
+    region_id = request.GET.get("region")
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['districts'] = District.objects.filter(region=self.object)
-        return context
+    qs = District.objects.all()
 
-class DistrictDetailView(DetailView):
-    model = District
-    template_name = 'locations/district_detail.html'
+    if region_id:
+        qs = qs.filter(region_id=region_id)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['sites'] = Site.objects.filter(district=self.object)
-        return context
+    if q:
+        qs = qs.filter(name__icontains=q)
 
-class SiteDetailView(DetailView):
-    model = Site
-    template_name = 'locations/site_detail.html'
+    qs = qs[:20]
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        district = self.object.district
-        region = district.region
-        country = region.country
-        context.update({
-            'district': district,
-            'region': region,
-            'country': country
-        })
-        return context
+    return JsonResponse([
+        {"id": d.id, "text": d.name} for d in qs
+    ], safe=False)
+
+
+def search_wards(request):
+    q = request.GET.get("q", "")
+    district_id = request.GET.get("district")
+
+    qs = Ward.objects.all()
+
+    if district_id:
+        qs = qs.filter(district_id=district_id)
+
+    if q:
+        qs = qs.filter(name__icontains=q)
+
+    qs = qs[:20]
+
+    return JsonResponse([
+        {"id": w.id, "text": w.name} for w in qs
+    ], safe=False)
+    

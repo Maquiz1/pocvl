@@ -1,0 +1,70 @@
+[
+  {
+    "model": "locations.region",
+    "pk": 1,
+    "fields": { "name": "Dar es Salaam" }
+  },
+  {
+    "model": "locations.district",
+    "pk": 1,
+    "fields": { "name": "Ilala", "region": 1 }
+  },
+  {
+    "model": "locations.district",
+    "pk": 2,
+    "fields": { "name": "Kinondoni", "region": 1 }
+  },
+  {
+    "model": "locations.district",
+    "pk": 3,
+    "fields": { "name": "Temeke", "region": 1 }
+  },
+
+  {
+    "model": "locations.ward",
+    "pk": 1,
+    "fields": { "name": "Upanga", "district": 1 }
+  },
+  {
+    "model": "locations.ward",
+    "pk": 2,
+    "fields": { "name": "Kariakoo", "district": 1 }
+  },
+  {
+    "model": "locations.ward",
+    "pk": 3,
+    "fields": { "name": "Buguruni", "district": 1 }
+  },
+
+  {
+    "model": "locations.ward",
+    "pk": 4,
+    "fields": { "name": "Mikocheni", "district": 2 }
+  },
+  {
+    "model": "locations.ward",
+    "pk": 5,
+    "fields": { "name": "Kawe", "district": 2 }
+  },
+  {
+    "model": "locations.ward",
+    "pk": 6,
+    "fields": { "name": "Sinza", "district": 2 }
+  },
+
+  {
+    "model": "locations.region",
+    "pk": 2,
+    "fields": { "name": "Arusha" }
+  },
+  {
+    "model": "locations.district",
+    "pk": 4,
+    "fields": { "name": "Arusha Urban", "region": 2 }
+  },
+  {
+    "model": "locations.ward",
+    "pk": 7,
+    "fields": { "name": "Sekei", "district": 4 }
+  }
+]

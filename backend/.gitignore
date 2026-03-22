@@ -2,7 +2,7 @@
 venv/
 env/
 .venv/
-venv-eapocvl/
+venv-herbal/
 
 # Python cache and compiled files
 __pycache__/
@@ -32,7 +32,7 @@ db.sqlite3
 *.log
 
 # Ignore collected static files
-staticfiles/
+# staticfiles/
 
 # Ignore user uploads
 uploads/
@@ -45,4 +45,3 @@ sent_emails/
 # MacOS/Windows clutter
 .DS_Store
 Thumbs.db
-

@@ -1,0 +1,196 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+<div class="container">
+
+    <p><strong>Subject ID:</strong> {{ subject.subject_id }}</p>
+    <p><strong>Site:</strong> {{ request.user.staff_profile.site }}</p>
+    <p><strong>Sex:</strong> {{ subject.sex.name }}</p>
+
+    <h3>
+        {% if is_update %}
+        Update Screening
+        {% else %}
+        Create Screening
+        {% endif %}
+    </h3>
+
+    <div class="card">
+        <div class="card-body">
+
+            <form method="post" novalidate>
+                {% csrf_token %}
+                <!-- SEX (hidden but available for JS) -->
+                <input type="hidden" id="subject-sex" value="{{ subject.sex_id }}">
+
+                <!-- GLOBAL ERRORS -->
+                {% for field in form %}
+                {% if field.errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ field.label }}:</strong> {{ field.errors|striptags }}
+                </div>
+                {% endif %}
+                {% endfor %}
+
+                <!-- ===================== -->
+                <!-- CORE -->
+                <!-- ===================== -->
+                <h5>Screening Info</h5>
+                <div class="row">
+                    <div class="col-md-4">
+                        {{ form.screening_date.label_tag }}
+                        {{ form.screening_date }}
+                    </div>
+                </div>
+
+                <hr>
+
+                <!-- ===================== -->
+                <!-- CONSENT -->
+                <!-- ===================== -->
+                <h5>Consent</h5>
+                <div class="row">
+                    <div class="col-md-3">
+                        {{ form.consent.label_tag }}
+                        {{ form.consent }}
+                    </div>
+                    <div class="col-md-3" id="consent-date-wrapper">
+                        {{ form.consent_date.label_tag }}
+                        {{ form.consent_date }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ form.consent_nimregenin.label_tag }}
+                        {{ form.consent_nimregenin }}
+                    </div>
+                    <div class="col-md-3 mt-2" id="nimregenin-date-wrapper">
+                        {{ form.nimregenin_date.label_tag }}
+                        {{ form.nimregenin_date }}
+                    </div>
+                </div>
+
+                <div class="mt-2" id="consent-reasons-wrapper">
+                    {{ form.consent_reasons.label_tag }}
+                    {{ form.consent_reasons }}
+                </div>
+
+                <div class="mt-2" id="nimregenin-reasons-wrapper">
+                    {{ form.nimregenin_reasons.label_tag }}
+                    {{ form.nimregenin_reasons }}
+                </div>
+
+                <hr>
+
+                <!-- ===================== -->
+                <!-- INCLUSION -->
+                <!-- ===================== -->
+                <h5>Inclusion Criteria</h5>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        {{ form.age_18.label_tag }}
+                        {{ form.age_18 }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ form.biopsy.label_tag }}
+                        {{ form.biopsy }}
+                    </div>
+                </div>
+
+                <div class="row mt-2">
+                    <div class="col-md-3" id="breast-wrapper">
+                        {{ form.breast_cancer.label_tag }}
+                        {{ form.breast_cancer }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ form.brain_cancer.label_tag }}
+                        {{ form.brain_cancer }}
+                    </div>
+                    <div class="col-md-3" id="cervical-wrapper">
+                        {{ form.cervical_cancer.label_tag }}
+                        {{ form.cervical_cancer }}
+                    </div>
+                    <div class="col-md-3" id="prostate-wrapper">
+                        {{ form.prostate_cancer.label_tag }}
+                        {{ form.prostate_cancer }}
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">{{ form.cancer_types.label }}</label>
+
+                        {% for checkbox in form.cancer_types %}
+                        <div class="form-check">
+                            {{ checkbox.tag }}
+                            <label class="form-check-label">
+                                {{ checkbox.choice_label }}
+                            </label>
+                        </div>
+                        {% endfor %}
+
+                        {% if form.cancer_types.errors %}
+                        <div class="text-danger">
+                            {{ form.cancer_types.errors }}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <hr>
+
+                <!-- ===================== -->
+                <!-- EXCLUSION -->
+                <!-- ===================== -->
+                <h5>Exclusion Criteria</h5>
+
+                <div class="row">
+                    <div class="col-md-3" id="pregnant-wrapper">
+                        {{ form.pregnant.label_tag }}
+                        {{ form.pregnant }}
+                    </div>
+                    <div class="col-md-3" id="breastfeeding-wrapper">
+                        {{ form.breast_feeding.label_tag }}
+                        {{ form.breast_feeding }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ form.ckd.label_tag }}
+                        {{ form.ckd }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ form.liver_disease.label_tag }}
+                        {{ form.liver_disease }}
+                    </div>
+                </div>
+
+                <hr>
+
+                <!-- ===================== -->
+                <!-- NOTES -->
+                <!-- ===================== -->
+                <h5>Remarks</h5>
+                {{ form.remarks }}
+
+                <br><br>
+
+                <button class="btn btn-primary">
+                    {% if is_update %} Update {% else %} Save {% endif %} Screening
+                </button>
+
+                <a href="{% url 'herbal:subjects-detail' subject.pk %}" class="btn btn-secondary">
+                    Cancel
+                </a>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/screening/sex.js' %}"></script>
+<script src="{% static 'js/screening/consent.js' %}"></script>
+<script src="{% static 'js/screening/nimregenin.js' %}"></script>
+{% endblock %}

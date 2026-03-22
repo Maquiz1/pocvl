@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+    <p><strong>Site:</strong> {{ request.user.staff_profile.site }}</p>
+    <h3>Create Subject</h3>
+
+    <div class="card">
+        <div class="card-body">
+
+            <form method="post">
+                {% csrf_token %}
+
+                <!-- BASIC INFO -->
+                <div class="mb-3">
+                    <label>First Name</label>
+                    {{ form.first_name }}
+                </div>
+
+                <div class="mb-3">
+                    <label>Last Name</label>
+                    {{ form.last_name }}
+                </div>
+
+                <div class="mb-3">
+                    <label>Sex</label>
+                    {{ form.sex }}
+                </div>
+
+                <div class="mb-3">
+                    <label>Date of Birth</label>
+                    {{ form.dob }}
+                </div>
+
+                <!-- LOCATION -->
+                <hr>
+                <h5>Location</h5>
+
+                <div class="mb-3">
+                    <label>Region</label>
+                    {{ form.region }}
+                </div>
+
+                <div class="mb-3">
+                    <label>District</label>
+                    {{ form.district }}
+                </div>
+
+                <div class="mb-3">
+                    <label>Ward</label>
+                    {{ form.ward }}
+                </div>
+
+                <button class="btn btn-primary">Save Subject</button>
+
+                <a href="{% url 'herbal:subjects-list' %}" class="btn btn-secondary">
+                    Cancel
+                </a>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<!-- AJAX -->
+<script>
+document.getElementById("region").addEventListener("change", function () {
+    let regionId = this.value;
+
+    fetch(`/locations/districts/?region_id=${regionId}`)
+        .then(response => response.json())
+        .then(data => {
+            let district = document.getElementById("district");
+            district.innerHTML = '<option value="">Select District</option>';
+
+            data.forEach(item => {
+                district.innerHTML += `<option value="${item.id}">${item.name}</option>`;
+            });
+
+            // reset ward
+            document.getElementById("ward").innerHTML = '<option value="">Select Ward</option>';
+        });
+});
+
+document.getElementById("district").addEventListener("change", function () {
+    let districtId = this.value;
+
+    fetch(`/locations/wards/?district_id=${districtId}`)
+        .then(response => response.json())
+        .then(data => {
+            let ward = document.getElementById("ward");
+            ward.innerHTML = '<option value="">Select Ward</option>';
+
+            data.forEach(item => {
+                ward.innerHTML += `<option value="${item.id}">${item.name}</option>`;
+            });
+        });
+});
+</script>
+
+{% endblock %}

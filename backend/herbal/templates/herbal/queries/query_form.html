@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+
+    <h3>Raise Data Query</h3>
+
+    <div class="card">
+        <div class="card-body">
+
+            <p>
+                <strong>Subject:</strong>
+                {{ visit.enrollment.screening.subject.subject_id }}
+            </p>
+
+            <p>
+                <strong>Visit:</strong>
+                {{ visit.get_visit_day_display }}
+            </p>
+
+            <form method="post">
+
+                {% csrf_token %}
+
+                <div class="mb-3">
+
+                    <label class="form-label">Field Name</label>
+
+                    {{ form.field_name }}
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">Query Description</label>
+
+                    {{ form.query_text }}
+
+                </div>
+
+                <button class="btn btn-danger">
+                    Raise Query
+                </button>
+
+                <a href="{% url 'herbal:subjects-detail' visit.enrollment.screening.subject.pk %}"
+                    class="btn btn-secondary">
+
+                    Cancel
+
+                </a>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
