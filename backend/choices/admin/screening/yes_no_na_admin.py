@@ -2,10 +2,9 @@
 
 from django.contrib import admin
 from choices.models import YesNoNa
+from ..base_admin import BaseChoiceAdmin
 
 
 @admin.register(YesNoNa)
-class YesNoNaAdmin(admin.ModelAdmin):
-    list_display = ['id','value','code', 'name']
-    ordering = ['id']
-    search_fields = ['name']
+class YesNoNaAdmin(BaseChoiceAdmin):
+    pass

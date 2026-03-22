@@ -2,9 +2,8 @@
 
 from django.contrib import admin
 from choices.models import IDType
+from ..base_admin import BaseChoiceAdmin
 
 @admin.register(IDType)
-class IDTypeAdmin(admin.ModelAdmin):
-    list_display = ['id','value', 'code', 'name']
-    ordering = ['id']
-    search_fields = ['code', 'name']
+class IDTypeAdmin(BaseChoiceAdmin):
+    pass

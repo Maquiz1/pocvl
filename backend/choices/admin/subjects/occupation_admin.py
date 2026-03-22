@@ -2,10 +2,9 @@
 
 from django.contrib import admin
 from choices.models import Occupation
+from ..base_admin import BaseChoiceAdmin
 
 
 @admin.register(Occupation)
-class OccupationAdmin(admin.ModelAdmin):
-    list_display = ['id','value', 'name']
-    ordering = ['id']
-    search_fields = ['name']
+class OccupationAdmin(BaseChoiceAdmin):
+    pass

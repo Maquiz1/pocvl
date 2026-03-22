@@ -2,8 +2,9 @@
 
 from django.contrib import admin
 from choices.models import Sex
+from ..base_admin import BaseChoiceAdmin
 
 
 @admin.register(Sex)
-class SexAdmin(admin.ModelAdmin):
-    ordering = ['id']
+class SexAdmin(BaseChoiceAdmin):
+    pass

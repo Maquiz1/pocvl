@@ -2,10 +2,9 @@
 
 from django.contrib import admin
 from choices.models import EducationLevel
+from ..base_admin import BaseChoiceAdmin
 
 
 @admin.register(EducationLevel)
-class EducationLevelAdmin(admin.ModelAdmin):
-    list_display = ['id', 'code', 'name']
-    ordering = ['id']
-    search_fields = ['code', 'name']
+class EducationLevelAdmin(BaseChoiceAdmin):
+    pass

@@ -2,10 +2,9 @@
 
 from django.contrib import admin
 from choices.models import YesNoUnk
+from ..base_admin import BaseChoiceAdmin
 
 
 @admin.register(YesNoUnk)
-class YesNoUnkAdmin(admin.ModelAdmin):
-    list_display = ['id','value','code', 'name']
-    ordering = ['id']
-    search_fields = ['name']
+class YesNoUnkAdmin(BaseChoiceAdmin):
+    pass
