@@ -35,11 +35,14 @@
                 </div>
                 {% endif %}
                 {% endfor %}
+                <hr>
 
                 <!-- ===================== -->
                 <!-- CORE -->
                 <!-- ===================== -->
                 <h5>Screening Info</h5>
+                <hr>
+
                 <div class="row">
                     <div class="col-md-4">
                         {{ form.screening_date.label_tag }}
@@ -53,6 +56,8 @@
                 <!-- CONSENT -->
                 <!-- ===================== -->
                 <h5>Consent</h5>
+                <hr>
+
                 <div class="row">
                     <div class="col-md-3">
                         {{ form.consent.label_tag }}
@@ -91,6 +96,7 @@
                 <!-- INCLUSION -->
                 <!-- ===================== -->
                 <h5>Inclusion Criteria</h5>
+                <hr>
 
                 <div class="row">
                     <div class="col-md-4">
@@ -151,6 +157,7 @@
                 <!-- EXCLUSION -->
                 <!-- ===================== -->
                 <h5>Exclusion Criteria</h5>
+                <hr>
 
                 <div class="row">
 
@@ -181,9 +188,12 @@
                 <!-- NOTES -->
                 <!-- ===================== -->
                 <h5>Remarks</h5>
+                <hr>
+
                 {{ form.remarks|add_class:"form-control" }}
 
                 <br><br>
+                <hr>
 
                 <button class="btn btn-primary">
                     {% if is_update %} Update {% else %} Save {% endif %} Screening
