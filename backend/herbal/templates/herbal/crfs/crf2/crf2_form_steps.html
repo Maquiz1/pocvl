@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-fluid mt-4">
+
+    <!-- HEADER -->
+    <div class="mb-3">
+        <h3>
+            {% if is_update %}
+                ✏️ Edit CRF2
+            {% else %}
+                ➕ Create CRF2
+            {% endif %}
+            — {{ visit.get_visit_day_display }}
+        </h3>
+
+        <p class="text-muted mb-1">
+            Step {{ step }} of {{ total_steps }}
+        </p>
+
+        <!-- PROGRESS -->
+        <div class="progress" style="height: 18px;">
+            <div class="progress-bar bg-success progress-bar-striped progress-bar-animated"
+                 style="width: {{ progress }}%;">
+                {{ progress }}%
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <!-- 🔥 SIDEBAR -->
+        <div class="col-md-3">
+
+            <div class="list-group shadow-sm">
+
+                <a class="list-group-item list-group-item-action {% if step == 1 %}active{% endif %}"
+                   href="?step=1">
+                    🩺 Vitals
+                </a>
+
+                <a class="list-group-item list-group-item-action {% if step == 2 %}active{% endif %}"
+                   href="?step=2">
+                    ❤️ System Exam
+                </a>
+
+                <a class="list-group-item list-group-item-action {% if step == 3 %}active{% endif %}"
+                   href="?step=3">
+                    🧪 Other Exam
+                </a>
+
+                <a class="list-group-item list-group-item-action {% if step == 4 %}active{% endif %}"
+                   href="?step=4">
+                    ✅ Final Review
+                </a>
+
+            </div>
+
+        </div>
+
+        <!-- 🔥 MAIN CONTENT -->
+        <div class="col-md-9">
+
+            <!-- SECTION TITLE -->
+            <h5 class="text-primary mb-3">
+                {% if step == 1 %}Vitals
+                {% elif step == 2 %}System Examination
+                {% elif step == 3 %}Other Examination
+                {% else %}Final Review
+                {% endif %}
+            </h5>
+
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="card shadow-sm p-4 mb-4">
+
+                    {% for field in form %}
+                        <div class="mb-3">
+
+                            <label class="form-label fw-semibold">
+                                {{ field.label }}
+                            </label>
+
+                            {{ field }}
+
+                            {% if field.help_text %}
+                                <div class="form-text">
+                                    {{ field.help_text }}
+                                </div>
+                            {% endif %}
+
+                            {% if field.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ field.errors }}
+                                </div>
+                            {% endif %}
+
+                        </div>
+                    {% endfor %}
+
+                </div>
+
+                <!-- 🔥 ACTION BUTTONS -->
+                <div class="d-flex justify-content-between">
+
+                    <!-- BACK -->
+                    {% if step > 1 %}
+                        <a href="?step={{ step|add:-1 }}" class="btn btn-outline-secondary">
+                            ← Back
+                        </a>
+                    {% else %}
+                        <span></span>
+                    {% endif %}
+
+                    <div class="d-flex gap-2">
+
+                        <!-- 💾 SAVE DRAFT -->
+                        <button name="save_draft" class="btn btn-warning">
+                            💾 Save Draft
+                        </button>
+
+                        <!-- ❌ CANCEL -->
+                        <a href="{% url 'herbal:subjects-detail' visit.subject.pk %}"
+                           class="btn btn-outline-danger">
+                            Cancel
+                        </a>
+
+                        <!-- NEXT / SUBMIT -->
+                        <button type="submit" class="btn btn-success">
+                            {% if step == total_steps %}
+                                ✅ Submit
+                            {% else %}
+                                Next →
+                            {% endif %}
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+<!-- 🔥 BMI AUTO CALCULATION -->
+<script>
+document.addEventListener("input", function () {
+    let height = parseFloat(document.getElementById("id_height")?.value);
+    let weight = parseFloat(document.getElementById("id_weight")?.value);
+
+    if (height > 0 && weight > 0) {
+        let bmi = weight / Math.pow(height / 100, 2);
+        let bmiField = document.getElementById("id_bmi");
+
+        if (bmiField) {
+            bmiField.value = bmi.toFixed(2);
+        }
+    }
+});
+</script>

@@ -1,108 +1,375 @@
 {% extends "base.html" %}
-
 {% block content %}
+
+<style>
+    .card-header {
+        cursor: pointer;
+        font-weight: 600;
+    }
+
+    .section-collapsed .card-body {
+        display: none;
+    }
+
+    .sticky-save {
+        position: sticky;
+        bottom: 0;
+        z-index: 1000;
+    }
+
+    .table th,
+    .table td {
+        vertical-align: middle;
+    }
+
+    .field-error {
+        color: #dc3545;
+        font-size: 0.85rem;
+        margin-top: 4px;
+    }
+</style>
 
 <div class="container mt-4">
 
-    <!-- TITLE -->
-    <h3 class="mb-2">
-        {% if is_update %}
-            ✏️ Edit CRF2
-        {% else %}
-            ➕ Create CRF2
-        {% endif %}
+    <h4 class="mb-3">
+        {% if is_update %} ✏️ Edit CRF2 {% else %} ➕ New CRF2 {% endif %}
         — {{ visit.get_visit_day_display }}
-    </h3>
-
-    <!-- STEP -->
-    <p class="text-muted">
-        Step {{ step }} of {{ total_steps }}
-    </p>
-
-    <!-- PROGRESS BAR -->
-    <div class="progress mb-4" style="height: 20px;">
-        <div class="progress-bar bg-success progress-bar-striped progress-bar-animated"
-             role="progressbar"
-             style="width: {{ progress }}%;">
-            {{ progress }}%
-        </div>
-    </div>
-
-    <!-- SECTION TITLE -->
-    <h5 class="text-primary mb-3">
-        {% if step == 1 %}Vitals
-        {% elif step == 2 %}System Examination
-        {% elif step == 3 %}Other Examination
-        {% else %}Final Review
-        {% endif %}
-    </h5>
+    </h4>
 
     <form method="post">
         {% csrf_token %}
 
-        <div class="card shadow-sm p-4 mb-4">
-
-            {% for field in form %}
-                <div class="mb-3">
-
-                    <label class="form-label fw-semibold">
-                        {{ field.label }}
-                    </label>
-
-                    {{ field }}
-
-                    {% if field.help_text %}
-                        <div class="form-text">
-                            {{ field.help_text }}
-                        </div>
-                    {% endif %}
-
-                    {% if field.errors %}
-                        <div class="text-danger small mt-1">
-                            {{ field.errors }}
-                        </div>
-                    {% endif %}
-
-                </div>
-            {% endfor %}
-
+        <!-- 🔥 GLOBAL ERRORS -->
+        {% if form.errors %}
+        <div class="alert alert-danger">
+            <strong>Please fix the errors below:</strong>
+            <ul class="mb-0 mt-2">
+                {% for field in form %}
+                {% for error in field.errors %}
+                <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+                {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
         </div>
+        {% endif %}
 
-        <!-- ACTION BUTTONS -->
-        <div class="d-flex justify-content-between">
+        <!-- ================= VITALS ================= -->
+        <div class="card mb-3">
+            <div class="card-header bg-primary text-white" onclick="toggleSection(this)">Vitals</div>
+            <div class="card-body row g-3">
 
-            <!-- BACK -->
-            {% if step > 1 %}
-                <a href="?step={{ step|add:-1 }}" class="btn btn-outline-secondary">
-                    ← Back
-                </a>
-            {% else %}
-                <span></span>
-            {% endif %}
+                <div class="col-md-3">{{ form.test_date.label_tag }}{{ form.test_date }}<div class="field-error">{{
+                        form.test_date.errors }}</div>
+                </div>
+                <div class="col-md-3">{{ form.vital_time.label_tag }}{{ form.vital_time }}<div class="field-error">{{
+                        form.vital_time.errors }}</div>
+                </div>
 
-            <div class="d-flex gap-2">
+                <div class="col-md-3">{{ form.height.label_tag }}{{ form.height }}<div class="field-error">{{
+                        form.height.errors }}</div>
+                </div>
+                <div class="col-md-3">{{ form.weight.label_tag }}{{ form.weight }}<div class="field-error">{{
+                        form.weight.errors }}</div>
+                </div>
 
-                <!-- CANCEL -->
-                <a href="{% url 'herbal:subjects-detail' visit.subject.pk %}"
-                   class="btn btn-outline-danger">
-                    Cancel
-                </a>
+                <div class="col-md-3">{{ form.bmi.label_tag }}{{ form.bmi }}<div class="field-error">{{ form.bmi.errors
+                        }}</div>
+                </div>
+                <div class="col-md-3">{{ form.temperature.label_tag }}{{ form.temperature }}<div class="field-error">{{
+                        form.temperature.errors }}</div>
+                </div>
 
-                <!-- NEXT / SUBMIT -->
-                <button type="submit" class="btn btn-success">
-                    {% if step == total_steps %}
-                        ✅ Submit
-                    {% else %}
-                        Next →
-                    {% endif %}
-                </button>
+                <div class="col-md-3">{{ form.respiratory_rate.label_tag }}{{ form.respiratory_rate }}<div
+                        class="field-error">{{ form.respiratory_rate.errors }}</div>
+                </div>
+                <div class="col-md-3">{{ form.heart_rate.label_tag }}{{ form.heart_rate }}<div class="field-error">{{
+                        form.heart_rate.errors }}</div>
+                </div>
+
+                <div class="col-md-3">{{ form.systolic.label_tag }}{{ form.systolic }}<div class="field-error">{{
+                        form.systolic.errors }}</div>
+                </div>
+                <div class="col-md-3">{{ form.diastolic.label_tag }}{{ form.diastolic }}<div class="field-error">{{
+                        form.diastolic.errors }}</div>
+                </div>
+
+                <div class="col-md-3">{{ form.method.label_tag }}{{ form.method }}<div class="field-error">{{
+                        form.method.errors }}</div>
+                </div>
 
             </div>
+        </div>
 
+        <!-- ================= SYSTEM EXAM ================= -->
+        <div class="card mb-3">
+            <div class="card-header bg-success text-white" onclick="toggleSection(this)">System Examination</div>
+            <div class="card-body">
+
+                <table class="table table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <th>System</th>
+                            <th>Finding</th>
+                            <th>Comments</th>
+                            <th>Significant?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td><b>Appearance</b></td>
+                            <td>{{ form.appearance }}<div class="field-error">{{ form.appearance.errors }}</div>
+                            </td>
+                            <td>{{ form.appearance_comments }}<div class="field-error">{{
+                                    form.appearance_comments.errors }}</div>
+                            </td>
+                            <td>{{ form.appearance_signifcnt }}<div class="field-error">{{
+                                    form.appearance_signifcnt.errors }}</div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><b>HEENT</b></td>
+                            <td>{{ form.heent }}<div class="field-error">{{ form.heent.errors }}</div>
+                            </td>
+                            <td>{{ form.heent_comments }}<div class="field-error">{{ form.heent_comments.errors }}</div>
+                            </td>
+                            <td>{{ form.heent_signifcnt }}<div class="field-error">{{ form.heent_signifcnt.errors }}
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><b>Respiratory</b></td>
+                            <td>{{ form.respiratory }}<div class="field-error">{{ form.respiratory.errors }}</div>
+                            </td>
+                            <td>{{ form.respiratory_comments }}<div class="field-error">{{
+                                    form.respiratory_comments.errors }}</div>
+                            </td>
+                            <td>{{ form.respiratory_signifcnt }}<div class="field-error">{{
+                                    form.respiratory_signifcnt.errors }}</div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><b>Cardiovascular</b></td>
+                            <td>{{ form.cardiovascular }}<div class="field-error">{{ form.cardiovascular.errors }}</div>
+                            </td>
+                            <td>{{ form.cardiovascular_comments }}<div class="field-error">{{
+                                    form.cardiovascular_comments.errors }}</div>
+                            </td>
+                            <td>{{ form.cardiovascular_signifcnt }}<div class="field-error">{{
+                                    form.cardiovascular_signifcnt.errors }}</div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><b>Abdominal</b></td>
+                            <td>{{ form.abdominal }}<div class="field-error">{{ form.abdominal.errors }}</div>
+                            </td>
+                            <td>{{ form.abdominal_comments }}<div class="field-error">{{ form.abdominal_comments.errors
+                                    }}</div>
+                            </td>
+                            <td>{{ form.abdominal_signifcnt }}<div class="field-error">{{
+                                    form.abdominal_signifcnt.errors }}</div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><b>Urogenital</b></td>
+                            <td>{{ form.urogenital }}<div class="field-error">{{ form.urogenital.errors }}</div>
+                            </td>
+                            <td>{{ form.urogenital_comments }}<div class="field-error">{{
+                                    form.urogenital_comments.errors }}</div>
+                            </td>
+                            <td>{{ form.urogenital_signifcnt }}<div class="field-error">{{
+                                    form.urogenital_signifcnt.errors }}</div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><b>Musculoskeletal</b></td>
+                            <td>{{ form.musculoskeletal }}<div class="field-error">{{ form.musculoskeletal.errors }}
+                                </div>
+                            </td>
+                            <td>{{ form.musculoskeletal_comments }}<div class="field-error">{{
+                                    form.musculoskeletal_comments.errors }}</div>
+                            </td>
+                            <td>{{ form.musculoskeletal_signifcnt }}<div class="field-error">{{
+                                    form.musculoskeletal_signifcnt.errors }}</div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><b>Neurological</b></td>
+                            <td>{{ form.neurological }}<div class="field-error">{{ form.neurological.errors }}</div>
+                            </td>
+                            <td>{{ form.neurological_comments }}<div class="field-error">{{
+                                    form.neurological_comments.errors }}</div>
+                            </td>
+                            <td>{{ form.neurological_signifcnt }}<div class="field-error">{{
+                                    form.neurological_signifcnt.errors }}</div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><b>Psychological</b></td>
+                            <td>{{ form.psychological }}<div class="field-error">{{ form.psychological.errors }}</div>
+                            </td>
+                            <td>{{ form.psychological_comments }}<div class="field-error">{{
+                                    form.psychological_comments.errors }}</div>
+                            </td>
+                            <td>{{ form.psychological_signifcnt }}<div class="field-error">{{
+                                    form.psychological_signifcnt.errors }}</div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><b>Endocrine</b></td>
+                            <td>{{ form.endocrine }}<div class="field-error">{{ form.endocrine.errors }}</div>
+                            </td>
+                            <td>{{ form.endocrine_comments }}<div class="field-error">{{ form.endocrine_comments.errors
+                                    }}</div>
+                            </td>
+                            <td>{{ form.endocrine_signifcnt }}<div class="field-error">{{
+                                    form.endocrine_signifcnt.errors }}</div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><b>Lymphatic</b></td>
+                            <td>{{ form.lymphatic }}<div class="field-error">{{ form.lymphatic.errors }}</div>
+                            </td>
+                            <td>{{ form.lymphatic_comments }}<div class="field-error">{{ form.lymphatic_comments.errors
+                                    }}</div>
+                            </td>
+                            <td>{{ form.lymphatic_signifcnt }}<div class="field-error">{{
+                                    form.lymphatic_signifcnt.errors }}</div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><b>Skin</b></td>
+                            <td>{{ form.skin }}<div class="field-error">{{ form.skin.errors }}</div>
+                            </td>
+                            <td>{{ form.skin_comments }}<div class="field-error">{{ form.skin_comments.errors }}</div>
+                            </td>
+                            <td>{{ form.skin_signifcnt }}<div class="field-error">{{ form.skin_signifcnt.errors }}</div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><b>Local Examination</b></td>
+                            <td>{{ form.local_examination }}<div class="field-error">{{ form.local_examination.errors }}
+                                </div>
+                            </td>
+                            <td>{{ form.local_examination_comments }}<div class="field-error">{{
+                                    form.local_examination_comments.errors }}</div>
+                            </td>
+                            <td>{{ form.local_examination_signifcnt }}<div class="field-error">{{
+                                    form.local_examination_signifcnt.errors }}</div>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+        <!-- ================= OTHER ================= -->
+        <div class="card mb-3">
+            <div class="card-header bg-warning" onclick="toggleSection(this)">Other Examination</div>
+            <div class="card-body row g-3">
+
+                <div class="col-md-3">{{ form.physical_exams_other.label_tag }}{{ form.physical_exams_other }}<div
+                        class="field-error">{{ form.physical_exams_other.errors }}</div>
+                </div>
+                <div class="col-md-3 conditional-other">{{ form.physical_other_specify.label_tag }}{{
+                    form.physical_other_specify }}<div class="field-error">{{ form.physical_other_specify.errors }}
+                    </div>
+                </div>
+                <div class="col-md-3 conditional-other">{{ form.physical_other_system.label_tag }}{{
+                    form.physical_other_system }}<div class="field-error">{{ form.physical_other_system.errors }}</div>
+                </div>
+                <div class="col-md-6 conditional-other">{{ form.physical_other_comments.label_tag }}{{
+                    form.physical_other_comments }}<div class="field-error">{{ form.physical_other_comments.errors }}
+                    </div>
+                </div>
+                <div class="col-md-3 conditional-other">{{ form.physical_other_signifcnt.label_tag }}{{
+                    form.physical_other_signifcnt }}<div class="field-error">{{ form.physical_other_signifcnt.errors }}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ================= FINAL ================= -->
+        <div class="card mb-3">
+            <div class="card-header bg-dark text-white" onclick="toggleSection(this)">Final Section</div>
+            <div class="card-body row g-3">
+
+                <div class="col-md-4">{{ form.physcl_pfmd_by.label_tag }}{{ form.physcl_pfmd_by }}<div
+                        class="field-error">{{ form.physcl_pfmd_by.errors }}</div>
+                </div>
+                <div class="col-md-4">{{ form.date_completed.label_tag }}{{ form.date_completed }}<div
+                        class="field-error">{{ form.date_completed.errors }}</div>
+                </div>
+                <div class="col-md-4">{{ form.phys_exm_time.label_tag }}{{ form.phys_exm_time }}<div
+                        class="field-error">{{ form.phys_exm_time.errors }}</div>
+                </div>
+
+                <div class="col-md-12">{{ form.additional_notes.label_tag }}{{ form.additional_notes }}<div
+                        class="field-error">{{ form.additional_notes.errors }}</div>
+                </div>
+                <div class="col-md-12">{{ form.remarks.label_tag }}{{ form.remarks }}<div class="field-error">{{
+                        form.remarks.errors }}</div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- SAVE -->
+        <div class="sticky-save bg-white p-3 border-top text-end">
+            <button class="btn btn-success px-4">💾 Save CRF2</button>
         </div>
 
     </form>
-
 </div>
+
+<script>
+    function toggleSection(header) {
+        header.parentElement.classList.toggle("section-collapsed");
+    }
+
+    function calculateBMI() {
+        let h = parseFloat(id_height.value);
+        let w = parseFloat(id_weight.value);
+        if (h && w) id_bmi.value = (w / ((h / 100) ** 2)).toFixed(2);
+    }
+
+    id_height?.addEventListener("input", calculateBMI);
+    id_weight?.addEventListener("input", calculateBMI);
+
+    function toggleOther() {
+        let v = id_physical_exams_other?.value || "";
+        let show = v.toLowerCase().includes("yes");
+        document.querySelectorAll(".conditional-other")
+            .forEach(e => e.style.display = show ? "block" : "none");
+    }
+
+    id_physical_exams_other?.addEventListener("change", toggleOther);
+    window.onload = toggleOther;
+
+    /* highlight invalid */
+    document.querySelectorAll(".field-error").forEach(e => {
+        if (e.innerText.trim() !== "") {
+            e.previousElementSibling?.classList.add("is-invalid");
+        }
+    });
+</script>
 
 {% endblock %}
