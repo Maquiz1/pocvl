@@ -4,6 +4,7 @@ from core.models import BaseModel
 from choices.models import YesNo, YesNoNa, YesNoUnk, Method,Appearance
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.core.exceptions import ValidationError
+# from accounts.models import StaffProfile  # adjust path if needed
 
 
 class CRF2(BaseModel):
@@ -193,9 +194,18 @@ class CRF2(BaseModel):
     # FINAL
     # =========================
     additional_notes = models.TextField(blank=True)
-    physical_performed = yn_field()
+
+
+    physcl_pfmd_by = models.ForeignKey(
+        "accounts.StaffProfile",   # 🔥 string reference (NO import)
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        limit_choices_to={'site__isnull': False}  # basic safety
+    )
     
-    
+    date_completed = models.DateField(null=True,blank=True)
+
     remarks = models.TextField(blank=True)
 
     # =========================

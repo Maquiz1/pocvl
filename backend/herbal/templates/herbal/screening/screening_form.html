@@ -129,7 +129,7 @@
 
                         {% for checkbox in form.cancer_types %}
                             <div class="form-check">
-                                {{ checkbox.tag|add_class:"form-check-input" }}
+                                {{ checkbox.tag }}
                                 <label class="form-check-label">
                                     {{ checkbox.choice_label }}
                                 </label>
