@@ -61,43 +61,87 @@
             <div class="card-header bg-primary text-white" onclick="toggleSection(this)">Vitals</div>
             <div class="card-body row g-3">
 
-                <div class="col-md-3">{{ form.test_date.label_tag }}{{ form.test_date }}<div class="field-error">{{
-                        form.test_date.errors }}</div>
+                <div class="col-md-3">
+                    {{ form.test_date.label_tag }}
+                    {{ form.test_date }}
+                    <div class="field-error">
+                        {{ form.test_date.errors }}
+                    </div>
                 </div>
-                <div class="col-md-3">{{ form.vital_time.label_tag }}{{ form.vital_time }}<div class="field-error">{{
-                        form.vital_time.errors }}</div>
-                </div>
-
-                <div class="col-md-3">{{ form.height.label_tag }}{{ form.height }}<div class="field-error">{{
-                        form.height.errors }}</div>
-                </div>
-                <div class="col-md-3">{{ form.weight.label_tag }}{{ form.weight }}<div class="field-error">{{
-                        form.weight.errors }}</div>
-                </div>
-
-                <div class="col-md-3">{{ form.bmi.label_tag }}{{ form.bmi }}<div class="field-error">{{ form.bmi.errors
-                        }}</div>
-                </div>
-                <div class="col-md-3">{{ form.temperature.label_tag }}{{ form.temperature }}<div class="field-error">{{
-                        form.temperature.errors }}</div>
+                <div class="col-md-3">
+                    {{ form.vital_time.label_tag }}
+                    {{ form.vital_time }}
+                    <div class="field-error">
+                        {{ form.vital_time.errors }}
+                    </div>
                 </div>
 
-                <div class="col-md-3">{{ form.respiratory_rate.label_tag }}{{ form.respiratory_rate }}<div
-                        class="field-error">{{ form.respiratory_rate.errors }}</div>
+                <div class="col-md-3">
+                    {{ form.height.label_tag }}
+                    {{ form.height }}
+                    <div class="field-error">
+                        {{ form.height.errors }}
+                    </div>
                 </div>
-                <div class="col-md-3">{{ form.heart_rate.label_tag }}{{ form.heart_rate }}<div class="field-error">{{
-                        form.heart_rate.errors }}</div>
+                <div class="col-md-3">
+                    {{ form.weight.label_tag }}
+                    {{ form.weight }}
+                    <div class="field-error">
+                        {{ form.weight.errors }}
+                    </div>
                 </div>
 
-                <div class="col-md-3">{{ form.systolic.label_tag }}{{ form.systolic }}<div class="field-error">{{
-                        form.systolic.errors }}</div>
+                <div class="col-md-3">
+                    {{ form.bmi.label_tag }}
+                    {{ form.bmi }}
+                    <div class="field-error">
+                        {{ form.bmi.errors }}
+                    </div>
                 </div>
-                <div class="col-md-3">{{ form.diastolic.label_tag }}{{ form.diastolic }}<div class="field-error">{{
-                        form.diastolic.errors }}</div>
+                <div class="col-md-3">
+                    {{ form.temperature.label_tag }}
+                    {{ form.temperature }}
+                    <div class="field-error">
+                        {{ form.temperature.errors }}
+                    </div>
                 </div>
 
-                <div class="col-md-3">{{ form.method.label_tag }}{{ form.method }}<div class="field-error">{{
-                        form.method.errors }}</div>
+                <div class="col-md-3">
+                    {{ form.respiratory_rate.label_tag }}
+                    {{ form.respiratory_rate }}
+                    <div
+                        class="field-error">
+                        {{ form.respiratory_rate.errors }}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    {{ form.heart_rate.label_tag }}
+                    {{ form.heart_rate }}
+                    <div class="field-error">
+                        {{ form.heart_rate.errors }}
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    {{ form.systolic.label_tag }}
+                    {{ form.systolic }}
+                    <div class="field-error">
+                        {{ form.systolic.errors }}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    {{ form.diastolic.label_tag }}
+                    {{ form.diastolic }}
+                    <div class="field-error">
+                        {{ form.diastolic.errors }}
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    {{ form.method.label_tag }}
+                    {{ form.method }}
+                    <div class="field-error">
+                        {{ form.method.errors }}</div>
                 </div>
 
             </div>
@@ -121,42 +165,73 @@
 
                         <tr>
                             <td><b>Appearance</b></td>
-                            <td>{{ form.appearance }}<div class="field-error">{{ form.appearance.errors }}</div>
+                            <td>{{ form.appearance }}
+                                <div class="field-error">
+                                    {{ form.appearance.errors }}
+                                </div>
                             </td>
-                            <td>{{ form.appearance_comments }}<div class="field-error">{{
-                                    form.appearance_comments.errors }}</div>
+                            <td>
+                                {{ form.appearance_comments }}
+                                <div class="field-error">
+                                    {{ form.appearance_comments.errors }}
+                                </div>
                             </td>
-                            <td>{{ form.appearance_signifcnt }}<div class="field-error">{{
-                                    form.appearance_signifcnt.errors }}</div>
+                            <td>
+                                {{ form.appearance_signifcnt }}
+                                <div class="field-error">
+                                    {{ form.appearance_signifcnt.errors }}
+                                </div>
                             </td>
                         </tr>
 
                         <tr>
                             <td><b>HEENT</b></td>
-                            <td>{{ form.heent }}<div class="field-error">{{ form.heent.errors }}</div>
+                            <td>{{ form.heent }}
+                                <div class="field-error">
+                                    {{ form.heent.errors }}
+                                </div>
                             </td>
-                            <td>{{ form.heent_comments }}<div class="field-error">{{ form.heent_comments.errors }}</div>
+                            <td>
+                                {{ form.heent_comments }}
+                                <div class="field-error">
+                                    {{ form.heent_comments.errors }}
+                                </div>
                             </td>
-                            <td>{{ form.heent_signifcnt }}<div class="field-error">{{ form.heent_signifcnt.errors }}
+                            <td>
+                                {{ form.heent_signifcnt }}
+                                <div class="field-error">
+                                    {{ form.heent_signifcnt.errors }}
                                 </div>
                             </td>
                         </tr>
 
                         <tr>
                             <td><b>Respiratory</b></td>
-                            <td>{{ form.respiratory }}<div class="field-error">{{ form.respiratory.errors }}</div>
+                            <td>{{ form.respiratory }}
+                                <div class="field-error">
+                                    {{ form.respiratory.errors }}
+                                </div>
                             </td>
-                            <td>{{ form.respiratory_comments }}<div class="field-error">{{
-                                    form.respiratory_comments.errors }}</div>
+                            <td>
+                                {{ form.respiratory_comments }}
+                                <div class="field-error">
+                                    {{ form.respiratory_comments.errors }}
+                                </div>
                             </td>
-                            <td>{{ form.respiratory_signifcnt }}<div class="field-error">{{
-                                    form.respiratory_signifcnt.errors }}</div>
+                            <td>
+                                {{ form.respiratory_signifcnt }}
+                                <div class="field-error">
+                                    {{ form.respiratory_signifcnt.errors }}
+                                </div>
                             </td>
                         </tr>
 
                         <tr>
                             <td><b>Cardiovascular</b></td>
-                            <td>{{ form.cardiovascular }}<div class="field-error">{{ form.cardiovascular.errors }}</div>
+                            <td>{{ form.cardiovascular }}
+                                <div class="field-error">
+                                    {{ form.cardiovascular.errors }}
+                                </div>
                             </td>
                             <td>{{ form.cardiovascular_comments }}<div class="field-error">{{
                                     form.cardiovascular_comments.errors }}</div>
