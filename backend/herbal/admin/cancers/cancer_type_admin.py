@@ -2,10 +2,8 @@
 
 from django.contrib import admin
 from herbal.models import CancerType
-
+from choices.admin import BaseChoiceAdmin
 
 @admin.register(CancerType)
-class CancerTypeAdmin(admin.ModelAdmin):
-    list_display = ("name", "code")
-    search_fields = ("name", "code")
-    # list_filter = ("is_active",)
+class CancerTypeAdmin(BaseChoiceAdmin):
+    pass
