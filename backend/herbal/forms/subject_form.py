@@ -81,7 +81,7 @@ class SubjectForm(forms.ModelForm):
 
         # ✅ Define required fields
         required_fields = [
-            "reg_date", "sex", "first_name",  "last_name","marital_status",
+            "reg_date", "sex", "identification_type","first_name",  "last_name","marital_status",
             "phone_number", "region", "district","ward","occupation","education_level"
         ]
         
