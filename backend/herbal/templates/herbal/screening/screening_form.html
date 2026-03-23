@@ -29,11 +29,11 @@
 
                 <!-- GLOBAL ERRORS -->
                 {% for field in form %}
-                    {% if field.errors %}
-                        <div class="alert alert-danger">
-                            <strong>{{ field.label }}:</strong> {{ field.errors|striptags }}
-                        </div>
-                    {% endif %}
+                {% if field.errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ field.label }}:</strong> {{ field.errors|striptags }}
+                </div>
+                {% endif %}
                 {% endfor %}
 
                 <!-- ===================== -->
@@ -93,55 +93,56 @@
                 <h5>Inclusion Criteria</h5>
 
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         {{ form.age_18.label_tag }}
                         {{ form.age_18|add_class:"form-select" }}
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         {{ form.biopsy.label_tag }}
                         {{ form.biopsy|add_class:"form-select" }}
                     </div>
+                    <div class="col-md-4 mt-3">
+                        <label class="form-label">{{ form.cancer_types.label }}</label>
+
+                        {% for checkbox in form.cancer_types %}
+                        <div class="form-check">
+                            {{ checkbox.tag }}
+                            <label class="form-check-label">
+                                {{ checkbox.choice_label }}
+                            </label>
+                        </div>
+                        {% endfor %}
+
+                        {% if form.cancer_types.errors %}
+                        <div class="text-danger">
+                            {{ form.cancer_types.errors }}
+                        </div>
+                        {% endif %}
+                    </div>
                 </div>
+                <hr>
 
                 <div class="row mt-2">
-                    <div class="col-md-3" id="breast-wrapper">
+                    <div class="col-md-4" id="breast-wrapper">
                         {{ form.breast_cancer.label_tag }}
                         {{ form.breast_cancer|add_class:"form-select" }}
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         {{ form.brain_cancer.label_tag }}
                         {{ form.brain_cancer|add_class:"form-select" }}
                     </div>
 
-                    <div class="col-md-3" id="cervical-wrapper">
+                    <div class="col-md-4" id="cervical-wrapper">
                         {{ form.cervical_cancer.label_tag }}
                         {{ form.cervical_cancer|add_class:"form-select" }}
                     </div>
 
-                    <div class="col-md-3" id="prostate-wrapper">
+                    <div class="col-md-4" id="prostate-wrapper">
                         {{ form.prostate_cancer.label_tag }}
                         {{ form.prostate_cancer|add_class:"form-select" }}
                     </div>
 
-                    <div class="col-md-3 mt-3">
-                        <label class="form-label">{{ form.cancer_types.label }}</label>
-
-                        {% for checkbox in form.cancer_types %}
-                            <div class="form-check">
-                                {{ checkbox.tag }}
-                                <label class="form-check-label">
-                                    {{ checkbox.choice_label }}
-                                </label>
-                            </div>
-                        {% endfor %}
-
-                        {% if form.cancer_types.errors %}
-                            <div class="text-danger">
-                                {{ form.cancer_types.errors }}
-                            </div>
-                        {% endif %}
-                    </div>
                 </div>
 
                 <hr>
@@ -152,25 +153,26 @@
                 <h5>Exclusion Criteria</h5>
 
                 <div class="row">
-                    <div class="col-md-3" id="pregnant-wrapper">
+
+                    <div class="col-md-6" id="pregnant-wrapper">
                         {{ form.pregnant.label_tag }}
                         {{ form.pregnant|add_class:"form-select" }}
                     </div>
 
-                    <div class="col-md-3" id="breastfeeding-wrapper">
+                    <div class="col-md-6" id="breastfeeding-wrapper">
                         {{ form.breast_feeding.label_tag }}
                         {{ form.breast_feeding|add_class:"form-select" }}
                     </div>
-
-                    <div class="col-md-3">
+                    <div class="col-md-6">
                         {{ form.ckd.label_tag }}
                         {{ form.ckd|add_class:"form-select" }}
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-6">
                         {{ form.liver_disease.label_tag }}
                         {{ form.liver_disease|add_class:"form-select" }}
                     </div>
+
                 </div>
 
                 <hr>
