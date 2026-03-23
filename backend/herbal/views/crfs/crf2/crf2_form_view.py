@@ -5,7 +5,7 @@ from herbal.models import VisitSchedule
 from herbal.models.crfs import CRF2
 from herbal.services.visit_completion import update_visit_status
 
-from backend.herbal.forms import (
+from herbal.forms import (
     CRF2VitalsForm,
     CRF2SystemExamForm,
     CRF2OtherExamForm,
@@ -23,16 +23,21 @@ FORMS = [
 
 @login_required
 def crf2_form_view(request, pk):
-
     visit = get_object_or_404(VisitSchedule, pk=pk)
-    site = visit.site   # ✅ IMPORTANT
+    site = visit.site
 
-    # existing instance
     crf_instance = getattr(visit, "crf2", None)
 
+    # step index (0-based)
     step = int(request.GET.get("step", 1)) - 1
 
-    # 🔥 Init session storage
+    # safety clamp
+    if step < 0:
+        step = 0
+    if step >= len(FORMS):
+        step = len(FORMS) - 1
+
+    # init session
     if "crf2_data" not in request.session:
         request.session["crf2_data"] = {}
 
@@ -42,7 +47,6 @@ def crf2_form_view(request, pk):
                 if name not in ["id", "visit"]:
                     value = getattr(crf_instance, name)
 
-                    # ✅ handle FK safely (store ID)
                     if hasattr(value, "pk"):
                         value = value.pk
 
@@ -52,16 +56,12 @@ def crf2_form_view(request, pk):
 
     FormClass = FORMS[step]
 
-    # ✅ pass site into form
     def get_form(post_data=None):
-        kwargs = {
-            "initial": data,
-        }
+        kwargs = {"initial": data}
 
         if post_data:
             kwargs["data"] = post_data
 
-        # inject site only if form supports it
         try:
             return FormClass(**kwargs, site=site)
         except TypeError:
@@ -71,10 +71,8 @@ def crf2_form_view(request, pk):
         form = get_form(request.POST)
 
         if form.is_valid():
-
             cleaned = form.cleaned_data.copy()
 
-            # ✅ ensure FK stored as ID
             for key, value in cleaned.items():
                 if hasattr(value, "pk"):
                     cleaned[key] = value.pk
@@ -82,7 +80,7 @@ def crf2_form_view(request, pk):
             data.update(cleaned)
             request.session["crf2_data"] = data
 
-            # 🔥 LAST STEP
+            # LAST STEP
             if step + 1 == len(FORMS):
 
                 if crf_instance:
@@ -107,14 +105,20 @@ def crf2_form_view(request, pk):
     else:
         form = get_form()
 
+    # ✅ display values
+    step_display = step + 1
+    total_steps = len(FORMS)
+    progress = int((step_display / total_steps) * 100)
+
     return render(
         request,
         "herbal/crfs/crf2/crf2_form.html",
         {
             "form": form,
             "visit": visit,
-            "step": step + 1,
-            "total_steps": len(FORMS),
-            "is_update": crf_instance is not None
+            "step": step_display,
+            "total_steps": total_steps,
+            "progress": progress,
+            "is_update": crf_instance is not None,
         }
     )

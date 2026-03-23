@@ -2,53 +2,63 @@
 
 {% block content %}
 
-<div class="container">
+<div class="container mt-4">
 
-    <h3>
+    <!-- TITLE -->
+    <h3 class="mb-2">
         {% if is_update %}
-            Edit CRF2
+            ✏️ Edit CRF2
         {% else %}
-            Create CRF2
+            ➕ Create CRF2
         {% endif %}
         — {{ visit.get_visit_day_display }}
     </h3>
 
-    <!-- ✅ Step Indicator -->
+    <!-- STEP -->
     <p class="text-muted">
         Step {{ step }} of {{ total_steps }}
     </p>
 
-    <!-- ✅ Progress Bar (FIXED) -->
-    <div class="progress mb-3" style="height: 18px;">
-        <div class="progress-bar bg-success"
+    <!-- PROGRESS BAR -->
+    <div class="progress mb-4" style="height: 20px;">
+        <div class="progress-bar bg-success progress-bar-striped progress-bar-animated"
              role="progressbar"
-             style="width: {{ step|floatformat:0|divisibleby:total_steps }}%;">
+             style="width: {{ progress }}%;">
+            {{ progress }}%
         </div>
     </div>
+
+    <!-- SECTION TITLE -->
+    <h5 class="text-primary mb-3">
+        {% if step == 1 %}Vitals
+        {% elif step == 2 %}System Examination
+        {% elif step == 3 %}Other Examination
+        {% else %}Final Review
+        {% endif %}
+    </h5>
 
     <form method="post">
         {% csrf_token %}
 
-        <div class="card shadow-sm p-3 mb-3">
+        <div class="card shadow-sm p-4 mb-4">
 
-            <!-- 🔥 REDCap Style Fields -->
             {% for field in form %}
                 <div class="mb-3">
 
-                    <label class="form-label fw-bold">
+                    <label class="form-label fw-semibold">
                         {{ field.label }}
                     </label>
 
                     {{ field }}
 
-                    <!-- help text -->
                     {% if field.help_text %}
-                        <small class="text-muted">{{ field.help_text }}</small>
+                        <div class="form-text">
+                            {{ field.help_text }}
+                        </div>
                     {% endif %}
 
-                    <!-- errors -->
                     {% if field.errors %}
-                        <div class="text-danger small">
+                        <div class="text-danger small mt-1">
                             {{ field.errors }}
                         </div>
                     {% endif %}
@@ -58,32 +68,35 @@
 
         </div>
 
+        <!-- ACTION BUTTONS -->
         <div class="d-flex justify-content-between">
 
-            <!-- 🔙 BACK -->
+            <!-- BACK -->
             {% if step > 1 %}
-                <a href="?step={{ step|add:-1 }}" class="btn btn-secondary">
+                <a href="?step={{ step|add:-1 }}" class="btn btn-outline-secondary">
                     ← Back
                 </a>
             {% else %}
                 <span></span>
             {% endif %}
 
-            <div>
-                <!-- ❌ Cancel -->
-                <a href="{% url 'herbal:subjects-detail' visit.subject.pk %}" 
-                   class="btn btn-outline-secondary">
+            <div class="d-flex gap-2">
+
+                <!-- CANCEL -->
+                <a href="{% url 'herbal:subjects-detail' visit.subject.pk %}"
+                   class="btn btn-outline-danger">
                     Cancel
                 </a>
 
-                <!-- 🔥 NEXT / SUBMIT -->
-                <button class="btn btn-success">
+                <!-- NEXT / SUBMIT -->
+                <button type="submit" class="btn btn-success">
                     {% if step == total_steps %}
-                        Submit
+                        ✅ Submit
                     {% else %}
                         Next →
                     {% endif %}
                 </button>
+
             </div>
 
         </div>
