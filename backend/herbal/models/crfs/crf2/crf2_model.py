@@ -123,7 +123,7 @@ class CRF2(BaseModel):
     def appearance_field():
         return models.ForeignKey(
             Appearance,
-            on_delete=models.SET_NULL,
+            # on_delete=models.SET_NULL,
             null=True,
             blank=True,
             related_name="+"
