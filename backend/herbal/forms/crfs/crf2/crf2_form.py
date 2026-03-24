@@ -33,11 +33,7 @@ class CRF2Form(forms.ModelForm):
             "heart_rate": forms.NumberInput(attrs={"class": "form-control"}),
             "systolic": forms.NumberInput(attrs={"class": "form-control"}),
             "diastolic": forms.NumberInput(attrs={"class": "form-control"}),
-            # Textareas
-            "remarks": forms.Textarea(attrs={"class": "form-control", "rows": 3}),
-            "additional_notes": forms.Textarea(
-                attrs={"class": "form-control", "rows": 3}
-            ),
+
             "appearance_comments": forms.Textarea(
                 attrs={"class": "form-control", "rows": 2}
             ),
@@ -78,6 +74,12 @@ class CRF2Form(forms.ModelForm):
             "physical_other_comments": forms.Textarea(
                 attrs={"class": "form-control", "rows": 2}
             ),
+            
+            # Textareas
+            "remarks": forms.Textarea(attrs={"class": "form-control", "rows": 3}),
+            "additional_notes": forms.Textarea(
+                attrs={"class": "form-control", "rows": 3}
+            ),
         }
 
     def __init__(self, *args, site=None, **kwargs):
@@ -93,7 +95,8 @@ class CRF2Form(forms.ModelForm):
             "heart_rate",
             "systolic",
             "diastolic",
-            
+            "method",
+                        
             # SYSTEMS
             "appearance",
             "heent",
@@ -107,6 +110,8 @@ class CRF2Form(forms.ModelForm):
             "endocrine",
             "lymphatic",
             "skin",
+            "local_examination",
+            "physical_exams_other",
             
             # FINAL
             "date_completed",
@@ -267,5 +272,29 @@ class CRF2Form(forms.ModelForm):
                 self.add_error("skin_signifcnt", "This field is required")
         else:
             cleaned_data["skin_signifcnt"] = None
+            
+            
+        # --------------------
+        # local_examination
+        # --------------------
+        local_examination = cleaned_data.get("local_examination")
+
+        if local_examination and local_examination.id == 2:
+            if not cleaned_data.get("local_examination_signifcnt"):
+                self.add_error("local_examination_signifcnt", "This field is required")
+        else:
+            cleaned_data["local_examination_signifcnt"] = None
+            
+            
+        # --------------------
+        # physical_exams_other
+        # --------------------
+        physical_exams_other = cleaned_data.get("physical_exams_other")
+
+        if physical_exams_other and physical_exams_other.id == 2:
+            if not cleaned_data.get("physical_exams_other_signifcnt"):
+                self.add_error("physical_exams_other_signifcnt", "This field is required")
+        else:
+            cleaned_data["physical_exams_other_signifcnt"] = None
 
         return cleaned_data
