@@ -58,3 +58,14 @@ class CRF2Form(forms.ModelForm):
         if site and "physcl_pfmd_by" in self.fields:
             self.fields["physcl_pfmd_by"].queryset = \
                 self.fields["physcl_pfmd_by"].queryset.filter(site=site)
+                
+                
+    def clean(self):
+        cleaned_data = super().clean()
+        appearance = cleaned_data.get("appearance")
+
+        if appearance == 2:
+            # if not cleaned_data.get("appearance_comments"):
+            #     self.add_error("appearance_comments", "This field is required")
+            if not cleaned_data.get("appearance_signifcnt"):
+                self.add_error("appearance_signifcnt", "This field is required")
