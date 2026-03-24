@@ -1,4 +1,7 @@
 {% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
 {% block content %}
 
 <style>
@@ -109,8 +112,7 @@
                 <div class="col-md-3">
                     {{ form.respiratory_rate.label_tag }}
                     {{ form.respiratory_rate }}
-                    <div
-                        class="field-error">
+                    <div class="field-error">
                         {{ form.respiratory_rate.errors }}
                     </div>
                 </div>
@@ -137,7 +139,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-6">
                     {{ form.method.label_tag }}
                     {{ form.method }}
                     <div class="field-error">
@@ -170,13 +172,13 @@
                                     {{ form.appearance.errors }}
                                 </div>
                             </td>
-                            <td>
+                            <td id="appearance-comments" style="display: none;">
                                 {{ form.appearance_comments }}
                                 <div class="field-error">
                                     {{ form.appearance_comments.errors }}
                                 </div>
                             </td>
-                            <td>
+                            <td id="appearance-signifcnt" style="display: none;">
                                 {{ form.appearance_signifcnt }}
                                 <div class="field-error">
                                     {{ form.appearance_signifcnt.errors }}
@@ -309,8 +311,8 @@
                             <td><b>Neurological</b></td>
                             <td>{{ form.neurological }}
                                 <div class="field-error">
-                                {{ form.neurological.errors }}
-                            </div>
+                                    {{ form.neurological.errors }}
+                                </div>
                             </td>
                             <td>
                                 {{ form.neurological_comments }}
@@ -348,8 +350,8 @@
                             <td><b>Endocrine</b></td>
                             <td>{{ form.endocrine }}
                                 <div class="field-error">
-                                {{ form.endocrine.errors }}
-                            </div>
+                                    {{ form.endocrine.errors }}
+                                </div>
                             </td>
                             <td>{{ form.endocrine_comments }}
                                 <div class="field-error">
@@ -437,8 +439,7 @@
 
                 <div class="col-md-4">
                     {{ form.physical_exams_other.label_tag }}{{ form.physical_exams_other }}
-                    <div
-                        class="field-error">
+                    <div class="field-error">
                         {{ form.physical_exams_other.errors }}
                     </div>
                 </div>
@@ -483,24 +484,21 @@
                 <div class="col-md-4">
                     {{ form.physcl_pfmd_by.label_tag }}
                     {{ form.physcl_pfmd_by }}
-                    <div
-                        class="field-error">
+                    <div class="field-error">
                         {{ form.physcl_pfmd_by.errors }}
                     </div>
                 </div>
                 <div class="col-md-4">
                     {{ form.date_completed.label_tag }}
                     {{ form.date_completed }}
-                    <div
-                        class="field-error">
+                    <div class="field-error">
                         {{ form.date_completed.errors }}
                     </div>
                 </div>
                 <div class="col-md-4">
                     {{ form.phys_exm_time.label_tag }}
                     {{ form.phys_exm_time }}
-                    <div
-                        class="field-error">
+                    <div class="field-error">
                         {{ form.phys_exm_time.errors }}
                     </div>
                 </div>
@@ -508,8 +506,7 @@
                 <div class="col-md-12">
                     {{ form.additional_notes.label_tag }}
                     {{ form.additional_notes }}
-                    <div
-                        class="field-error">
+                    <div class="field-error">
                         {{ form.additional_notes.errors }}
                     </div>
                 </div>
@@ -532,23 +529,15 @@
     </form>
 </div>
 
-<script>
+{% endblock %}
 
-    function calculateBMI() {
-        let h = parseFloat(id_height.value);
-        let w = parseFloat(id_weight.value);
-        if (h && w) id_bmi.value = (w / ((h / 100) ** 2)).toFixed(2);
-    }
-
-    id_height?.addEventListener("input", calculateBMI);
-    id_weight?.addEventListener("input", calculateBMI);
-
-    /* highlight invalid */
-    document.querySelectorAll(".field-error").forEach(e => {
-        if (e.innerText.trim() !== "") {
-            e.previousElementSibling?.classList.add("is-invalid");
-        }
-    });
-</script>
-
+{% block scripts %}
+<script src="{% static 'js/crfs/crf2/bmi.js' %}"></script>
+<script src="{% static 'js/crfs/crf2/appearance.js' %}"></script>
+<!-- <script src="{% static 'js/crf/crf1_nimregenin.js' %}"></script>
+<script src="{% static 'js/crf/crf1_other_herbal.js' %}"></script>
+<script src="{% static 'js/crf/crf1_radiotherapy.js' %}"></script>
+<script src="{% static 'js/crf/crf1_chemotherapy.js' %}"></script>
+<script src="{% static 'js/crf/crf1_surgery.js' %}"></script> -->
+<!-- <script src="{% static 'js/utils/formset_helpers.js' %}"></script> -->
 {% endblock %}
