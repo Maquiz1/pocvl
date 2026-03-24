@@ -122,7 +122,9 @@ class CRF2Form(forms.ModelForm):
         for field in required_fields:
             if field in self.fields:
                 self.fields[field].required = True
-
+                # self.fields[field].widget.attrs["required"] = True
+                self.fields[field].widget.attrs["required"] = "required"
+                
         # 🔥 Apply Bootstrap to ALL fields automatically
         for field_name, field in self.fields.items():
             if not isinstance(field.widget, (forms.CheckboxInput, forms.RadioSelect)):
