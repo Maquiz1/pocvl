@@ -292,9 +292,9 @@ class CRF2Form(forms.ModelForm):
         physical_exams_other = cleaned_data.get("physical_exams_other")
 
         if physical_exams_other and physical_exams_other.id == 2:
-            if not cleaned_data.get("physical_exams_other_signifcnt"):
-                self.add_error("physical_exams_other_signifcnt", "This field is required")
+            if not cleaned_data.get("physical_other_signifcnt"):
+                self.add_error("physical_other_signifcnt", "This field is required")
         else:
-            cleaned_data["physical_exams_other_signifcnt"] = None
+            cleaned_data["physical_other_signifcnt"] = None
 
         return cleaned_data
