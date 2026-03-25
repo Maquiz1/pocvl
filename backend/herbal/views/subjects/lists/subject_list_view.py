@@ -22,7 +22,7 @@ def subject_list_view(request):
     subjects = apply_search(
         subjects,
         search,
-        ["subject_id", "first_name", "last_name", "phone"]
+        ["subject_id", "first_name", "last_name", "phone_number","other_phone","hid","idn","other_id"]
     )
 
     # ---------------- FILTERS ----------------
