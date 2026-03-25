@@ -49,11 +49,11 @@ class Screening(BaseModel):
     # =========================
     # EXCLUSION
     # =========================
-    pregnant = models.ForeignKey(YesNo, on_delete=models.SET_NULL, null=True, blank=True,related_name="+")
-    breast_feeding = models.ForeignKey(YesNo, on_delete=models.SET_NULL, null=True, blank=True,related_name="+")
+    pregnant = models.ForeignKey(YesNoUnk, on_delete=models.SET_NULL, null=True, blank=True,related_name="+")
+    breast_feeding = models.ForeignKey(YesNoUnk, on_delete=models.SET_NULL, null=True, blank=True,related_name="+")
 
-    ckd = models.ForeignKey(YesNo, on_delete=models.SET_NULL, null=True, blank=True,related_name="+")
-    liver_disease = models.ForeignKey(YesNo, on_delete=models.SET_NULL, null=True, blank=True,related_name="+")
+    ckd = models.ForeignKey(YesNoUnk, on_delete=models.SET_NULL, null=True, blank=True,related_name="+")
+    liver_disease = models.ForeignKey(YesNoUnk, on_delete=models.SET_NULL, null=True, blank=True,related_name="+")
 
     enrolled = models.ForeignKey(YesNoUnk, on_delete=models.SET_NULL, null=True, blank=True)
 
