@@ -1,8 +1,25 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    const enrolledField = document.getElementById("id_enrolled");
-    const reasonField = document.getElementById("id_reason");
-    const reasonOtherField = document.getElementById("id_reason_other");
+    // =========================
+    // FIELDS
+    // =========================
+    const consent = document.getElementById("id_consent");
+    const age = document.getElementById("id_age_18");
+    const biopsy = document.getElementById("id_biopsy");
+
+    const breast = document.getElementById("id_breast_cancer");
+    const brain = document.getElementById("id_brain_cancer");
+    const cervical = document.getElementById("id_cervical_cancer");
+    const prostate = document.getElementById("id_prostate_cancer");
+
+    const ckd = document.getElementById("id_ckd");
+    const liver = document.getElementById("id_liver_disease");
+    const pregnant = document.getElementById("id_pregnant");
+    const breastfeeding = document.getElementById("id_breast_feeding");
+
+    const enrolled = document.getElementById("id_enrolled");
+    const reason = document.getElementById("id_reason");
+    const reasonOther = document.getElementById("id_reason_other");
 
     const enrolledWrapper = document.getElementById("enrolled-wrapper");
     const reasonWrapper = document.getElementById("reason-wrapper");
@@ -13,48 +30,26 @@ document.addEventListener("DOMContentLoaded", function () {
     // =========================
     // HELPERS
     // =========================
-    function isYes(select) {
-        if (!select || !select.value) return false;
-        return select.options[select.selectedIndex].text.toLowerCase() === "yes";
+    function isYes(field) {
+        return String(field?.value || "") === "1";
     }
 
-    function isNo(select) {
-        if (!select || !select.value) return false;
-        return select.options[select.selectedIndex].text.toLowerCase() === "no";
-    }
-
-    // =========================
-    // SEX UI CONTROL
-    // =========================
-    if (sex == "1") {
-        document.getElementById("id_cervical_cancer")?.closest(".col-md-3").style.display = "none";
-        document.getElementById("id_pregnant")?.closest(".col-md-3").style.display = "none";
-        document.getElementById("id_breast_feeding")?.closest(".col-md-3").style.display = "none";
-    }
-
-    if (sex == "2") {
-        document.getElementById("id_prostate_cancer")?.closest(".col-md-3").style.display = "none";
+    function isNo(field) {
+        return String(field?.value || "") === "2";
     }
 
     // =========================
-    // COMPUTE ELIGIBILITY (FINAL ✅)
+    // TOGGLE FUNCTION 🔥
     // =========================
-    function computeEligible() {
+    function toggleEnrollment() {
 
-        const consent = document.getElementById("id_consent");
-        const age = document.getElementById("id_age_18");
-        const biopsy = document.getElementById("id_biopsy");
+        let showEnrolled = false;
+        let showReason = false;
+        let showReasonOther = false;
 
-        const breast = document.getElementById("id_breast_cancer");
-        const brain = document.getElementById("id_brain_cancer");
-        const cervical = document.getElementById("id_cervical_cancer");
-        const prostate = document.getElementById("id_prostate_cancer");
-
-        const ckd = document.getElementById("id_ckd");
-        const liver = document.getElementById("id_liver_disease");
-        const pregnant = document.getElementById("id_pregnant");
-        const breastfeeding = document.getElementById("id_breast_feeding");
-
+        // =========================
+        // ELIGIBILITY LOGIC
+        // =========================
         const basic =
             isYes(consent) &&
             isYes(age) &&
@@ -62,111 +57,75 @@ document.addEventListener("DOMContentLoaded", function () {
 
         let hasCancer = false;
 
-        if (sex == "1") {
-            hasCancer =
-                isYes(breast) ||
-                isYes(brain) ||
-                isYes(prostate);
-        } else if (sex == "2") {
-            hasCancer =
-                isYes(breast) ||
-                isYes(brain) ||
-                isYes(cervical);
+        if (sex === "1") {
+            hasCancer = isYes(breast) || isYes(brain) || isYes(prostate);
+        } else if (sex === "2") {
+            hasCancer = isYes(breast) || isYes(brain) || isYes(cervical);
         }
 
         let hasExclusion =
             isYes(ckd) ||
             isYes(liver);
 
-        if (sex == "2") {
+        if (sex === "2") {
             hasExclusion =
                 hasExclusion ||
                 isYes(pregnant) ||
                 isYes(breastfeeding);
         }
 
-        return basic && hasCancer && !hasExclusion;
-    }
+        const eligible = basic && hasCancer && !hasExclusion;
 
-    // =========================
-    // MAIN UI LOGIC 🔥
-    // =========================
-    function toggleEnrollment() {
-
-        const eligible = computeEligible();
-
-        // Show enrolled only if eligible
+        // =========================
+        // ENROLLED
+        // =========================
         if (eligible) {
-            enrolledWrapper.style.display = "";
+            showEnrolled = true;
         } else {
-            enrolledWrapper.style.display = "none";
-
-            enrolledField.value = "";
-            reasonField.value = "";
-            reasonOtherField.value = "";
-        }
-
-        if (!enrolledField.value) {
-            reasonWrapper.style.display = "none";
-            reasonOtherWrapper.style.display = "none";
-            return;
-        }
-
-        if (isYes(enrolledField)) {
-            reasonWrapper.style.display = "none";
-            reasonOtherWrapper.style.display = "none";
-
-            reasonField.value = "";
-            reasonOtherField.value = "";
-        }
-
-        else if (isNo(enrolledField)) {
-            reasonWrapper.style.display = "";
+            enrolled.value = "";
+            reason.value = "";
+            reasonOther.value = "";
         }
 
         // =========================
-        // REASON LOGIC
+        // REASON
         // =========================
-        if (!reasonField.value) {
-            reasonOtherWrapper.style.display = "none";
-            return;
+        if (isNo(enrolled)) {
+            showReason = true;
         }
 
-        const selectedOption = reasonField.options[reasonField.selectedIndex];
-        const reasonCode = selectedOption?.dataset?.code || selectedOption?.value;
-
-        if (reasonCode == "96") {
-            reasonOtherWrapper.style.display = "";
+        // =========================
+        // REASON OTHER
+        // =========================
+        if (reason && reason.value === "96") {
+            showReasonOther = true;
         } else {
-            reasonOtherWrapper.style.display = "none";
-            reasonOtherField.value = "";
+            reasonOther.value = "";
         }
+
+        // =========================
+        // APPLY UI
+        // =========================
+        enrolledWrapper.style.display = showEnrolled ? "block" : "none";
+        reasonWrapper.style.display = showReason ? "block" : "none";
+        reasonOtherWrapper.style.display = showReasonOther ? "block" : "none";
     }
+
+    // =========================
+    // INITIAL RUN
+    // =========================
+    toggleEnrollment();
 
     // =========================
     // EVENTS
     // =========================
     [
-        "id_consent",
-        "id_age_18",
-        "id_biopsy",
-        "id_breast_cancer",
-        "id_brain_cancer",
-        "id_cervical_cancer",
-        "id_prostate_cancer",
-        "id_ckd",
-        "id_liver_disease",
-        "id_pregnant",
-        "id_breast_feeding"
-    ].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.addEventListener("change", toggleEnrollment);
+        consent, age, biopsy,
+        breast, brain, cervical, prostate,
+        ckd, liver, pregnant, breastfeeding,
+        enrolled, reason
+    ].forEach(field => {
+        field?.addEventListener("change", toggleEnrollment);
     });
-
-    enrolledField?.addEventListener("change", toggleEnrollment);
-    reasonField?.addEventListener("change", toggleEnrollment);
-
-    // initial run
-    toggleEnrollment();
 
 });
