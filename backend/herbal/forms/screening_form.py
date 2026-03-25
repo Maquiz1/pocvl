@@ -304,19 +304,33 @@ class ScreeningForm(forms.ModelForm):
         # =========================
         # REASON / OTHER 🔥
         # =========================
+        # =========================
+        # REASON / OTHER 🔥
+        # =========================
+        reason = cleaned_data.get("reason")
+        reason_other = cleaned_data.get("reason_other")
+        reason_date = cleaned_data.get("reason_date")
+
         if reason:
+            # FK safe (handles None)
+            reason_code = str(getattr(reason, "value", ""))
 
-            # FK safe
-            reason_code = getattr(reason, "code", None)
-
-            # 4. OTHER (96) → require text
-            if str(reason_code) == "16" and not reason_other:
+            # 1. OTHER (16) → require text
+            if reason_code == "16" and not reason_other:
                 self.add_error("reason_other", "Please specify the 'Other' reason.")
 
-            # 5. NOT OTHER → must be empty
-            if str(reason_code) != "16" and reason_other:
-                self.add_error("reason_other", "Only fill this field when 'Other (96)' is selected.")
-                
+            # 2. NOT OTHER → must be empty
+            if reason_code != "16" and reason_other:
+                self.add_error("reason_other", "Remove text. Only fill this for 'Other' reason.")
+
+            # 3. DATE REQUIRED for specific reasons
+            if reason_code in ["4", "5", "14", "15"] and not reason_date:
+                self.add_error("reason_date", "This reason requires a date.")
+
+            # 4. DATE NOT ALLOWED for others
+            if reason_code not in ["4", "5", "14", "15"] and reason_date:
+                self.add_error("reason_date", "Remove date. Not required for this reason.")
+        
         # =========================
         # FINAL CLEANING
         # =========================
