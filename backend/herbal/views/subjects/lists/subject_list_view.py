@@ -97,6 +97,13 @@ def subject_list_view(request):
             distinct=True
         ),
 
+        attended_count=Count(
+            "id",
+            filter=Q(
+                screening__enrollment__visits__status__in=["completed", "incomplete"]
+            ),
+            distinct=True
+        ),
         terminated_count=Count(
             "id",
             filter=Q(screening__enrollment__termination__isnull=False),
@@ -170,6 +177,7 @@ def subject_list_view(request):
         "eligible_count": counts["eligible_count"],
         "enrolled_count": counts["enrolled_count"],
         "visits_count": counts["visits_count"],
+        "attended_count": counts["attended_count"],
         "terminated_count": counts["terminated_count"],
         "ltf_count": counts["ltf_count"],
     }

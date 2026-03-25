@@ -99,6 +99,10 @@ class VisitSchedule(BaseModel):
         return self.enrollment.screening.subject
 
     @property
+    def is_attended(self):
+        return self.status in ["completed", "incomplete"]
+    
+    @property
     def is_na(self):
         return self.status in ["missed", "na"]
     
