@@ -284,6 +284,10 @@ class ScreeningForm(forms.ModelForm):
         if eligible and not enrolled:
             self.add_error("enrolled", "Enrollment status is required if participant is eligible.")
 
+        # Not eligible → enrolled must be empty
+        if not eligible and enrolled:
+            self.add_error("enrolled", "Participant is not eligible and cannot be enrolled.")
+    
         # Continue only if enrolled exists
         if enrolled:
 
