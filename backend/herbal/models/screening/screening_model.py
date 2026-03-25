@@ -65,7 +65,8 @@ class Screening(BaseModel):
     )
 
     reason_other = models.TextField(blank=True)
-    
+    reason_date = models.DateField(null=True,blank=True)
+
     # =========================
     remarks = models.TextField(blank=True, null=True)
 
