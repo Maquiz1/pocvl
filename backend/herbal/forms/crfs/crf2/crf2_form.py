@@ -167,7 +167,7 @@ class CRF2Form(forms.ModelForm):
 
         if heent and heent.id == 2:
             if not heent_signif:
-                self.add_error("heent_signifcnt", "This field is required when finding is not abnormal")
+                self.add_error("heent_signifcnt", "This field is required when finding is abnormal")
         elif heent:
             if heent_comments:
                 self.add_error("heent_comments", "Must be empty when finding is not abnormal")
@@ -186,7 +186,7 @@ class CRF2Form(forms.ModelForm):
 
         if respiratory and respiratory.id == 2:
             if not respiratory_signif:
-                self.add_error("respiratory_signifcnt", "This field is required when finding is not abnormal")
+                self.add_error("respiratory_signifcnt", "This field is required when finding is abnormal")
         elif respiratory:
             if respiratory_comments:
                 self.add_error("respiratory_comments", "Must be empty when finding is not abnormal")
@@ -205,7 +205,7 @@ class CRF2Form(forms.ModelForm):
 
         if cardiovascular and cardiovascular.id == 2:
             if not cardiovascular_signif:
-                self.add_error("cardiovascular_signifcnt", "This field is required when finding is not abnormal")
+                self.add_error("cardiovascular_signifcnt", "This field is required when finding is abnormal")
         elif cardiovascular:
             if cardiovascular_comments:
                 self.add_error("cardiovascular_comments", "Must be empty when finding is not abnormal")
@@ -224,7 +224,7 @@ class CRF2Form(forms.ModelForm):
 
         if abdominal and abdominal.id == 2:
             if not abdominal_signif:
-                self.add_error("abdominal_signifcnt", "This field is required when finding is not abnormal")
+                self.add_error("abdominal_signifcnt", "This field is required when finding is abnormal")
         elif abdominal:
             if abdominal_comments:
                 self.add_error("abdominal_comments", "Must be empty when finding is not abnormal")
@@ -243,7 +243,7 @@ class CRF2Form(forms.ModelForm):
 
         if urogenital and urogenital.id == 2:
             if not urogenital_signif:
-                self.add_error("urogenital_signifcnt", "This field is required when finding is not abnormal")
+                self.add_error("urogenital_signifcnt", "This field is required when finding is abnormal")
         elif urogenital:
             if urogenital_comments:
                 self.add_error("urogenital_comments", "Must be empty when finding is not abnormal")
@@ -262,7 +262,7 @@ class CRF2Form(forms.ModelForm):
 
         if musculoskeletal and musculoskeletal.id == 2:
             if not musculoskeletal_signif:
-                self.add_error("musculoskeletal_signifcnt", "This field is required when finding is not abnormal")
+                self.add_error("musculoskeletal_signifcnt", "This field is required when finding is abnormal")
         elif musculoskeletal:
             if musculoskeletal_comments:
                 self.add_error("musculoskeletal_comments", "Must be empty when finding is not abnormal")
@@ -281,7 +281,7 @@ class CRF2Form(forms.ModelForm):
 
         if neurological and neurological.id == 2:
             if not neurological_signif:
-                self.add_error("neurological_signifcnt", "This field is required when finding is not abnormal")
+                self.add_error("neurological_signifcnt", "This field is required when finding is abnormal")
         elif neurological:
             if neurological_comments:
                 self.add_error("neurological_comments", "Must be empty when finding is not abnormal")
@@ -300,7 +300,7 @@ class CRF2Form(forms.ModelForm):
 
         if psychological and psychological.id == 2:
             if not psychological_signif:
-                self.add_error("psychological_signifcnt", "This field is required when finding is not abnormal")
+                self.add_error("psychological_signifcnt", "This field is required when finding is abnormal")
         elif psychological:
             if psychological_comments:
                 self.add_error("psychological_comments", "Must be empty when finding is not abnormal")
@@ -319,7 +319,7 @@ class CRF2Form(forms.ModelForm):
 
         if endocrine and endocrine.id == 2:
             if not endocrine_signif:
-                self.add_error("endocrine_signifcnt", "This field is required when finding is not abnormal")
+                self.add_error("endocrine_signifcnt", "This field is required when finding is abnormal")
         elif endocrine:
             if endocrine_comments:
                 self.add_error("endocrine_comments", "Must be empty when finding is not abnormal")
@@ -338,7 +338,7 @@ class CRF2Form(forms.ModelForm):
 
         if lymphatic and lymphatic.id == 2:
             if not lymphatic_signif:
-                self.add_error("lymphatic_signifcnt", "This field is required when finding is not abnormal")
+                self.add_error("lymphatic_signifcnt", "This field is required when finding is abnormal")
         elif lymphatic:
             if lymphatic_comments:
                 self.add_error("lymphatic_comments", "Must be empty when finding is not abnormal")
@@ -357,7 +357,7 @@ class CRF2Form(forms.ModelForm):
 
         if skin and skin.id == 2:
             if not skin_signif:
-                self.add_error("skin_signifcnt", "This field is required when finding is not abnormal")
+                self.add_error("skin_signifcnt", "This field is required when finding is abnormal")
         elif skin:
             if skin_comments:
                 self.add_error("skin_comments", "Must be empty when finding is not abnormal")
@@ -374,7 +374,7 @@ class CRF2Form(forms.ModelForm):
 
         if local_examination and local_examination.id == 2:
             if not cleaned_data.get("local_examination_signifcnt"):
-                self.add_error("local_examination_signifcnt", "This field is required when finding is not abnormal")
+                self.add_error("local_examination_signifcnt", "This field is required when finding is abnormal")
         else:
             cleaned_data["local_examination_signifcnt"] = None
             
@@ -386,11 +386,11 @@ class CRF2Form(forms.ModelForm):
 
         if physical_exams_other and physical_exams_other.id == 2:
             if not cleaned_data.get("physical_other_specify"):
-                self.add_error("physical_other_specify", "This field is required when finding is not abnormal")
+                self.add_error("physical_other_specify", "This field is required when finding is abnormal")
             if not cleaned_data.get("physical_other_system"):
-                self.add_error("physical_other_system", "This field is required when finding is not abnormal")
+                self.add_error("physical_other_system", "This field is required when finding is abnormal")
             if not cleaned_data.get("physical_other_signifcnt"):
-                self.add_error("physical_other_signifcnt", "This field is required when finding is not abnormal")
+                self.add_error("physical_other_signifcnt", "This field is required when finding is abnormal")
         else:
             cleaned_data["physical_other_signifcnt"] = None
 

@@ -476,6 +476,43 @@
             </div>
         </div>
 
+        <h5>Other Physical Exams</h5>
+
+        <div id="other-exams-section">
+
+            {{ formset.management_form }}
+
+            <table class="table" id="formset-table">
+                <thead>
+                    <tr>
+                        <th>System</th>
+                        <th>Finding</th>
+                        <th>Comments</th>
+                        <th>Significant</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="formset-body">
+                    {% for f in formset %}
+                    <tr class="formset-row">
+                        <td>{{ f.system }}</td>
+                        <td>{{ f.finding }}</td>
+                        <td>{{ f.comments }}</td>
+                        <td>{{ f.signifcnt }}</td>
+                        <td>
+                            {{ f.DELETE }}
+                            <button type="button" class="btn btn-danger remove-row">Remove</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <button type="button" class="btn btn-primary" id="add-row">+ Add Row</button>
+        </div>
+
+
         <!-- ================= FINAL ================= -->
         <div class="card mb-3">
             <div class="card-header bg-dark text-white" onclick="toggleSection(this)">Final Section</div>
@@ -534,8 +571,9 @@
 {% block scripts %}
 <script src="{% static 'js/crfs/crf2/bmi.js' %}"></script>
 <script src="{% static 'js/crfs/crf2/appearance.js' %}"></script>
+<script src="{% static 'js/crfs/crf2/other_physical_exams.js' %}"></script>
 <!-- <script src="{% static 'js/crf/crf1_nimregenin.js' %}"></script>
-<script src="{% static 'js/crf/crf1_other_herbal.js' %}"></script>
+<script src="{% static 'js/crf/other_physical_exams.js' %}"></script>
 <script src="{% static 'js/crf/crf1_radiotherapy.js' %}"></script>
 <script src="{% static 'js/crf/crf1_chemotherapy.js' %}"></script>
 <script src="{% static 'js/crf/crf1_surgery.js' %}"></script> -->
