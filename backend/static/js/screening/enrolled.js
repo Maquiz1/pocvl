@@ -21,6 +21,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const reason = document.getElementById("id_reason");
     const reasonOther = document.getElementById("id_reason_other");
 
+    const enrolledHeaderWrapper = document.getElementById("enrolled-header-wrapper");
+    const enrolledHrWrapper = document.getElementById("enrolled-hr-wrapper");
     const enrolledWrapper = document.getElementById("enrolled-wrapper");
     const reasonWrapper = document.getElementById("reason-wrapper");
     const reasonOtherWrapper = document.getElementById("reason-other-wrapper");
@@ -43,6 +45,9 @@ document.addEventListener("DOMContentLoaded", function () {
     // =========================
     function toggleEnrollment() {
 
+        
+        let showEnrolledHeader = false;
+        let showEnrolledHr = false;
         let showEnrolled = false;
         let showReason = false;
         let showReasonOther = false;
@@ -80,6 +85,8 @@ document.addEventListener("DOMContentLoaded", function () {
         // ENROLLED
         // =========================
         if (eligible) {
+            showEnrolledHeader = true;
+            showEnrolledHr = true;
             showEnrolled = true;
         } else {
             enrolled.value = "";
@@ -97,7 +104,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // =========================
         // REASON OTHER
         // =========================
-        if (reason && reason.value === "96") {
+        if (reason && reason.value === "14") {
             showReasonOther = true;
         } else {
             reasonOther.value = "";
@@ -106,6 +113,8 @@ document.addEventListener("DOMContentLoaded", function () {
         // =========================
         // APPLY UI
         // =========================
+        enrolledHeaderWrapper.style.display = showEnrolledHeader ? "block" : "none";
+        enrolledHrWrapper.style.display = showEnrolledHr ? "block" : "none";
         enrolledWrapper.style.display = showEnrolled ? "block" : "none";
         reasonWrapper.style.display = showReason ? "block" : "none";
         reasonOtherWrapper.style.display = showReasonOther ? "block" : "none";
