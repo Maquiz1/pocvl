@@ -5,6 +5,7 @@ from django.utils import timezone
 
 from core.models import BaseModel
 from ..enrollments.enrollment_model import Enrollment
+from django.core.exceptions import ValidationError
 
 
 VISIT_DAY_CHOICES = [
@@ -100,7 +101,47 @@ class VisitSchedule(BaseModel):
     @property
     def is_na(self):
         return self.status in ["missed", "na"]
+    
+    @property
+    def is_missed(self):
+        return self.status == "missed"
 
+    @property
+    def is_not_applicable(self):
+        return self.status == "na"
+    
+    def is_within_window(self, days=3):
+        today = timezone.now().date()
+        delta = abs((today - self.scheduled_date).days)
+        return delta <= days
+
+    @property
+    def visit_progress(self):
+
+        enrollment = getattr(self.screening, "enrollment", None)
+        if not enrollment:
+            return 0
+
+        visits = enrollment.visits.all()
+
+        total = visits.count()
+        completed = visits.filter(status="completed").count()
+
+        if total == 0:
+            return 0
+
+        return int((completed / total) * 100)
+
+    @property
+    def is_completed(self):
+        return self.status == "completed"
+
+    def clean(self):
+        if self.status == "missed" and not self.missed_reason:
+            raise ValidationError({
+                "missed_reason": "This field is required when visit is missed."
+            })
+            
     def __str__(self):
         return f"{self.enrollment.screening.subject.subject_id} - {self.visit_day}"
 

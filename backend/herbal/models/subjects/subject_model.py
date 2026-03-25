@@ -128,9 +128,14 @@ class Subject(BaseModel):
 
             if enrollment:
 
-                # ✅ Check termination FIRST (highest priority)
-                if hasattr(enrollment, "termination"):
+                # 1️⃣ termination (highest priority)
+                termination = getattr(enrollment, "termination", None)
+                if termination:
                     return "terminated"
+
+                # 2️⃣ visits exist
+                if enrollment.visits.exists():
+                    return "visits"
 
                 return "enrolled"
 
@@ -144,15 +149,43 @@ class Subject(BaseModel):
     @property
     def progress(self):
 
+        if self.status == "terminated":
+            return 100
+
+        if self.status == "visits":
+            visits = self.screening.enrollment.visits.all()
+            total = visits.count()
+            completed = visits.filter(status="completed").count()
+
+            if total == 0:
+                return 60  # fallback to enrolled
+
+            return 60 + int((completed / total) * 20)
+
         status_map = {
             "registered": 20,
-            "screened": 50,
-            "enrolled": 80,
-            "completed": 100,
+            "screened": 40,
+            "enrolled": 60,
         }
 
         return status_map.get(self.status, 0)
 
+
+    @property
+    def status_badge(self):
+
+        badge_map = {
+            "registered": ("secondary", "Registered"),   # gray
+            "screened": ("info", "Screened"),           # light blue
+            "enrolled": ("primary", "Enrolled"),        # blue
+            "visits": ("primary", "In Follow-up"),      # blue
+            "terminated": ("danger", "Terminated"),     # red
+        }
+
+        color, label = badge_map.get(self.status, ("dark", "Unknown"))
+
+        return f'<span class="badge bg-{color}">{label}</span>'
+    
     # ----------------------------
     # OPTIONAL HELPERS (VERY USEFUL)
     # ----------------------------
@@ -167,6 +200,14 @@ class Subject(BaseModel):
     @property
     def is_enrolled(self):
         return self.status == "enrolled"
+    
+    @property
+    def has_visits(self):
+        return self.status == "visits"
+
+    @property
+    def is_terminated(self):
+        return self.status == "terminated"
 
     def __str__(self):
         return f"{self.subject_id} - {self.first_name} {self.last_name}"

@@ -101,6 +101,9 @@
                 <a href="?{% querystring request status='enrolled' %}" class="btn btn-outline-success btn-sm">
                     Enrolled ({{ enrolled_count }})
                 </a>
+                <a href="?{% querystring request status='visits' %}" class="btn btn-outline-primary btn-sm">
+                    Visits ({{ visits_count }})
+                </a>
 
                 <a href="?{% querystring request status='terminated' %}" class="btn btn-outline-danger btn-sm">
                     Terminated ({{ terminated_count }})
@@ -136,33 +139,19 @@
 
                         <td>{{ subject.reg_date }}</td>
                         <td>
-
-                            {% if subject.screening and subject.screening.enrollment and  subject.screening.enrollment.termination %}
-                            <span class="badge bg-danger">Terminated</span>
-
-                            {% elif subject.progress_percent == 100 %}
-                            <span class="badge bg-success">Enrolled</span>
-
-                            {% elif subject.screening and subject.screening.eligible %}
-                            <span class="badge bg-info">Eligible</span>
-
-                            {% elif subject.progress_percent == 60 %}
-                            <span class="badge bg-warning text-dark">Screened</span>
-
-                            {% else %}
-                            <span class="badge bg-secondary">Registered</span>
-
-                            {% endif %}
-
+                            {{ subject.status_badge|safe }}
                         </td>
 
                         <td>
                             <div class="progress" style="height: 18px;">
                                 <div class="progress-bar
-                                    {% if subject.progress_percent == 100 %}bg-success
-                                    {% elif subject.progress_percent == 60 %}bg-warning
+                                    {% if subject.progress_percent == 100 %}bg-danger
+                                    {% elif subject.progress_percent >= 80 %}bg-primary
+                                    {% elif subject.progress_percent >= 60 %}bg-success
+                                    {% elif subject.progress_percent >= 40 %}bg-warning
                                     {% else %}bg-secondary
-                                    {% endif %}" style="width: {{ subject.progress_percent }}%;">
+                                    {% endif %}"
+                                    style="width: {{ subject.progress_percent }}%;">
 
                                     {{ subject.progress_percent }}%
                                 </div>

@@ -12,6 +12,7 @@ def subject_list_view(request):
     subjects = (
         Subject.objects.for_user(request.user)
         .select_related("site", "screening", "screening__enrollment")
+        .prefetch_related("screening__enrollment__visits")
         .order_by("-created_at")
     )
 
@@ -22,60 +23,86 @@ def subject_list_view(request):
     subjects = apply_search(
         subjects,
         search,
-        ["subject_id", "first_name", "last_name", "phone_number","other_phone","hid","idn","other_id"]
+        ["subject_id", "first_name", "last_name", "phone_number",
+         "other_phone", "hid", "idn", "other_id"]
     )
 
     # ---------------- FILTERS ----------------
     subjects = apply_filters(subjects, request, ["site"])
 
-    # ---------------- ANNOTATION (PROGRESS) ----------------
+    # ---------------- PROGRESS ANNOTATION ----------------
     subjects = subjects.annotate(
         progress_percent=Case(
-            When(screening__isnull=True, then=Value(20)),   # Registered
+
+            # 🔴 Terminated (highest priority)
+            When(
+                screening__enrollment__termination__isnull=False,
+                then=Value(100)
+            ),
+
+            # 🟡 Visits exist
+            When(
+                screening__enrollment__visits__isnull=False,
+                then=Value(80)
+            ),
+
+            # 🔵 Enrolled
+            When(
+                screening__enrollment__isnull=False,
+                then=Value(60)
+            ),
+
+            # ⚪ Screened
             When(
                 screening__isnull=False,
-                screening__enrollment__isnull=True,
-                then=Value(60)
-            ),  # Screened / Eligible
-            When(screening__enrollment__isnull=False, then=Value(100)),  # Enrolled
+                then=Value(40)
+            ),
+
+            # ⚪ Registered
+            When(
+                screening__isnull=True,
+                then=Value(20)
+            ),
+
             output_field=IntegerField()
         )
-    )
+    ).distinct()
 
-    # ---------------- COUNTS (CLINICAL CORRECT) ----------------
+    # ---------------- COUNTS ----------------
     counts = subjects.aggregate(
 
-        # Registered = all subjects
         total_subjects=Count("id", distinct=True),
 
-        # Screened (has screening)
         screened_count=Count(
             "id",
             filter=Q(screening__isnull=False),
             distinct=True
         ),
 
-        # Eligible (screening.eligible=True)
         eligible_count=Count(
             "id",
             filter=Q(screening__eligible=True),
             distinct=True
         ),
 
-        # Enrolled
         enrolled_count=Count(
             "id",
             filter=Q(screening__enrollment__isnull=False),
             distinct=True
         ),
 
-        # Terminated (CRF6 exists)
+        visits_count=Count(
+            "id",
+            filter=Q(screening__enrollment__visits__isnull=False),
+            distinct=True
+        ),
+
         terminated_count=Count(
             "id",
             filter=Q(screening__enrollment__termination__isnull=False),
             distinct=True
         ),
-        
+
         ltf_count=Count(
             "id",
             filter=Q(
@@ -85,13 +112,14 @@ def subject_list_view(request):
         ),
     )
 
-    # ---------------- STATUS FILTER (TABLE ONLY) ----------------
+    # ---------------- STATUS FILTER ----------------
     if status == "registered":
         subjects = subjects.filter(screening__isnull=True)
 
     elif status == "screened":
         subjects = subjects.filter(
             screening__isnull=False,
+            screening__enrollment__isnull=True,
             screening__eligible=False
         )
 
@@ -103,14 +131,22 @@ def subject_list_view(request):
 
     elif status == "enrolled":
         subjects = subjects.filter(
-            screening__enrollment__isnull=False
+            screening__enrollment__isnull=False,
+            screening__enrollment__visits__isnull=True,
+            screening__enrollment__termination__isnull=True
+        )
+
+    elif status == "visits":
+        subjects = subjects.filter(
+            screening__enrollment__visits__isnull=False,
+            screening__enrollment__termination__isnull=True
         )
 
     elif status == "terminated":
         subjects = subjects.filter(
             screening__enrollment__termination__isnull=False
         )
-        
+
     elif status == "ltf":
         subjects = subjects.filter(
             screening__enrollment__termination__reason="ltf"
@@ -133,6 +169,7 @@ def subject_list_view(request):
         "screened_count": counts["screened_count"],
         "eligible_count": counts["eligible_count"],
         "enrolled_count": counts["enrolled_count"],
+        "visits_count": counts["visits_count"],
         "terminated_count": counts["terminated_count"],
         "ltf_count": counts["ltf_count"],
     }
