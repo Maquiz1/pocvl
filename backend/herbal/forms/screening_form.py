@@ -308,11 +308,11 @@ class ScreeningForm(forms.ModelForm):
             reason_code = getattr(reason, "code", None)
 
             # 4. OTHER (96) → require text
-            if str(reason_code) == "14" and not reason_other:
+            if str(reason_code) == "16" and not reason_other:
                 self.add_error("reason_other", "Please specify the 'Other' reason.")
 
             # 5. NOT OTHER → must be empty
-            if str(reason_code) != "14" and reason_other:
+            if str(reason_code) != "16" and reason_other:
                 self.add_error("reason_other", "Only fill this field when 'Other (96)' is selected.")
                 
         # =========================

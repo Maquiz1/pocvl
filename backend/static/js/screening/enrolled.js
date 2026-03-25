@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // =========================
         // REASON OTHER
         // =========================
-        if (reason && reason.value === "14") {
+        if (reason && reason.value === "16") {
             showReasonOther = true;
         } else {
             reasonOther.value = "";
