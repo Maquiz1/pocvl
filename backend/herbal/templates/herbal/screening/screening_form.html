@@ -185,6 +185,32 @@
                 <hr>
 
                 <!-- ===================== -->
+                <!-- ENROLLMENTS -->
+                <!-- ===================== -->
+                <h5>ENROLLMENTS</h5>
+                <hr>
+
+                <div class="row">
+
+                    <div class="col-md-3" id="enrolled-wrapper">
+                        {{ form.enrolled.label_tag }}
+                        {{ form.enrolled|add_class:"form-select" }}
+                    </div>
+
+                    <div class="col-md-3" id="reason-wrapper">
+                        {{ form.reason.label_tag }}
+                        {{ form.reason|add_class:"form-select" }}
+                    </div>
+                    <div class="col-md-6"  id="reason_other-wrapper">
+                        {{ form.reason_other.label_tag }}
+                        {{ form.reason_other|add_class:"form-control" }}
+                    </div>
+
+                </div>
+
+                <hr>
+
+                <!-- ===================== -->
                 <!-- NOTES -->
                 <!-- ===================== -->
                 <h5>Remarks</h5>

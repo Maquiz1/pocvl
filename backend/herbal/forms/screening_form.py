@@ -1,7 +1,7 @@
 from django import forms
 from herbal.models import Screening
 from django.core.exceptions import ValidationError
-
+from choices.models import NotEnrolledReason
 
 class ScreeningForm(forms.ModelForm):
 
@@ -37,6 +37,11 @@ class ScreeningForm(forms.ModelForm):
             "ckd",
             "liver_disease",
 
+            # Enrollment
+            "enrolled",
+            "reason",
+            "reason_other",
+
             # Notes
             "remarks",
         ]
@@ -71,6 +76,11 @@ class ScreeningForm(forms.ModelForm):
 
             "consent_reasons": forms.Textarea(attrs={"class": "form-control", "rows": 3}),
             "nimregenin_reasons": forms.Textarea(attrs={"class": "form-control", "rows": 3}),
+            
+            "enrolled": forms.Select(attrs={"class": "form-select"}),
+            "reason": forms.Select(attrs={"class": "form-select"}),
+            "reason_other": forms.Textarea(attrs={"class": "form-control", "rows": 3}),
+
             "remarks": forms.Textarea(attrs={"class": "form-control", "rows": 3}),
         }
 
@@ -120,6 +130,55 @@ class ScreeningForm(forms.ModelForm):
             self.fields["pregnant"].required = True
             self.fields["breast_feeding"].required = True
             self.fields["prostate_cancer"].required = False
+
+
+    def compute_eligible(self, cleaned_data):
+        subject = getattr(self.instance, "subject", None)
+        if not subject:
+            return False
+
+        sex = subject.sex_id
+
+        # Basic inclusion
+        basic = (
+            self.is_yes(cleaned_data.get("consent")) and
+            self.is_yes(cleaned_data.get("age_18")) and
+            self.is_yes(cleaned_data.get("biopsy"))
+        )
+
+        # Cancer logic
+        common = [
+            cleaned_data.get("breast_cancer"),
+            cleaned_data.get("brain_cancer")
+        ]
+
+        specific = []
+        if sex == 1:
+            specific = [cleaned_data.get("prostate_cancer")]
+        elif sex == 2:
+            specific = [cleaned_data.get("cervical_cancer")]
+
+        cancer_fields = [f for f in (common + specific) if f]
+        has_cancer = any(self.is_yes(f) for f in cancer_fields)
+
+        inclusion = basic and has_cancer
+
+        # Exclusions
+        exclusions = [
+            cleaned_data.get("ckd"),
+            cleaned_data.get("liver_disease")
+        ]
+
+        if sex == 2:
+            exclusions += [
+                cleaned_data.get("pregnant"),
+                cleaned_data.get("breast_feeding")
+            ]
+
+        exclusions = [f for f in exclusions if f]
+        has_exclusion = any(self.is_yes(f) for f in exclusions)
+
+        return inclusion and not has_exclusion
 
     # =========================
     # CLEAN (FULLY FIXED)
@@ -212,6 +271,46 @@ class ScreeningForm(forms.ModelForm):
             if selected_codes:
                 self.add_error("cancer_types", "No cancers should be selected if all are No")
 
+
+        # =========================
+        # ELIGIBILITY / ENROLLMENT 🔥
+        # =========================
+        eligible = self.compute_eligible(cleaned_data)
+        enrolled = cleaned_data.get("enrolled")
+        reason = cleaned_data.get("reason")
+        reason_other = cleaned_data.get("reason_other")
+
+        # 1. Eligible → enrolled required
+        if eligible and not enrolled:
+            self.add_error("enrolled", "Enrollment status is required if participant is eligible.")
+
+        # Continue only if enrolled exists
+        if enrolled:
+
+            # 2. NOT enrolled → reason required
+            if self.is_no(enrolled) and not reason:
+                self.add_error("reason", "Reason is required if participant is not enrolled.")
+
+            # 3. Enrolled → reason must be empty
+            if self.is_yes(enrolled) and reason:
+                self.add_error("reason", "Reason must be empty if participant is enrolled.")
+
+        # =========================
+        # REASON / OTHER 🔥
+        # =========================
+        if reason:
+
+            # FK safe
+            reason_code = getattr(reason, "code", None)
+
+            # 4. OTHER (96) → require text
+            if str(reason_code) == "96" and not reason_other:
+                self.add_error("reason_other", "Please specify the 'Other' reason.")
+
+            # 5. NOT OTHER → must be empty
+            if str(reason_code) != "96" and reason_other:
+                self.add_error("reason_other", "Only fill this field when 'Other (96)' is selected.")
+                
         # =========================
         # FINAL CLEANING
         # =========================
@@ -222,5 +321,6 @@ class ScreeningForm(forms.ModelForm):
 
         elif sex_id == 2:
             cleaned_data["prostate_cancer"] = None
+            
 
         return cleaned_data

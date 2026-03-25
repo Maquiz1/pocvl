@@ -1,7 +1,7 @@
 from django.db import models
 from ..subjects.subject_model import Subject
 from core.models import BaseModel
-from choices.models import YesNo, YesNoUnk
+from choices.models import YesNo, YesNoUnk,NotEnrolledReason
 from herbal.models.cancers.cancer_type_model import CancerType
 from django.core.exceptions import ValidationError
 
@@ -55,6 +55,17 @@ class Screening(BaseModel):
     ckd = models.ForeignKey(YesNo, on_delete=models.SET_NULL, null=True, blank=True,related_name="+")
     liver_disease = models.ForeignKey(YesNo, on_delete=models.SET_NULL, null=True, blank=True,related_name="+")
 
+    enrolled = models.ForeignKey(YesNoUnk, on_delete=models.SET_NULL, null=True, blank=True)
+
+    reason = models.ForeignKey(
+        NotEnrolledReason,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
+
+    reason_other = models.TextField(blank=True)
+    
     # =========================
     remarks = models.TextField(blank=True, null=True)
 
@@ -140,11 +151,72 @@ class Screening(BaseModel):
         sex_id = subject.sex.id
         cancers = self.cancer_types.all()
 
+        # =========================
+        # SEX VS CANCER VALIDATION
+        # =========================
         if sex_id == 1 and cancers.filter(code="CC").exists():
             raise ValidationError("Male cannot have Cervical Cancer")
 
         if sex_id == 2 and cancers.filter(code="PC").exists():
             raise ValidationError("Female cannot have Prostate Cancer")
+
+        # =========================
+        # ENROLLMENT LOGIC 🔥
+        # =========================
+        enrolled = self.enrolled
+        reason = self.reason
+        reason_other = self.reason_other
+
+        # 1. Eligible → enrolled MUST be answered
+        if self.eligible and not enrolled:
+            raise ValidationError({
+                "enrolled": "Enrollment status is required if participant is eligible."
+            })
+
+        if enrolled:
+
+            # helper inline (since model has only is_yes)
+            is_yes = enrolled.value == 1
+            is_no = enrolled.value == 2
+
+            # 2. NOT enrolled → reason required
+            if is_no and not reason:
+                raise ValidationError({
+                    "reason": "Reason is required if participant is not enrolled."
+                })
+
+            # 3. Enrolled → reason must be empty
+            if is_yes and reason:
+                raise ValidationError({
+                    "reason": "Reason must be empty if participant is enrolled."
+                })
+
+        # =========================
+        # REASON / OTHER 🔥
+        # =========================
+        if reason:
+
+            # FK safe → use code
+            reason_code = getattr(reason, "code", None)
+
+            # 4. OTHER (96) → reason_other required
+            if str(reason_code) == "96" and not reason_other:
+                raise ValidationError({
+                    "reason_other": "Please specify the 'Other' reason."
+                })
+
+            # 5. NOT OTHER → must be empty
+            if str(reason_code) != "96" and reason_other:
+                raise ValidationError({
+                    "reason_other": "Only fill this field when 'Other (96)' is selected."
+                })
+
+        # # =========================
+        # # AUTO CLEAN (OPTIONAL 🔥)
+        # # =========================
+        # if enrolled and enrolled.value == 1:
+        #     self.reason = None
+        #     self.reason_other = ""
 
     def __str__(self):
         return f"Screening - {self.subject}"
