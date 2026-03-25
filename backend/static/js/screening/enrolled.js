@@ -20,12 +20,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const enrolled = document.getElementById("id_enrolled");
     const reason = document.getElementById("id_reason");
     const reasonOther = document.getElementById("id_reason_other");
+    const reasonDate = document.getElementById("id_reason_date");
 
     const enrolledHeaderWrapper = document.getElementById("enrolled-header-wrapper");
     const enrolledHrWrapper = document.getElementById("enrolled-hr-wrapper");
     const enrolledWrapper = document.getElementById("enrolled-wrapper");
     const reasonWrapper = document.getElementById("reason-wrapper");
     const reasonOtherWrapper = document.getElementById("reason-other-wrapper");
+    const reasonDateWrapper = document.getElementById("reason-date-wrapper");
 
     const sex = document.getElementById("subject-sex")?.value;
 
@@ -51,6 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let showEnrolled = false;
         let showReason = false;
         let showReasonOther = false;
+        let showReasonDate = false;
 
         // =========================
         // ELIGIBILITY LOGIC
@@ -92,6 +95,7 @@ document.addEventListener("DOMContentLoaded", function () {
             enrolled.value = "";
             reason.value = "";
             reasonOther.value = "";
+            reasonDate.value = "";
         }
 
         // =========================
@@ -111,6 +115,15 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         // =========================
+        // REASON DATE
+        // =========================
+        if (reason && reason.value === "4" || reason.value === "5" || reason.value === "14" ||reason.value === "15") {
+            showReasonDate = true;
+        } else {
+            reasonDate.value = "";
+        }
+
+        // =========================
         // APPLY UI
         // =========================
         enrolledHeaderWrapper.style.display = showEnrolledHeader ? "block" : "none";
@@ -118,6 +131,7 @@ document.addEventListener("DOMContentLoaded", function () {
         enrolledWrapper.style.display = showEnrolled ? "block" : "none";
         reasonWrapper.style.display = showReason ? "block" : "none";
         reasonOtherWrapper.style.display = showReasonOther ? "block" : "none";
+        reasonDateWrapper.style.display = showDateOther ? "block" : "none";
     }
 
     // =========================

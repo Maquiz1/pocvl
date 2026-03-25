@@ -41,6 +41,7 @@ class ScreeningForm(forms.ModelForm):
             "enrolled",
             "reason",
             "reason_other",
+            "reason_date",
 
             # Notes
             "remarks",
@@ -57,6 +58,7 @@ class ScreeningForm(forms.ModelForm):
             "screening_date": forms.DateInput(attrs={"type": "date", "class": "form-control"}),
             "consent_date": forms.DateInput(attrs={"type": "date", "class": "form-control"}),
             "nimregenin_date": forms.DateInput(attrs={"type": "date", "class": "form-control"}),
+            "reason_date": forms.DateInput(attrs={"type": "date", "class": "form-control"}),
 
             "consent": forms.Select(attrs={"class": "form-select"}),
             "consent_nimregenin": forms.Select(attrs={"class": "form-select"}),
