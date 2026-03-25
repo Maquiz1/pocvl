@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const reasonOtherWrapper = document.getElementById("reason-other-wrapper");
     const reasonDateWrapper = document.getElementById("reason-date-wrapper");
 
+
     const sex = document.getElementById("subject-sex")?.value;
 
     // =========================
@@ -114,13 +115,11 @@ document.addEventListener("DOMContentLoaded", function () {
             reasonOther.value = "";
         }
 
-        // =========================
         // REASON DATE
-        // =========================
-        if (reason && reason.value === "4" || reason.value === "5" || reason.value === "14" ||reason.value === "15") {
+        if (reason && ["4", "5", "14", "15"].includes(reason.value)) {
             showReasonDate = true;
         } else {
-            reasonDate.value = "";
+            if (reasonDate) reasonDate.value = "";
         }
 
         // =========================
@@ -131,7 +130,7 @@ document.addEventListener("DOMContentLoaded", function () {
         enrolledWrapper.style.display = showEnrolled ? "block" : "none";
         reasonWrapper.style.display = showReason ? "block" : "none";
         reasonOtherWrapper.style.display = showReasonOther ? "block" : "none";
-        reasonDateWrapper.style.display = showDateOther ? "block" : "none";
+        reasonDateWrapper.style.display = showReasonDate ? "block" : "none";
     }
 
     // =========================
