@@ -1,29 +1,68 @@
-# herbal/services/visit_scheduler.py
-
 from datetime import timedelta
-from constants.constants import VISIT_SCHEDULE
 from herbal.models import VisitSchedule
+from herbal.models import VisitScheduleConfig
+import traceback
 
 
 def generate_visit_schedule(enrollment):
+    print("🔥 SCHEDULER TRIGGERED", enrollment.id)
 
     enrollment_date = enrollment.enrollment_date
 
-    for visit_day, offset in VISIT_SCHEDULE.items():
+    configs = VisitScheduleConfig.objects.select_related("visit_day") \
+        .filter(is_active=True) \
+        .order_by("visit_day__order")
 
-        scheduled_date = enrollment_date + timedelta(days=offset)
+    print("CONFIG COUNT:", configs.count())  # 👈 ADD THIS
+
+    for config in configs:
+
+        scheduled_date = enrollment_date + timedelta(days=config.offset_days)
 
         visit, created = VisitSchedule.objects.get_or_create(
             enrollment=enrollment,
-            visit_day=visit_day,
+            visit_day=config.visit_day,
             defaults={"scheduled_date": scheduled_date},
         )
 
-        # If visit already exists and not completed, update schedule
-        if not created:
+        if not created and visit.scheduled_date != scheduled_date:
+            visit.scheduled_date = scheduled_date
+            visit.save(update_fields=["scheduled_date"])
+            
+            
+            
+def update_visit_schedule(enrollment):
+    print("🧠 SMART UPDATE", enrollment.id)
 
-            if visit.scheduled_date != scheduled_date:
+    from datetime import timedelta
+    from herbal.models import VisitScheduleConfig
 
-                visit.scheduled_date = scheduled_date
+    enrollment_date = enrollment.enrollment_date
 
+    configs = VisitScheduleConfig.objects.filter(is_active=True)
+
+    for config in configs:
+
+        new_date = enrollment_date + timedelta(days=config.offset_days)
+
+        try:
+            visit = enrollment.visits.get(visit_day=config.visit_day)
+
+            # ✅ DO NOT change completed visits
+            if visit.status == "completed":
+                continue
+
+            # ✅ Only update if changed
+            if visit.scheduled_date != new_date:
+                visit.scheduled_date = new_date
                 visit.save(update_fields=["scheduled_date"])
+                print(f"✏️ Updated {config.visit_day.code}")
+
+        except VisitSchedule.DoesNotExist:
+            # ✅ Create missing visit
+            VisitSchedule.objects.create(
+                enrollment=enrollment,
+                visit_day=config.visit_day,
+                scheduled_date=new_date
+            )
+            print(f"➕ Created {config.visit_day.code}")

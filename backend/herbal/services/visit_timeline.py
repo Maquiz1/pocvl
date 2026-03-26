@@ -29,7 +29,7 @@ def get_subject_timeline(subject):
             icon = "⏳"
 
         timeline.append({
-            "visit_day": visit.visit_day,
+            "visit_day": visit.visit_day.code,
             "scheduled_date": visit.scheduled_date,
             "status_icon": icon,
             "visit": visit

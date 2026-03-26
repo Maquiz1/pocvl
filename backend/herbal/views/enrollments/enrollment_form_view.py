@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
-from herbal.models import Subject, Enrollment
 from herbal.forms.enrollment_form import EnrollmentForm
 from herbal.services.visit_scheduler import generate_visit_schedule
 from herbal.services.access_control import get_accessible_subjects
@@ -38,9 +37,9 @@ def enrollment_form_view(request, pk):
             enrollment_obj.screening = screening
             enrollment_obj.save()
 
-            # ✅ Only generate visits on CREATE
-            if not enrollment:
-                generate_visit_schedule(enrollment_obj)
+            # # # ✅ Only generate visits on CREATE
+            # if not enrollment:
+            #     generate_visit_schedule(enrollment_obj)
 
             return redirect(
                 "herbal:subjects-detail",

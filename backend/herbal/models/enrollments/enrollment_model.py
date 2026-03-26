@@ -7,6 +7,18 @@ from core.models import BaseModel
 from choices.models import PatientType,PatientCategory,TreatmentType
 from django.core.exceptions import ValidationError
 
+
+# =========================
+# ✅ STATUS
+# =========================
+STATUS_CHOICES = [
+    ("active", "Active"),
+    ("completed", "Completed"),
+    ("terminated", "Terminated"),
+    ("lost", "Lost To Follow Up"),
+    ("transfer", "Transferred Out"),
+]
+    
 class Enrollment(BaseModel):
 
     screening = models.OneToOneField(
@@ -83,17 +95,6 @@ class Enrollment(BaseModel):
     cycle_number = models.PositiveIntegerField(
         help_text="Current cycle number"
     )
-
-    # =========================
-    # ✅ STATUS
-    # =========================
-    STATUS_CHOICES = [
-        ("active", "Active"),
-        ("completed", "Completed"),
-        ("terminated", "Terminated"),
-        ("lost", "Lost To Follow Up"),
-        ("transfer", "Transferred Out"),
-    ]
 
     remarks = models.TextField(
         blank=True

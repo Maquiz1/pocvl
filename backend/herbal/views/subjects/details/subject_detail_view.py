@@ -26,8 +26,8 @@ def subject_detail_view(request, pk):
     # ---------------- ENROLLMENT (SAFE ✅) ----------------
     enrollment = None
     if screening:
-        enrollment = Enrollment.objects.filter(screening=screening).first()
-
+        # enrollment = Enrollment.objects.filter(screening=screening).first()
+        enrollment = getattr(screening, "enrollment", None) if screening else None
     # ---------------- VISITS ----------------
     visits = []
     scheduled_visits = VisitSchedule.objects.none()
@@ -46,17 +46,9 @@ def subject_detail_view(request, pk):
             .all()
         )
 
-        visits = list(scheduled_visits)
-        # # 🔥 MAP unscheduled → parent visit
-        # unscheduled_map = {}
-        # for u in unscheduled_visits:
-        #     unscheduled_map.setdefault(u.after_visit_id, []).append(u)
-
-        # # 🔥 MERGE visits
-        # for visit in scheduled_visits:
-        #     visits.append(visit)
-        #     visits.extend(unscheduled_map.get(visit.id, []))
-
+        # visits = list(scheduled_visits)
+        visits = scheduled_visits
+        
     # ---------------- ADVERSE EVENTS ----------------
     adverse_events = CRF5.objects.none()
 

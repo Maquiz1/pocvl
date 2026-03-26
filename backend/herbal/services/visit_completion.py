@@ -9,7 +9,7 @@ def update_visit_status(visit):
 
     required_forms = ["crf2", "crf3", "crf4", "crf7"]
 
-    if visit.visit_day == "D0":
+    if visit.visit_day.code == "D0":
         required_forms.append("crf1")
 
     filled = []

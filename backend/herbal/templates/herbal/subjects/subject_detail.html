@@ -287,7 +287,7 @@
 
                                     <td>
                                         {% if ae.after_visit %}
-                                        {{ ae.after_visit.get_visit_day_display }}
+                                        {{ ae.after_visit.visit_day.name }}
                                         {% else %}-{% endif %}
                                     </td>
 
@@ -366,7 +366,7 @@
 
                                     <td>
                                         {% if uv.after_visit %}
-                                        {{ uv.after_visit.get_visit_day_display }}
+                                        {{ uv.after_visit.visit_day.name }}
                                         {% else %}-{% endif %}
                                     </td>
 
@@ -447,7 +447,7 @@
 
         <div class="text-center">
             <a href="#visit{{ visit.id }}">
-                <div title="{{ visit.get_visit_day_display }} - {{ visit.status }}"
+                <div title="{{ visit.visit_day.name }} - {{ visit.status }}"
                     class="rounded-circle d-flex align-items-center justify-content-center" style="
                     width:60px;
                     height:60px;
@@ -470,11 +470,7 @@
                     {% endif %}
                     ">
 
-                    <!-- {% if visit.after_visit_day %}
-                    U-{{ visit.after_visit_day }}
-                    {% else %} -->
-                    {{ visit.visit_day }}
-                    <!-- {% endif %} -->
+                    {{ visit.visit_day.code }}
                 </div>
 
                 <small>{{ visit.scheduled_date }}</small>
@@ -515,7 +511,7 @@
         {% for visit in visits %}
         <tr>
             <td>
-                {{ visit.get_visit_day_display }}
+                {{ visit.visit_day.name }}
             </td>
             <td>{{ visit.scheduled_date }}</td>
 
@@ -531,7 +527,7 @@
                 </a>
                 {% if visit.missed_reason %}
                 <br>
-                <small>{{ visit.get_missed_reason_display }}</small>
+                <small>{{ visit.missed_reason.name }}</small>
                 {% endif %}
                 {% elif visit.status == "na" %}
                 <span class="badge bg-secondary">N/A</span>
@@ -596,7 +592,7 @@
                 {% if visit.is_na %}
                 <span class="badge bg-secondary">N/A</span>
 
-                {% elif visit.visit_day == "D0" %}
+                {% elif visit.visit_day.code == "D0" %}
 
                 {% if visit.crf1 %}
                 <a href="{% url 'herbal:crf1-update' visit.pk %}" class="btn btn-sm btn-info">Edit</a>
@@ -756,7 +752,7 @@
 
         <tr>
 
-            <td>{{ query.visit.get_visit_day_display }}</td>
+            <td>{{ query.visit.visit_day.name }}</td>
 
             <td>{{ query.field_name }}</td>
 

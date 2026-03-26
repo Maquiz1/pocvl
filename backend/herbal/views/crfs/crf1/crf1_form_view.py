@@ -19,7 +19,7 @@ def crf1_form_view(request, pk):
     visit = get_object_or_404(VisitSchedule, pk=pk)
 
     # Only allow Day 0
-    if visit.visit_day != "D0":
+    if visit.visit_day.code != "D0":
         return redirect("herbal:subjects-detail", pk=visit.subject.pk)
 
     # Check if CRF already exists
