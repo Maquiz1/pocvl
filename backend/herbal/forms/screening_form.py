@@ -219,24 +219,33 @@ class ScreeningForm(forms.ModelForm):
         if self.is_yes(consent) and not consent_date:
             self.add_error("consent_date", "Consent date is required if consent is Yes.")
 
-        # if self.is_no(consent) and not consent_reasons:
-        #     self.add_error("consent_reasons", "Conset Reason is required if consent is No.")
+        if self.is_no(consent) and not consent_reasons:
+            self.add_error("consent_reasons", "Conset Reason is required if consent is No.")
 
-        # if self.is_no(consent) and not consent_other:
-        #     self.add_error("consent_other", "Other Conset Reason is required if consent reason is Other.")
+        if self.is_no(consent) and not consent_other:
+            self.add_error("consent_other", "Other Conset Reason is required if consent reason is Other.")
             
         # =========================
         # NIMREGENIN
         # =========================
-        if nimr:
-            if nimr.value == 1 and not nimr_date:
+        # SAFE FK access
+        nimr_value = getattr(nimr, "value", None)
+        nimr_reason_value = getattr(nimr_reasons, "value", None)
+
+        if nimr_value == 1:
+            if not nimr_date:
                 self.add_error("nimregenin_date", "Date is required if YES.")
 
-            elif nimr.value == 2 and not nimr_reasons:
-                self.add_error("nimregenin_reasons", "Nimregenin Reason is required if NO.")
-                
-            elif nimr_reasons.value == 16 and not nimregenin_other:
-                self.add_error("nimregenin_other", "Nimregenin Other Reason is required if Other.")
+        if nimr_value == 2:
+            if not nimr_reasons:
+                self.add_error("nimregenin_reasons", "Reason is required if NO.")
+
+            # 🔥 OTHER logic MUST be nested here
+            if nimr_reason_value == 16 and not nimregenin_other:
+                self.add_error("nimregenin_other", "Specify 'Other' reason.")
+
+            if nimr_reason_value != 16 and nimregenin_other:
+                self.add_error("nimregenin_other", "Remove text. Only for 'Other'.")
 
         # =========================
         # CANCER TYPES
@@ -314,9 +323,6 @@ class ScreeningForm(forms.ModelForm):
             if self.is_yes(enrolled) and reason:
                 self.add_error("reason", "Reason must be empty if participant is enrolled.")
 
-        # =========================
-        # REASON / OTHER 🔥
-        # =========================
         # =========================
         # REASON / OTHER 🔥
         # =========================
