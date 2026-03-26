@@ -1,7 +1,7 @@
 from django.db import models
 from ..subjects.subject_model import Subject
 from core.models import BaseModel
-from choices.models import YesNo, YesNoUnk,NotEnrolledReason
+from choices.models import YesNo, YesNoUnk,NotEnrolledReason,NotConsetReason
 from herbal.models.cancers.cancer_type_model import CancerType
 from django.core.exceptions import ValidationError
 
@@ -25,7 +25,7 @@ class Screening(BaseModel):
     consent_nimregenin = models.ForeignKey(YesNoUnk, on_delete=models.SET_NULL, null=True, blank=True,related_name="+")
     nimregenin_date = models.DateField(null=True, blank=True)
 
-    consent_reasons = models.ForeignKey(YesNoUnk, on_delete=models.SET_NULL, null=True, blank=True,related_name="+")
+    consent_reasons = models.ForeignKey(NotConsetReason, on_delete=models.SET_NULL, null=True, blank=True,related_name="+")
     consent_other = models.TextField(blank=True)
     nimregenin_reasons = models.TextField(blank=True, null=True)
 
