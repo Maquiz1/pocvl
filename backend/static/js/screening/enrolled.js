@@ -23,12 +23,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const reasonDate = document.getElementById("id_reason_date");
 
     const enrolledHeaderWrapper = document.getElementById("enrolled-header-wrapper");
-    const enrolledHrWrapper = document.getElementById("enrolled-hr-wrapper");
     const enrolledWrapper = document.getElementById("enrolled-wrapper");
     const reasonWrapper = document.getElementById("reason-wrapper");
     const reasonOtherWrapper = document.getElementById("reason-other-wrapper");
     const reasonDateWrapper = document.getElementById("reason-date-wrapper");
 
+    const eligibilityBadge = document.getElementById("eligibility-badge");
 
     const sex = document.getElementById("subject-sex")?.value;
 
@@ -43,21 +43,40 @@ document.addEventListener("DOMContentLoaded", function () {
         return String(field?.value || "") === "2";
     }
 
+    function resetField(field) {
+        if (field) field.value = "";
+    }
+
+    function toggle(el, show) {
+        if (!el) return;   // 🔥 prevents crash
+        el.style.display = show ? "block" : "none";
+    }
+
+    function updateBadge(isEligible) {
+        if (!eligibilityBadge) return;
+
+        if (isEligible) {
+            eligibilityBadge.className = "badge bg-success";
+            eligibilityBadge.innerText = "Eligible";
+        } else {
+            eligibilityBadge.className = "badge bg-danger";
+            eligibilityBadge.innerText = "Not Eligible";
+        }
+    }
+
     // =========================
-    // TOGGLE FUNCTION 🔥
+    // MAIN LOGIC
     // =========================
     function toggleEnrollment() {
 
-        
         let showEnrolledHeader = false;
-        let showEnrolledHr = false;
         let showEnrolled = false;
         let showReason = false;
         let showReasonOther = false;
         let showReasonDate = false;
 
         // =========================
-        // ELIGIBILITY LOGIC
+        // ELIGIBILITY
         // =========================
         const basic =
             isYes(consent) &&
@@ -85,24 +104,36 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const eligible = basic && hasCancer && !hasExclusion;
 
-        // =========================
-        // ENROLLED
-        // =========================
-        if (eligible) {
-            showEnrolledHeader = true;
-            showEnrolledHr = true;
-            showEnrolled = true;
-        } else {
-            enrolled.value = "";
-            reason.value = "";
-            reasonOther.value = "";
-            reasonDate.value = "";
+        // 🔥 UPDATE BADGE
+        updateBadge(eligible);
+
+        // 🔥 OPTIONAL: disable enrolled if not eligible
+        if (enrolled) {
+            enrolled.disabled = !eligible;
         }
 
         // =========================
-        // REASON
+        // ENROLLMENT (FIXED)
         // =========================
-        if (isNo(enrolled)) {
+        const hasValue = enrolled && enrolled.value !== "";
+
+        if (eligible || hasValue) {
+            showEnrolledHeader = true;
+            showEnrolled = true;
+        } else {
+            showEnrolledHeader = false;
+            showEnrolled = false;
+
+            resetField(enrolled);
+            resetField(reason);
+            resetField(reasonOther);
+            resetField(reasonDate);
+        }
+
+        // =========================
+        // REASON (FIXED)
+        // =========================
+        if (enrolled && enrolled.value === "2") {
             showReason = true;
         }
 
@@ -112,29 +143,30 @@ document.addEventListener("DOMContentLoaded", function () {
         if (reason && reason.value === "16") {
             showReasonOther = true;
         } else {
-            reasonOther.value = "";
+            resetField(reasonOther);
         }
 
+        // =========================
         // REASON DATE
+        // =========================
         if (reason && ["4", "5", "14", "15"].includes(reason.value)) {
             showReasonDate = true;
         } else {
-            if (reasonDate) reasonDate.value = "";
+            resetField(reasonDate);
         }
 
         // =========================
         // APPLY UI
         // =========================
-        enrolledHeaderWrapper.style.display = showEnrolledHeader ? "block" : "none";
-        enrolledHrWrapper.style.display = showEnrolledHr ? "block" : "none";
-        enrolledWrapper.style.display = showEnrolled ? "block" : "none";
-        reasonWrapper.style.display = showReason ? "block" : "none";
-        reasonOtherWrapper.style.display = showReasonOther ? "block" : "none";
-        reasonDateWrapper.style.display = showReasonDate ? "block" : "none";
+        toggle(enrolledHeaderWrapper, showEnrolledHeader);
+        toggle(enrolledWrapper, showEnrolled);
+        toggle(reasonWrapper, showReason);
+        toggle(reasonOtherWrapper, showReasonOther);
+        toggle(reasonDateWrapper, showReasonDate);
     }
 
     // =========================
-    // INITIAL RUN
+    // INIT
     // =========================
     toggleEnrollment();
 
@@ -149,5 +181,6 @@ document.addEventListener("DOMContentLoaded", function () {
     ].forEach(field => {
         field?.addEventListener("change", toggleEnrollment);
     });
+    
 
 });

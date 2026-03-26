@@ -4,141 +4,161 @@
 
 {% block content %}
 
-<div class="container">
+<style>
+    .card {
+        border-radius: 10px;
+    }
 
-    <p><strong>Subject ID:</strong> {{ subject.subject_id }}</p>
-    <p><strong>Site:</strong> {{ request.user.staff_profile.site }}</p>
-    <p><strong>Sex:</strong> {{ subject.sex.name }}</p>
+    .card-header {
+        font-weight: 600;
+    }
 
-    <h3>
-        {% if is_update %}
-        Update Screening
-        {% else %}
-        Create Screening
-        {% endif %}
-    </h3>
+    .field-error {
+        color: #dc3545;
+        font-size: 0.85rem;
+        margin-top: 4px;
+    }
+</style>
 
-    <div class="card">
-        <div class="card-body">
+<div class="container mt-4">
 
-            <form method="post" novalidate>
-                {% csrf_token %}
+    <!-- HEADER -->
+    <div class="mb-3">
+        <h4>{% if is_update %} ✏️ Update Screening {% else %} ➕ Create Screening {% endif %}</h4>
+        <small class="text-muted">
+            Subject: {{ subject.subject_id }} |
+            Site: {{ request.user.staff_profile.site }} |
+            Sex: {{ subject.sex.name }}
+        </small>
+    </div>
 
-                <!-- SEX (for JS) -->
-                <input type="hidden" id="subject-sex" value="{{ subject.sex_id }}">
+    <form method="post" novalidate>
+        {% csrf_token %}
+        <input type="hidden" id="subject-sex" value="{{ subject.sex_id }}">
 
-                <!-- GLOBAL ERRORS -->
+        <!-- GLOBAL ERRORS -->
+        {% if form.errors %}
+        <div class="alert alert-danger">
+            <ul>
                 {% for field in form %}
-                {% if field.errors %}
-                <div class="alert alert-danger">
-                    <strong>{{ field.label }}:</strong> {{ field.errors|striptags }}
-                </div>
-                {% endif %}
+                {% for error in field.errors %}
+                <li><strong>{{ field.label }}:</strong> {{ error }}</li>
                 {% endfor %}
-                <hr>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
 
-                <!-- ===================== -->
-                <!-- CORE -->
-                <!-- ===================== -->
-                <h5>Screening Info</h5>
-                <hr>
-
-                <div class="row">
-                    <div class="col-md-4">
-                        {{ form.screening_date.label_tag }}
-                        {{ form.screening_date|add_class:"form-control" }}
-                    </div>
+        <!-- ================= SCREENING ================= -->
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-dark text-white">Screening Info</div>
+            <div class="card-body row g-3">
+                <div class="col-md-12">
+                    {{ form.screening_date.label_tag }}
+                    {{ form.screening_date|add_class:"form-control" }}
+                    <div class="field-error">{{ form.screening_date.errors }}</div>
                 </div>
+            </div>
+        </div>
 
-                <hr>
+        <!-- ================= STUDY CONSENT ================= -->
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-primary text-white">Study Consent</div>
+            <div class="card-body">
 
-                <!-- ===================== -->
-                <!-- CONSENT -->
-                <!-- ===================== -->
-                <h5>Consent</h5>
-                <hr>
-
-                <div class="row">
-                    <div class="col-md-3">
+                <div class="row g-3">
+                    <div class="col-md-4">
                         {{ form.consent.label_tag }}
                         {{ form.consent|add_class:"form-select" }}
+                        <div class="field-error">{{ form.consent.errors }}</div>
                     </div>
 
-                    <div class="col-md-3" id="consent-date-wrapper" style="display:none;">
+                    <div class="col-md-4" id="consent-date-wrapper" style="display:none;">
                         {{ form.consent_date.label_tag }}
                         {{ form.consent_date|add_class:"form-control" }}
-                    </div>
-
-                    <div class="col-md-3">
-                        {{ form.consent_nimregenin.label_tag }}
-                        {{ form.consent_nimregenin|add_class:"form-select" }}
-                    </div>
-
-                    <div class="col-md-3 mt-2" id="nimregenin-date-wrapper" style="display:none;">
-                        {{ form.nimregenin_date.label_tag }}
-                        {{ form.nimregenin_date|add_class:"form-control" }}
+                        <div class="field-error">{{ form.consent_date.errors }}</div>
                     </div>
                 </div>
 
-                <div class="mt-2" id="consent-reasons-wrapper" style="display:none;">
+                <div class="mt-3" id="consent-reasons-wrapper" style="display:none;">
                     {{ form.consent_reasons.label_tag }}
                     {{ form.consent_reasons|add_class:"form-select" }}
+                    <div class="field-error">{{ form.consent_reasons.errors }}</div>
                 </div>
 
-                <div class="mt-2" id="consent-other-wrapper" style="display:none;">
+                <div class="mt-3" id="consent-other-wrapper" style="display:none;">
                     {{ form.consent_other.label_tag }}
                     {{ form.consent_other|add_class:"form-control" }}
+                    <div class="field-error">{{ form.consent_other.errors }}</div>
                 </div>
 
-                <div class="mt-2" id="nimregenin-reasons-wrapper" style="display:none;">
+            </div>
+        </div>
+
+        <!-- ================= NIMREGENIN ================= -->
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-success text-white">Nimregenin Consent</div>
+            <div class="card-body">
+
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        {{ form.consent_nimregenin.label_tag }}
+                        {{ form.consent_nimregenin|add_class:"form-select" }}
+                        <div class="field-error">{{ form.consent_nimregenin.errors }}</div>
+                    </div>
+
+                    <div class="col-md-4" id="nimregenin-date-wrapper" style="display:none;">
+                        {{ form.nimregenin_date.label_tag }}
+                        {{ form.nimregenin_date|add_class:"form-control" }}
+                        <div class="field-error">{{ form.nimregenin_date.errors }}</div>
+                    </div>
+                </div>
+
+                <div class="mt-3" id="nimregenin-reasons-wrapper" style="display:none;">
                     {{ form.nimregenin_reasons.label_tag }}
                     {{ form.nimregenin_reasons|add_class:"form-select" }}
+                    <div class="field-error">{{ form.nimregenin_reasons.errors }}</div>
                 </div>
 
-                <div class="mt-2" id="nimregenin-other-wrapper" style="display:none;">
+                <div class="mt-3" id="nimregenin-other-wrapper" style="display:none;">
                     {{ form.nimregenin_other.label_tag }}
                     {{ form.nimregenin_other|add_class:"form-control" }}
+                    <div class="field-error">{{ form.nimregenin_other.errors }}</div>
                 </div>
 
-                <hr>
+            </div>
+        </div>
 
-                <!-- ===================== -->
-                <!-- INCLUSION -->
-                <!-- ===================== -->
-                <h5>Inclusion Criteria</h5>
-                <hr>
+        <!-- ================= INCLUSION ================= -->
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-info text-white">Inclusion Criteria</div>
+            <div class="card-body">
 
-                <div class="row">
+                <div class="row g-3">
                     <div class="col-md-4">
                         {{ form.age_18.label_tag }}
                         {{ form.age_18|add_class:"form-select" }}
                     </div>
+
                     <div class="col-md-4">
                         {{ form.biopsy.label_tag }}
                         {{ form.biopsy|add_class:"form-select" }}
                     </div>
-                    <div class="col-md-4 mt-3">
-                        <label class="form-label">{{ form.cancer_types.label }}</label>
-
+                    <!-- checkbox group -->
+                    <div class="col-md-4">
+                        <label>{{ form.cancer_types.label }}</label>
                         {% for checkbox in form.cancer_types %}
                         <div class="form-check">
-                            {{ checkbox.tag }}
-                            <label class="form-check-label">
-                                {{ checkbox.choice_label }}
-                            </label>
+                            {{ checkbox.tag }} {{ checkbox.choice_label }}
                         </div>
                         {% endfor %}
-
-                        {% if form.cancer_types.errors %}
-                        <div class="text-danger">
-                            {{ form.cancer_types.errors }}
-                        </div>
-                        {% endif %}
                     </div>
                 </div>
+
                 <hr>
 
-                <div class="row mt-2">
+                <!-- ALL cancer fields preserved -->
+                <div class="row g-3 mt-2">
                     <div class="col-md-4" id="breast-wrapper">
                         {{ form.breast_cancer.label_tag }}
                         {{ form.breast_cancer|add_class:"form-select" }}
@@ -158,96 +178,95 @@
                         {{ form.prostate_cancer.label_tag }}
                         {{ form.prostate_cancer|add_class:"form-select" }}
                     </div>
-
                 </div>
 
                 <hr>
 
-                <!-- ===================== -->
-                <!-- EXCLUSION -->
-                <!-- ===================== -->
-                <h5>Exclusion Criteria</h5>
-                <hr>
-
-                <div class="row">
-
-                    <div class="col-md-6" id="pregnant-wrapper">
-                        {{ form.pregnant.label_tag }}
-                        {{ form.pregnant|add_class:"form-select" }}
-                    </div>
-
-                    <div class="col-md-6" id="breastfeeding-wrapper">
-                        {{ form.breast_feeding.label_tag }}
-                        {{ form.breast_feeding|add_class:"form-select" }}
-                    </div>
-                    <div class="col-md-6">
-                        {{ form.ckd.label_tag }}
-                        {{ form.ckd|add_class:"form-select" }}
-                    </div>
-
-                    <div class="col-md-6">
-                        {{ form.liver_disease.label_tag }}
-                        {{ form.liver_disease|add_class:"form-select" }}
-                    </div>
-
-                </div>
-
-                <hr>
-
-                <!-- ===================== -->
-                <!-- ENROLLMENTS -->
-                <!-- ===================== -->
-                <h5 id="enrolled-header-wrapper"  style="display:none;">ENROLLMENTS</h5>
-                <hr id="enrolled-hr-wrapper"  style="display:none;">
-
-                <div class="row">
-
-                    <div class="col-md-3" id="enrolled-wrapper"  style="display:none;">
-                        {{ form.enrolled.label_tag }}
-                        {{ form.enrolled|add_class:"form-select" }}
-                    </div>
-
-                    <div class="col-md-3" id="reason-wrapper"  style="display:none;">
-                        {{ form.reason.label_tag }}
-                        {{ form.reason|add_class:"form-select" }}
-                    </div>
-                    <div class="col-md-6"  id="reason-other-wrapper"  style="display:none;">
-                        {{ form.reason_other.label_tag }}
-                        {{ form.reason_other|add_class:"form-control" }}
-                    </div>
-                    <div class="col-md-6"  id="reason-date-wrapper"  style="display:none;">
-                        {{ form.reason_date.label_tag }}
-                        {{ form.reason_date|add_class:"form-control" }}
-                    </div>
-
-                </div>
-
-                <hr>
-
-                <!-- ===================== -->
-                <!-- NOTES -->
-                <!-- ===================== -->
-                <h5>Remarks</h5>
-                <hr>
-
-                {{ form.remarks|add_class:"form-control" }}
-
-                <br><br>
-                <hr>
-
-                <button class="btn btn-primary">
-                    {% if is_update %} Update {% else %} Save {% endif %} Screening
-                </button>
-
-                <a href="{% url 'herbal:subjects-detail' subject.pk %}" class="btn btn-secondary">
-                    Cancel
-                </a>
-
-            </form>
-
+            </div>
         </div>
-    </div>
 
+        <!-- ================= EXCLUSION ================= -->
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-warning">Exclusion Criteria</div>
+            <div class="card-body row g-3">
+
+                <div class="col-md-6" id="pregnant-wrapper">
+                    {{ form.pregnant.label_tag }}
+                    {{ form.pregnant|add_class:"form-select" }}
+                </div>
+
+                <div class="col-md-6" id="breastfeeding-wrapper">
+                    {{ form.breast_feeding.label_tag }}
+                    {{ form.breast_feeding|add_class:"form-select" }}
+                </div>
+
+                <div class="col-md-6">
+                    {{ form.ckd.label_tag }}
+                    {{ form.ckd|add_class:"form-select" }}
+                </div>
+
+                <div class="col-md-6">
+                    {{ form.liver_disease.label_tag }}
+                    {{ form.liver_disease|add_class:"form-select" }}
+                </div>
+
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <strong>Eligibility:</strong>
+            <span id="eligibility-badge" class="badge bg-secondary">
+                Not evaluated
+            </span>
+        </div>
+        <!-- ================= ENROLLMENT ================= -->
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-secondary text-white" id="enrolled-header-wrapper" style="display:none;">
+                Enrollment
+            </div>
+
+            <div class="card-body row g-3">
+
+                <div class="col-md-3" id="enrolled-wrapper">
+                    {{ form.enrolled.label_tag }}
+                    {{ form.enrolled|add_class:"form-select" }}
+                </div>
+
+                <div class="col-md-3" id="reason-wrapper">
+                    {{ form.reason.label_tag }}
+                    {{ form.reason|add_class:"form-select" }}
+                </div>
+
+                <div class="col-md-6" id="reason-other-wrapper">
+                    {{ form.reason_other.label_tag }}
+                    {{ form.reason_other|add_class:"form-control" }}
+                </div>
+
+                <div class="col-md-6" id="reason-date-wrapper">
+                    {{ form.reason_date.label_tag }}
+                    {{ form.reason_date|add_class:"form-control" }}
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ================= REMARKS ================= -->
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header">Remarks</div>
+            <div class="card-body">
+                {{ form.remarks|add_class:"form-control" }}
+            </div>
+        </div>
+
+        <!-- ACTION -->
+        <div class="d-flex justify-content-between">
+            <a href="{% url 'herbal:subjects-detail' subject.pk %}" class="btn btn-secondary">Cancel</a>
+            <button class="btn btn-success px-4">
+                💾 {% if is_update %}Update{% else %}Save{% endif %}
+            </button>
+        </div>
+
+    </form>
 </div>
 
 {% endblock %}

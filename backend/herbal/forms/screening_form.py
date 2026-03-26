@@ -20,7 +20,7 @@ class ScreeningForm(forms.ModelForm):
 
             "consent_nimregenin",
             "nimregenin_date",
-            # "nimregenin_reasons",
+            "nimregenin_reasons",
             "nimregenin_other",
 
             # Inclusion
@@ -81,7 +81,7 @@ class ScreeningForm(forms.ModelForm):
 
             "consent_reasons": forms.Select(attrs={"class": "form-select"}),
             "consent_other": forms.Textarea(attrs={"class": "form-control", "rows": 3}),
-            # "nimregenin_reasons": forms.Textarea(attrs={"class": "form-control", "rows": 3}),
+            "nimregenin_reasons": forms.Select(attrs={"class": "form-select"}),
             "nimregenin_other": forms.Textarea(attrs={"class": "form-control", "rows": 3}),
     
             "enrolled": forms.Select(attrs={"class": "form-select"}),
