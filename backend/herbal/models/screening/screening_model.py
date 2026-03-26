@@ -19,7 +19,7 @@ class Screening(BaseModel):
     # =========================
     # CONSENT
     # =========================
-    consent = models.ForeignKey(YesNo, on_delete=models.SET_NULL, null=True, blank=True,related_name="+")
+    consent = models.ForeignKey(YesNoUnk, on_delete=models.SET_NULL, null=True, blank=True,related_name="+")
     consent_date = models.DateField(null=True, blank=True)
 
     consent_nimregenin = models.ForeignKey(YesNoUnk, on_delete=models.SET_NULL, null=True, blank=True,related_name="+")
@@ -33,14 +33,14 @@ class Screening(BaseModel):
     # =========================
     # INCLUSION
     # =========================
-    age_18 = models.ForeignKey(YesNo, on_delete=models.SET_NULL, null=True, blank=True,related_name="+")
-    biopsy = models.ForeignKey(YesNo, on_delete=models.SET_NULL, null=True, blank=True,related_name="+")
+    age_18 = models.ForeignKey(YesNoUnk, on_delete=models.SET_NULL, null=True, blank=True,related_name="+")
+    biopsy = models.ForeignKey(YesNoUnk, on_delete=models.SET_NULL, null=True, blank=True,related_name="+")
 
-    breast_cancer = models.ForeignKey(YesNo, on_delete=models.SET_NULL, null=True, blank=True,related_name="+")
-    brain_cancer = models.ForeignKey(YesNo, on_delete=models.SET_NULL, null=True, blank=True,related_name="+")
+    breast_cancer = models.ForeignKey(YesNoUnk, on_delete=models.SET_NULL, null=True, blank=True,related_name="+")
+    brain_cancer = models.ForeignKey(YesNoUnk, on_delete=models.SET_NULL, null=True, blank=True,related_name="+")
 
-    cervical_cancer = models.ForeignKey(YesNo, on_delete=models.SET_NULL, null=True, blank=True,related_name="+")
-    prostate_cancer = models.ForeignKey(YesNo, on_delete=models.SET_NULL, null=True, blank=True,related_name="+")
+    cervical_cancer = models.ForeignKey(YesNoUnk, on_delete=models.SET_NULL, null=True, blank=True,related_name="+")
+    prostate_cancer = models.ForeignKey(YesNoUnk, on_delete=models.SET_NULL, null=True, blank=True,related_name="+")
 
     cancer_types = models.ManyToManyField(
         CancerType,

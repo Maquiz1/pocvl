@@ -219,11 +219,11 @@ class ScreeningForm(forms.ModelForm):
         if self.is_yes(consent) and not consent_date:
             self.add_error("consent_date", "Consent date is required if consent is Yes.")
 
-        if self.is_no(consent) and not consent_reasons:
-            self.add_error("consent_reasons", "Conset Reason is required if consent is No.")
+        # if self.is_no(consent) and not consent_reasons:
+        #     self.add_error("consent_reasons", "Conset Reason is required if consent is No.")
 
-        if self.is_no(consent) and not consent_other:
-            self.add_error("consent_other", "Other Conset Reason is required if consent reason is Other.")
+        # if self.is_no(consent) and not consent_other:
+        #     self.add_error("consent_other", "Other Conset Reason is required if consent reason is Other.")
             
         # =========================
         # NIMREGENIN
