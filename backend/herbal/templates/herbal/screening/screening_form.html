@@ -82,7 +82,12 @@
 
                 <div class="mt-2" id="consent-reasons-wrapper" style="display:none;">
                     {{ form.consent_reasons.label_tag }}
-                    {{ form.consent_reasons|add_class:"form-control" }}
+                    {{ form.consent_reasons|add_class:"form-select" }}
+                </div>
+
+                <div class="mt-2" id="consent-other-wrapper" style="display:none;">
+                    {{ form.consent_other.label_tag }}
+                    {{ form.consent_other|add_class:"form-control" }}
                 </div>
 
                 <div class="mt-2" id="nimregenin-reasons-wrapper" style="display:none;">

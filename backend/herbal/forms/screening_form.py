@@ -16,6 +16,7 @@ class ScreeningForm(forms.ModelForm):
             "consent",
             "consent_date",
             "consent_reasons",
+            "consent_other",
 
             "consent_nimregenin",
             "nimregenin_date",
@@ -76,7 +77,8 @@ class ScreeningForm(forms.ModelForm):
             "ckd": forms.Select(attrs={"class": "form-select"}),
             "liver_disease": forms.Select(attrs={"class": "form-select"}),
 
-            "consent_reasons": forms.Textarea(attrs={"class": "form-control", "rows": 3}),
+            "consent_reasons": forms.Select(attrs={"class": "form-select"}),
+            "consent_other": forms.Textarea(attrs={"class": "form-control", "rows": 3}),
             "nimregenin_reasons": forms.Textarea(attrs={"class": "form-control", "rows": 3}),
             
             "enrolled": forms.Select(attrs={"class": "form-select"}),
@@ -191,6 +193,7 @@ class ScreeningForm(forms.ModelForm):
         consent = cleaned_data.get("consent")
         consent_date = cleaned_data.get("consent_date")
         consent_reasons = cleaned_data.get("consent_reasons")
+        consent_other = cleaned_data.get("consent_other")
 
         nimr = cleaned_data.get("consent_nimregenin")
         nimr_date = cleaned_data.get("nimregenin_date")
@@ -215,6 +218,9 @@ class ScreeningForm(forms.ModelForm):
         if self.is_no(consent) and not consent_reasons:
             self.add_error("consent_reasons", "Reason is required if consent is No.")
 
+        # if self.is_no(consent) and not consent_other:
+        #     self.add_error("consent_other", "Reason is required if consent is No.")
+            
         # =========================
         # NIMREGENIN
         # =========================

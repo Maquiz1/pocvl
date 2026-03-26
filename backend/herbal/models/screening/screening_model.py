@@ -25,7 +25,8 @@ class Screening(BaseModel):
     consent_nimregenin = models.ForeignKey(YesNoUnk, on_delete=models.SET_NULL, null=True, blank=True,related_name="+")
     nimregenin_date = models.DateField(null=True, blank=True)
 
-    consent_reasons = models.TextField(blank=True, null=True)
+    consent_reasons = models.ForeignKey(YesNoUnk, on_delete=models.SET_NULL, null=True, blank=True,related_name="+")
+    consent_other = models.TextField(blank=True)
     nimregenin_reasons = models.TextField(blank=True, null=True)
 
     # =========================

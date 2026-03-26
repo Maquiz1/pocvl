@@ -30,8 +30,10 @@ $(document).ready(function () {
         // ✅ Show reasons if NO
         if (isNo(val)) {
             $("#consent-reasons-wrapper").show();
+            $("#consent-other-wrapper").show();
         } else {
             $("#consent-reasons-wrapper").hide();
+            $("#consent-other-wrapper").hide();
             // optional reset:
             // $("#id_consent_reasons").val("");
         }
