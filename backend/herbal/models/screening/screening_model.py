@@ -27,7 +27,8 @@ class Screening(BaseModel):
 
     consent_reasons = models.ForeignKey(NotConsetReason, on_delete=models.SET_NULL, null=True, blank=True,related_name="+")
     consent_other = models.TextField(blank=True)
-    nimregenin_reasons = models.TextField(blank=True, null=True)
+    nimregenin_reasons = models.ForeignKey(NotConsetReason, on_delete=models.SET_NULL, null=True, blank=True,related_name="+")
+    nimregenin_other = models.TextField(blank=True)
 
     # =========================
     # INCLUSION

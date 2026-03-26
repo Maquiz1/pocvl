@@ -92,7 +92,12 @@
 
                 <div class="mt-2" id="nimregenin-reasons-wrapper" style="display:none;">
                     {{ form.nimregenin_reasons.label_tag }}
-                    {{ form.nimregenin_reasons|add_class:"form-control" }}
+                    {{ form.nimregenin_reasons|add_class:"form-select" }}
+                </div>
+
+                <div class="mt-2" id="nimregenin-other-wrapper" style="display:none;">
+                    {{ form.nimregenin_other.label_tag }}
+                    {{ form.nimregenin_other|add_class:"form-control" }}
                 </div>
 
                 <hr>
@@ -250,7 +255,8 @@
 {% block scripts %}
 <script src="{% static 'js/screening/sex.js' %}"></script>
 <script src="{% static 'js/screening/consent.js' %}"></script>
+<script src="{% static 'js/screening/consent_reason.js' %}"></script>
 <script src="{% static 'js/screening/nimregenin.js' %}"></script>
-<!-- <script src="{% static 'js/screening/eligible.js' %}"></script> -->
+<script src="{% static 'js/screening/nimregenin_reason.js' %}"></script>
 <script src="{% static 'js/screening/enrolled.js' %}"></script>
 {% endblock %}

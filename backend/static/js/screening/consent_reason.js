@@ -11,27 +11,22 @@ $(document).ready(function () {
         return val === "2";
     }
 
+    function isOther(val) {
+        return val === "16";
+    }
+
     // =========================
     // CONSENT DATE + REASONS
     // =========================
-    function toggleConsentFields() {
+    function toggleConsentReasonFields() {
 
-        const val = $("#id_consent").val();
-
-        // ✅ Show date if YES
-        if (isYes(val)) {
-            $("#consent-date-wrapper").show();
-        } else {
-            $("#consent-date-wrapper").hide();
-            // optional reset:
-            // $("#id_consent_date").val("");
-        }
+        const val = $("#id_consent_reasons").val();
 
         // ✅ Show reasons if NO
-        if (isNo(val)) {
-            $("#consent-reasons-wrapper").show();
+        if (isOther(val)) {
+            $("#consent-other-wrapper").show();
         } else {
-            $("#consent-reasons-wrapper").hide();
+            $("#consent-other-wrapper").hide();
             // optional reset:
             // $("#id_consent_reasons").val("");
         }
@@ -40,11 +35,11 @@ $(document).ready(function () {
     // =========================
     // EVENTS
     // =========================
-    $("#id_consent").on("change", toggleConsentFields);
+    $("#id_consent_reasons").on("change", toggleConsentReasonFields);
 
     // =========================
     // INITIAL LOAD
     // =========================
-    toggleConsentFields();
+    toggleConsentReasonFields();
 
 });

@@ -20,7 +20,8 @@ class ScreeningForm(forms.ModelForm):
 
             "consent_nimregenin",
             "nimregenin_date",
-            "nimregenin_reasons",
+            # "nimregenin_reasons",
+            "nimregenin_other",
 
             # Inclusion
             "age_18",
@@ -63,6 +64,7 @@ class ScreeningForm(forms.ModelForm):
 
             "consent": forms.Select(attrs={"class": "form-select"}),
             "consent_nimregenin": forms.Select(attrs={"class": "form-select"}),
+
             "age_18": forms.Select(attrs={"class": "form-select"}),
             "biopsy": forms.Select(attrs={"class": "form-select"}),
             "breast_cancer": forms.Select(attrs={"class": "form-select"}),
@@ -79,8 +81,9 @@ class ScreeningForm(forms.ModelForm):
 
             "consent_reasons": forms.Select(attrs={"class": "form-select"}),
             "consent_other": forms.Textarea(attrs={"class": "form-control", "rows": 3}),
-            "nimregenin_reasons": forms.Textarea(attrs={"class": "form-control", "rows": 3}),
-            
+            # "nimregenin_reasons": forms.Textarea(attrs={"class": "form-control", "rows": 3}),
+            "nimregenin_other": forms.Textarea(attrs={"class": "form-control", "rows": 3}),
+    
             "enrolled": forms.Select(attrs={"class": "form-select"}),
             "reason": forms.Select(attrs={"class": "form-select"}),
             "reason_other": forms.Textarea(attrs={"class": "form-control", "rows": 3}),
@@ -198,6 +201,7 @@ class ScreeningForm(forms.ModelForm):
         nimr = cleaned_data.get("consent_nimregenin")
         nimr_date = cleaned_data.get("nimregenin_date")
         nimr_reasons = cleaned_data.get("nimregenin_reasons")
+        nimregenin_other = cleaned_data.get("nimregenin_other")
 
         breast = cleaned_data.get("breast_cancer")
         brain = cleaned_data.get("brain_cancer")
@@ -216,10 +220,10 @@ class ScreeningForm(forms.ModelForm):
             self.add_error("consent_date", "Consent date is required if consent is Yes.")
 
         if self.is_no(consent) and not consent_reasons:
-            self.add_error("consent_reasons", "Reason is required if consent is No.")
+            self.add_error("consent_reasons", "Conset Reason is required if consent is No.")
 
-        # if self.is_no(consent) and not consent_other:
-        #     self.add_error("consent_other", "Reason is required if consent is No.")
+        if self.is_no(consent) and not consent_other:
+            self.add_error("consent_other", "Other Conset Reason is required if consent reason is Other.")
             
         # =========================
         # NIMREGENIN
@@ -229,7 +233,10 @@ class ScreeningForm(forms.ModelForm):
                 self.add_error("nimregenin_date", "Date is required if YES.")
 
             elif nimr.value == 2 and not nimr_reasons:
-                self.add_error("nimregenin_reasons", "Reason is required if NO.")
+                self.add_error("nimregenin_reasons", "Nimregenin Reason is required if NO.")
+                
+            elif nimr_reasons.value == 16 and not nimregenin_other:
+                self.add_error("nimregenin_other", "Nimregenin Other Reason is required if Other.")
 
         # =========================
         # CANCER TYPES
