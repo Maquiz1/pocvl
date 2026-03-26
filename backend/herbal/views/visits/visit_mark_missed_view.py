@@ -1,5 +1,5 @@
 from herbal.models.visits.visit_schedule_model import VisitSchedule
-from choices.models import MissedVisitReason  # 👈 ADD THIS
+from choices.models import MissedVisitReason
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
