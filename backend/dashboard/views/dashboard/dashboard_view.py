@@ -150,7 +150,7 @@ def dashboard_view(request):
         "cancer_type__name"
     ).annotate(
         target=Sum("target_enrollment")
-    )
+    ).order_by("site__name", "cancer_type__name")
 
     # enrolled_data MUST be site + cancer
     enrolled_data = Enrollment.objects.filter(
@@ -180,7 +180,12 @@ def dashboard_view(request):
             "target_enrollment": t["target"],
             "enrolled": enrolled_map.get((site, cancer), 0)
         })
-
+        
+    # Final safety sort (optional but safe)
+    detailed_progress = sorted(
+        detailed_progress,
+        key=lambda x: (x["site__name"], x["cancer_type__name"])
+    )
     # =========================
     # PATIENT STATS
     # =========================
