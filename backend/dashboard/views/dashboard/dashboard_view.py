@@ -108,6 +108,7 @@ def dashboard_view(request):
     # =========================
     # 1. TARGETS (no joins → correct)
     target_data = targets.values(
+        "site__name",
         "cancer_type__name"
     ).annotate(
         target=Sum("target_enrollment")
@@ -117,6 +118,7 @@ def dashboard_view(request):
     enrolled_data = Enrollment.objects.filter(
         screening__subject__in=subjects
     ).values(
+        "screening__subject__site__name",
         "screening__cancer_types__name"
     ).annotate(
         enrolled=Count("id")
@@ -124,7 +126,7 @@ def dashboard_view(request):
 
     # 3. Merge manually
     enrolled_map = {
-        e["screening__cancer_types__name"]: e["enrolled"]
+        (e["screening__subject__site__name"], e["screening__cancer_types__name"]): e["enrolled"]
         for e in enrolled_data
     }
 
@@ -140,16 +142,18 @@ def dashboard_view(request):
     # =========================
     # 🔬 SITE × CANCER (FIXED)
     # =========================
-    detailed_progress = targets.values(
-        "site__name",
-        "cancer_type__name",
-        "target_enrollment"
-    ).annotate(
-        enrolled=Count(
-            "cancer_type__screening_cancer__enrollment",
-            distinct=True
-        )
-    )
+    detailed_progress = []
+
+    for t in target_data:
+        site = t["site__name"]
+        cancer = t["cancer_type__name"]
+
+        detailed_progress.append({
+            "site__name": site,
+            "cancer_type__name": cancer,
+            "target_enrollment": t["target"],
+            "enrolled": enrolled_map.get((site, cancer), 0)
+        })
 
     # =========================
     # PATIENT STATS
