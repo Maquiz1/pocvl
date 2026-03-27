@@ -89,10 +89,14 @@ class Enrollment(BaseModel):
     # ✅ CYCLES
     # =========================
     total_cycle = models.PositiveIntegerField(
+        null=True,
+        blank=True,
         help_text="Total planned treatment cycles"
     )
 
     cycle_number = models.PositiveIntegerField(
+        null=True,
+        blank=True,
         help_text="Current cycle number"
     )
 
