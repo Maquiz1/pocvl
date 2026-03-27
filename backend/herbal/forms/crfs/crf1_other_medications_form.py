@@ -27,6 +27,17 @@ class CRF1OtherMedicalForm(forms.ModelForm):
                 "class": "form-control"
             }),
         }
+        
+    def clean(self):
+        cleaned_data = super().clean()
+
+        med = cleaned_data.get("other_medical_medicatn")
+        name = cleaned_data.get("other_medicatn_name")
+
+        if med and not name:
+            self.add_error("other_medicatn_name", "Provide medication name")
+
+        return cleaned_data
 
 
 CRF1OtherMedicalFormSet = inlineformset_factory(

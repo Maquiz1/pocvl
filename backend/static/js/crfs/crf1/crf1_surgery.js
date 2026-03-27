@@ -1,57 +1,119 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    const SurgeryPerformed = document.getElementById("id_surgery_performed");
+    const surgeryPerformed = document.getElementById("id_surgery_performed");
     const tableCard = document.getElementById("surgery-table");
     const addBtn = document.getElementById("add-surgery");
     const tbody = document.getElementById("surgery-body");
-    const totalForms = document.getElementById("id_surgeries-TOTAL_FORMS");
+    const totalForms = document.querySelector("input[name='surgeries-TOTAL_FORMS']");
+    const emptyForm = document.getElementById("surgery-empty-form");
 
+    // console.log({
+    //     surgeryPerformed,
+    //     tableCard,
+    //     addBtn,
+    //     tbody,
+    //     totalForms,
+    //     emptyForm
+    // });
+
+    // 🔥 SAFETY CHECK
+    if (!surgeryPerformed || !tableCard || !addBtn || !tbody || !totalForms || !emptyForm) {
+        console.error("❌ Surgery setup failed");
+        return;
+    }
+
+    function isYes(select) {
+        if (!select) return false;
+        return ["1", "yes", "true", "True"].includes(select.value);
+    }
+
+    // =========================
+    // SHOW / HIDE TABLE
+    // =========================
     function toggleTable() {
-        const valText = SurgeryPerformed.options[SurgeryPerformed.selectedIndex].text.toLowerCase();
-
         const hasRows = tbody.querySelectorAll(".surgery-row:not([style*='display: none'])").length > 0;
 
-        if (valText === "yes" || hasRows) {
-            tableCard.style.display = "";
+        if (isYes(surgeryPerformed) || hasRows) {
+            tableCard.style.display = "block";
         } else {
             tableCard.style.display = "none";
         }
 
-        // ✅ HERE
-        addBtn.disabled = valText !== "yes";
+        addBtn.disabled = !isYes(surgeryPerformed);
     }
 
-    SurgeryPerformed.addEventListener("change", toggleTable);
+    surgeryPerformed.addEventListener("change", toggleTable);
     toggleTable();
 
+    // =========================
+    // ADD ROW
+    // =========================
     addBtn.addEventListener("click", function () {
-        let count = parseInt(totalForms.value);
-        let template = document.getElementById("surgery-empty").innerHTML.replace(/__prefix__/g, count);
+        let formCount = parseInt(totalForms.value);
+        let template = emptyForm.innerHTML;
 
-        const temp = document.createElement("tbody");
-        temp.innerHTML = template;
+        if (!template) {
+            console.error("Empty form template not found!");
+            return;
+        }
 
-        tbody.appendChild(temp.firstElementChild);
-        totalForms.value = count + 1;
+        template = template.replace(/__prefix__/g, formCount);
+
+        const tempDiv = document.createElement("tbody");
+        tempDiv.innerHTML = template.trim();
+
+        const newRow = tempDiv.firstElementChild;
+        if (!newRow) {
+            console.error("Failed to create new row");
+            return;
+        }
+
+        tbody.appendChild(newRow);
+        totalForms.value = formCount + 1;
 
         toggleTable();
     });
 
+    // =========================
+    // REMOVE ROW (SMART)
+    // =========================
     tbody.addEventListener("click", function (e) {
         if (e.target.classList.contains("remove-surgery")) {
             const row = e.target.closest("tr");
-            const del = row.querySelector("input[type='checkbox']");
+            const deleteInput = row.querySelector("input[name$='-DELETE']");
 
-            if (del) {
-                del.checked = true;
+            if (deleteInput) {
+                // existing row → soft delete
+                deleteInput.checked = true;
                 row.style.display = "none";
             } else {
+                // new row → remove only
                 row.remove();
-                totalForms.value = tbody.querySelectorAll(".surgery-row").length;
             }
 
             toggleTable();
         }
+    });
+
+    // =========================
+    // PREVENT EMPTY ROWS
+    // =========================
+    document.querySelector("form").addEventListener("submit", function () {
+        tbody.querySelectorAll(".surgery-row").forEach(row => {
+            const inputs = row.querySelectorAll("input, select, textarea");
+            let hasValue = false;
+
+            inputs.forEach(input => {
+                if (input.type !== "checkbox" && input.value.trim() !== "") {
+                    hasValue = true;
+                }
+            });
+
+            if (!hasValue) {
+                const del = row.querySelector("input[type='checkbox']");
+                if (del) del.checked = true;
+            }
+        });
     });
 
 });

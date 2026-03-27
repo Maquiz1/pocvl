@@ -11,9 +11,6 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!NimregeninHerbal || !tableCard || !addBtn || !tbody || !totalForms || !emptyForm) {
         console.error("❌ Nimregenin setup failed");
         return;
-    }else {
-        console.error("Good Nimregeini");
-
     }
 
     function isYes(select) {

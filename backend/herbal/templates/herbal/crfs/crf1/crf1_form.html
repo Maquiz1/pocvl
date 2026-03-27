@@ -209,6 +209,12 @@
 
                                 {{ other_formset.management_form }}
 
+                                {% if other_formset.non_form_errors %}
+                                    <div class="alert alert-danger">
+                                        {{ other_formset.non_form_errors }}
+                                    </div>
+                                {% endif %}
+
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
@@ -223,42 +229,90 @@
                                     <tbody id="other-body">
                                         {% for f in other_formset %}
                                         <tr class="other-row">
+
                                             {% for hidden in f.hidden_fields %}
-                                            {{ hidden }}
+                                                {{ hidden }}
                                             {% endfor %}
-                                            <td>{{ f.other_specify }}</td>
-                                            <td>{{ f.other_medical_medicatn }}</td>
-                                            <td>{{ f.other_medicatn_name }}</td>
-                                            <td>{{ f.medication_remarks }}</td>
+
+                                            <!-- Other Specify -->
+                                            <td>
+                                                {% if f.other_specify.errors %}
+                                                    {{ f.other_specify|add_class:"is-invalid" }}
+                                                    <div class="invalid-feedback d-block">
+                                                        {{ f.other_specify.errors|striptags }}
+                                                    </div>
+                                                {% else %}
+                                                    {{ f.other_specify }}
+                                                {% endif %}
+                                            </td>
+
+                                            <!-- Medication -->
+                                            <td>
+                                                {% if f.other_medical_medicatn.errors %}
+                                                    {{ f.other_medical_medicatn|add_class:"is-invalid" }}
+                                                    <div class="invalid-feedback d-block">
+                                                        {{ f.other_medical_medicatn.errors|striptags }}
+                                                    </div>
+                                                {% else %}
+                                                    {{ f.other_medical_medicatn }}
+                                                {% endif %}
+                                            </td>
+
+                                            <!-- Medication Name -->
+                                            <td>
+                                                {% if f.other_medicatn_name.errors %}
+                                                    {{ f.other_medicatn_name|add_class:"is-invalid" }}
+                                                    <div class="invalid-feedback d-block">
+                                                        {{ f.other_medicatn_name.errors|striptags }}
+                                                    </div>
+                                                {% else %}
+                                                    {{ f.other_medicatn_name }}
+                                                {% endif %}
+                                            </td>
+
+                                            <!-- Remarks -->
+                                            <td>
+                                                {% if f.medication_remarks.errors %}
+                                                    {{ f.medication_remarks|add_class:"is-invalid" }}
+                                                    <div class="invalid-feedback d-block">
+                                                        {{ f.medication_remarks.errors|striptags }}
+                                                    </div>
+                                                {% else %}
+                                                    {{ f.medication_remarks }}
+                                                {% endif %}
+                                            </td>
+
                                             <td>
                                                 {{ f.DELETE|add_class:"d-none" }}
-                                                <button type="button" class="btn btn-sm btn-danger remove-row">
-                                                    ✕
-                                                </button>
+                                                <button type="button" class="btn btn-sm btn-danger remove-row">✕</button>
                                             </td>
+
                                         </tr>
                                         {% endfor %}
                                     </tbody>
                                 </table>
+
+                                <!-- EMPTY FORM TEMPLATE -->
                                 <script type="text/template" id="other-empty-form">
                                 {% autoescape off %}
                                 <tr class="other-row">
+
                                     {% for hidden in other_formset.empty_form.hidden_fields %}
                                         {{ hidden }}
                                     {% endfor %}
-                                        <td>{{ other_formset.empty_form.other_specify }}</td>
-                                        <td>{{ other_formset.empty_form.other_medical_medicatn }}</td>
-                                        <td>{{ other_formset.empty_form.other_medicatn_name }}</td>
-                                        <td>{{ other_formset.empty_form.medication_remarks }}</td>
-                                        <td>
-                                            {{ other_formset.empty_form.DELETE|add_class:"d-none" }}
-                                            <button type="button" class="btn btn-sm btn-danger remove-row">
-                                                ✕
-                                            </button>
-                                        </td>
-                                    </tr>
+
+                                    <td>{{ other_formset.empty_form.other_specify }}</td>
+                                    <td>{{ other_formset.empty_form.other_medical_medicatn }}</td>
+                                    <td>{{ other_formset.empty_form.other_medicatn_name }}</td>
+                                    <td>{{ other_formset.empty_form.medication_remarks }}</td>
+                                    <td>
+                                        {{ other_formset.empty_form.DELETE|add_class:"d-none" }}
+                                        <button type="button" class="btn btn-sm btn-danger remove-row">✕</button>
+                                    </td>
+                                </tr>
                                 {% endautoescape %}
                                 </script>
+
                                 <button type="button" class="btn btn-sm btn-primary" id="add-row">
                                     + Add Row
                                 </button>
@@ -274,6 +328,12 @@
                             <div class="card-body">
 
                                 {{ nimregenin_formset.management_form }}
+
+                                {% if nimregenin_formset.non_form_errors %}
+                                    <div class="alert alert-danger">
+                                        {{ nimregenin_formset.non_form_errors }}
+                                    </div>
+                                {% endif %}
 
                                 <table class="table table-bordered">
                                     <thead>
@@ -292,40 +352,127 @@
                                     <tbody id="nimregenin-body">
                                         {% for f in nimregenin_formset %}
                                         <tr class="nimregenin-row">
-                                            <td>{{ f.nimregenin_preparation }}</td>
-                                            <td>{{ f.nimregenin_start }}</td>
-                                            <td>{{ f.nimregenin_ongoing }}</td>
-                                            <td>{{ f.nimregenin_end }}</td>
-                                            <td>{{ f.nimregenin_dose }}</td>
-                                            <td>{{ f.nimregenin_frequency }}</td>
-                                            <td>{{ f.nimregenin_remarks }}</td>
+
+                                            {% for hidden in f.hidden_fields %}
+                                                {{ hidden }}
+                                            {% endfor %}
+
+                                            <!-- Preparation -->
+                                            <td>
+                                                {% if f.nimregenin_preparation.errors %}
+                                                    {{ f.nimregenin_preparation|add_class:"is-invalid" }}
+                                                    <div class="invalid-feedback d-block">
+                                                        {{ f.nimregenin_preparation.errors|striptags }}
+                                                    </div>
+                                                {% else %}
+                                                    {{ f.nimregenin_preparation }}
+                                                {% endif %}
+                                            </td>
+
+                                            <!-- Start -->
+                                            <td>
+                                                {% if f.nimregenin_start.errors %}
+                                                    {{ f.nimregenin_start|add_class:"is-invalid" }}
+                                                    <div class="invalid-feedback d-block">
+                                                        {{ f.nimregenin_start.errors|striptags }}
+                                                    </div>
+                                                {% else %}
+                                                    {{ f.nimregenin_start }}
+                                                {% endif %}
+                                            </td>
+
+                                            <!-- Ongoing -->
+                                            <td>
+                                                {% if f.nimregenin_ongoing.errors %}
+                                                    {{ f.nimregenin_ongoing|add_class:"is-invalid" }}
+                                                    <div class="invalid-feedback d-block">
+                                                        {{ f.nimregenin_ongoing.errors|striptags }}
+                                                    </div>
+                                                {% else %}
+                                                    {{ f.nimregenin_ongoing }}
+                                                {% endif %}
+                                            </td>
+
+                                            <!-- End -->
+                                            <td>
+                                                {% if f.nimregenin_end.errors %}
+                                                    {{ f.nimregenin_end|add_class:"is-invalid" }}
+                                                    <div class="invalid-feedback d-block">
+                                                        {{ f.nimregenin_end.errors|striptags }}
+                                                    </div>
+                                                {% else %}
+                                                    {{ f.nimregenin_end }}
+                                                {% endif %}
+                                            </td>
+
+                                            <!-- Dose -->
+                                            <td>
+                                                {% if f.nimregenin_dose.errors %}
+                                                    {{ f.nimregenin_dose|add_class:"is-invalid" }}
+                                                    <div class="invalid-feedback d-block">
+                                                        {{ f.nimregenin_dose.errors|striptags }}
+                                                    </div>
+                                                {% else %}
+                                                    {{ f.nimregenin_dose }}
+                                                {% endif %}
+                                            </td>
+
+                                            <!-- Frequency -->
+                                            <td>
+                                                {% if f.nimregenin_frequency.errors %}
+                                                    {{ f.nimregenin_frequency|add_class:"is-invalid" }}
+                                                    <div class="invalid-feedback d-block">
+                                                        {{ f.nimregenin_frequency.errors|striptags }}
+                                                    </div>
+                                                {% else %}
+                                                    {{ f.nimregenin_frequency }}
+                                                {% endif %}
+                                            </td>
+
+                                            <!-- Remarks -->
+                                            <td>
+                                                {% if f.nimregenin_remarks.errors %}
+                                                    {{ f.nimregenin_remarks|add_class:"is-invalid" }}
+                                                    <div class="invalid-feedback d-block">
+                                                        {{ f.nimregenin_remarks.errors|striptags }}
+                                                    </div>
+                                                {% else %}
+                                                    {{ f.nimregenin_remarks }}
+                                                {% endif %}
+                                            </td>
+
                                             <td>
                                                 {{ f.DELETE|add_class:"d-none" }}
-                                                <button type="button" class="btn btn-sm btn-danger remove-nimregenin">
-                                                    ✕
-                                                </button>
+                                                <button type="button" class="btn btn-sm btn-danger remove-nimregenin">✕</button>
                                             </td>
+
                                         </tr>
                                         {% endfor %}
                                     </tbody>
                                 </table>
 
+                                <!-- EMPTY FORM TEMPLATE -->
                                 <script type="text/template" id="nimregenin-empty-form">
-                                    <tr class="nimregenin-row">
-                                        <td>{{ nimregenin_formset.empty_form.nimregenin_preparation }}</td>
-                                        <td>{{ nimregenin_formset.empty_form.nimregenin_start }}</td>
-                                        <td>{{ nimregenin_formset.empty_form.nimregenin_ongoing }}</td>
-                                        <td>{{ nimregenin_formset.empty_form.nimregenin_end }}</td>
-                                        <td>{{ nimregenin_formset.empty_form.nimregenin_dose }}</td>
-                                        <td>{{ nimregenin_formset.empty_form.nimregenin_frequency }}</td>
-                                        <td>{{ nimregenin_formset.empty_form.nimregenin_remarks }}</td>
-                                        <td>
-                                            {{ nimregenin_formset.empty_form.DELETE|add_class:"d-none" }}
-                                            <button type="button" class="btn btn-sm btn-danger remove-nimregenin">
-                                                ✕
-                                            </button>
-                                        </td>
-                                    </tr>
+                                {% autoescape off %}
+                                <tr class="nimregenin-row">
+
+                                    {% for hidden in nimregenin_formset.empty_form.hidden_fields %}
+                                        {{ hidden }}
+                                    {% endfor %}
+
+                                    <td>{{ nimregenin_formset.empty_form.nimregenin_preparation }}</td>
+                                    <td>{{ nimregenin_formset.empty_form.nimregenin_start }}</td>
+                                    <td>{{ nimregenin_formset.empty_form.nimregenin_ongoing }}</td>
+                                    <td>{{ nimregenin_formset.empty_form.nimregenin_end }}</td>
+                                    <td>{{ nimregenin_formset.empty_form.nimregenin_dose }}</td>
+                                    <td>{{ nimregenin_formset.empty_form.nimregenin_frequency }}</td>
+                                    <td>{{ nimregenin_formset.empty_form.nimregenin_remarks }}</td>
+                                    <td>
+                                        {{ nimregenin_formset.empty_form.DELETE|add_class:"d-none" }}
+                                        <button type="button" class="btn btn-sm btn-danger remove-nimregenin">✕</button>
+                                    </td>
+                                </tr>
+                                {% endautoescape %}
                                 </script>
 
                                 <button type="button" class="btn btn-primary btn-sm" id="add-nimregenin">
@@ -334,6 +481,7 @@
 
                             </div>
                         </div>
+
                         <hr>
                         <div id="herbal-table" style="display:none;" class="card mb-4 border-0 shadow-sm">
 
@@ -344,6 +492,12 @@
                             <div class="card-body">
 
                                 {{ herbal_formset.management_form }}
+
+                                {% if herbal_formset.non_form_errors %}
+                                    <div class="alert alert-danger">
+                                        {{ herbal_formset.non_form_errors }}
+                                    </div>
+                                {% endif %}
 
                                 <table class="table table-bordered">
                                     <thead>
@@ -362,44 +516,135 @@
                                     <tbody id="herbal-body">
                                         {% for f in herbal_formset %}
                                         <tr class="herbal-row">
-                                            <td>{{ f.herbal_preparation }}</td>
-                                            <td>{{ f.herbal_start }}</td>
-                                            <td>{{ f.herbal_ongoing }}</td>
-                                            <td>{{ f.herbal_end }}</td>
-                                            <td>{{ f.herbal_dose }}</td>
-                                            <td>{{ f.herbal_frequency }}</td>
-                                            <td>{{ f.herbal_remarks }}</td>
+
+                                            {% for hidden in f.hidden_fields %}
+                                                {{ hidden }}
+                                            {% endfor %}
+
+                                            <!-- Preparation -->
+                                            <td>
+                                                {% if f.herbal_preparation.errors %}
+                                                    {{ f.herbal_preparation|add_class:"is-invalid" }}
+                                                    <div class="invalid-feedback d-block">
+                                                        {{ f.herbal_preparation.errors|striptags }}
+                                                    </div>
+                                                {% else %}
+                                                    {{ f.herbal_preparation }}
+                                                {% endif %}
+                                            </td>
+
+                                            <!-- Start -->
+                                            <td>
+                                                {% if f.herbal_start.errors %}
+                                                    {{ f.herbal_start|add_class:"is-invalid" }}
+                                                    <div class="invalid-feedback d-block">
+                                                        {{ f.herbal_start.errors|striptags }}
+                                                    </div>
+                                                {% else %}
+                                                    {{ f.herbal_start }}
+                                                {% endif %}
+                                            </td>
+
+                                            <!-- Ongoing -->
+                                            <td>
+                                                {% if f.herbal_ongoing.errors %}
+                                                    {{ f.herbal_ongoing|add_class:"is-invalid" }}
+                                                    <div class="invalid-feedback d-block">
+                                                        {{ f.herbal_ongoing.errors|striptags }}
+                                                    </div>
+                                                {% else %}
+                                                    {{ f.herbal_ongoing }}
+                                                {% endif %}
+                                            </td>
+
+                                            <!-- End -->
+                                            <td>
+                                                {% if f.herbal_end.errors %}
+                                                    {{ f.herbal_end|add_class:"is-invalid" }}
+                                                    <div class="invalid-feedback d-block">
+                                                        {{ f.herbal_end.errors|striptags }}
+                                                    </div>
+                                                {% else %}
+                                                    {{ f.herbal_end }}
+                                                {% endif %}
+                                            </td>
+
+                                            <!-- Dose -->
+                                            <td>
+                                                {% if f.herbal_dose.errors %}
+                                                    {{ f.herbal_dose|add_class:"is-invalid" }}
+                                                    <div class="invalid-feedback d-block">
+                                                        {{ f.herbal_dose.errors|striptags }}
+                                                    </div>
+                                                {% else %}
+                                                    {{ f.herbal_dose }}
+                                                {% endif %}
+                                            </td>
+
+                                            <!-- Frequency -->
+                                            <td>
+                                                {% if f.herbal_frequency.errors %}
+                                                    {{ f.herbal_frequency|add_class:"is-invalid" }}
+                                                    <div class="invalid-feedback d-block">
+                                                        {{ f.herbal_frequency.errors|striptags }}
+                                                    </div>
+                                                {% else %}
+                                                    {{ f.herbal_frequency }}
+                                                {% endif %}
+                                            </td>
+
+                                            <!-- Remarks -->
+                                            <td>
+                                                {% if f.herbal_remarks.errors %}
+                                                    {{ f.herbal_remarks|add_class:"is-invalid" }}
+                                                    <div class="invalid-feedback d-block">
+                                                        {{ f.herbal_remarks.errors|striptags }}
+                                                    </div>
+                                                {% else %}
+                                                    {{ f.herbal_remarks }}
+                                                {% endif %}
+                                            </td>
+
                                             <td>
                                                 {{ f.DELETE|add_class:"d-none" }}
-                                                <button type="button"
-                                                    class="btn btn-sm btn-danger remove-herbal">✕</button>
+                                                <button type="button" class="btn btn-sm btn-danger remove-herbal">✕</button>
                                             </td>
+
                                         </tr>
                                         {% endfor %}
                                     </tbody>
                                 </table>
 
+                                <!-- EMPTY FORM TEMPLATE -->
                                 <script type="text/template" id="herbal-empty-form">
-                            <tr class="herbal-row">
-                                <td>{{ herbal_formset.empty_form.herbal_preparation }}</td>
-                                <td>{{ herbal_formset.empty_form.herbal_start }}</td>
-                                <td>{{ herbal_formset.empty_form.herbal_ongoing }}</td>
-                                <td>{{ herbal_formset.empty_form.herbal_end }}</td>
-                                <td>{{ herbal_formset.empty_form.herbal_dose }}</td>
-                                <td>{{ herbal_formset.empty_form.herbal_frequency }}</td>
-                                <td>{{ herbal_formset.empty_form.herbal_remarks }}</td>
-                                <td>
-                                    {{ herbal_formset.empty_form.DELETE|add_class:"d-none" }}
-                                    <button type="button" class="btn btn-sm btn-danger remove-herbal">✕</button>
-                                </td>
-                            </tr>
-                            </script>
+                                {% autoescape off %}
+                                <tr class="herbal-row">
+
+                                    {% for hidden in herbal_formset.empty_form.hidden_fields %}
+                                        {{ hidden }}
+                                    {% endfor %}
+
+                                    <td>{{ herbal_formset.empty_form.herbal_preparation }}</td>
+                                    <td>{{ herbal_formset.empty_form.herbal_start }}</td>
+                                    <td>{{ herbal_formset.empty_form.herbal_ongoing }}</td>
+                                    <td>{{ herbal_formset.empty_form.herbal_end }}</td>
+                                    <td>{{ herbal_formset.empty_form.herbal_dose }}</td>
+                                    <td>{{ herbal_formset.empty_form.herbal_frequency }}</td>
+                                    <td>{{ herbal_formset.empty_form.herbal_remarks }}</td>
+                                    <td>
+                                        {{ herbal_formset.empty_form.DELETE|add_class:"d-none" }}
+                                        <button type="button" class="btn btn-sm btn-danger remove-herbal">✕</button>
+                                    </td>
+                                </tr>
+                                {% endautoescape %}
+                                </script>
 
                                 <button type="button" class="btn btn-primary btn-sm" id="add-herbal">
                                     + Add Herbal
                                 </button>
                             </div>
                         </div>
+
                     </div>
                 </div>
                 <hr>
@@ -436,6 +681,12 @@
 
                                 {{ radio_formset.management_form }}
 
+                                {% if radio_formset.non_form_errors %}
+                                    <div class="alert alert-danger">
+                                        {{ radio_formset.non_form_errors }}
+                                    </div>
+                                {% endif %}
+
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
@@ -453,25 +704,114 @@
                                     <tbody id="radio-body">
                                         {% for f in radio_formset %}
                                         <tr class="radio-row">
-                                            <td>{{ f.radiotherapy }}</td>
-                                            <td>{{ f.radiotherapy_start }}</td>
-                                            <td>{{ f.radiotherapy_ongoing }}</td>
-                                            <td>{{ f.radiotherapy_end }}</td>
-                                            <td>{{ f.radiotherapy_dose }}</td>
-                                            <td>{{ f.radiotherapy_frequency }}</td>
-                                            <td>{{ f.radiotherapy_remarks }}</td>
+
+                                            {% for hidden in f.hidden_fields %}
+                                                {{ hidden }}
+                                            {% endfor %}
+
+                                            <!-- Type -->
+                                            <td>
+                                                {% if f.radiotherapy.errors %}
+                                                    {{ f.radiotherapy|add_class:"is-invalid" }}
+                                                    <div class="invalid-feedback d-block">
+                                                        {{ f.radiotherapy.errors|striptags }}
+                                                    </div>
+                                                {% else %}
+                                                    {{ f.radiotherapy }}
+                                                {% endif %}
+                                            </td>
+
+                                            <!-- Start -->
+                                            <td>
+                                                {% if f.radiotherapy_start.errors %}
+                                                    {{ f.radiotherapy_start|add_class:"is-invalid" }}
+                                                    <div class="invalid-feedback d-block">
+                                                        {{ f.radiotherapy_start.errors|striptags }}
+                                                    </div>
+                                                {% else %}
+                                                    {{ f.radiotherapy_start }}
+                                                {% endif %}
+                                            </td>
+
+                                            <!-- Ongoing -->
+                                            <td>
+                                                {% if f.radiotherapy_ongoing.errors %}
+                                                    {{ f.radiotherapy_ongoing|add_class:"is-invalid" }}
+                                                    <div class="invalid-feedback d-block">
+                                                        {{ f.radiotherapy_ongoing.errors|striptags }}
+                                                    </div>
+                                                {% else %}
+                                                    {{ f.radiotherapy_ongoing }}
+                                                {% endif %}
+                                            </td>
+
+                                            <!-- End -->
+                                            <td>
+                                                {% if f.radiotherapy_end.errors %}
+                                                    {{ f.radiotherapy_end|add_class:"is-invalid" }}
+                                                    <div class="invalid-feedback d-block">
+                                                        {{ f.radiotherapy_end.errors|striptags }}
+                                                    </div>
+                                                {% else %}
+                                                    {{ f.radiotherapy_end }}
+                                                {% endif %}
+                                            </td>
+
+                                            <!-- Dose -->
+                                            <td>
+                                                {% if f.radiotherapy_dose.errors %}
+                                                    {{ f.radiotherapy_dose|add_class:"is-invalid" }}
+                                                    <div class="invalid-feedback d-block">
+                                                        {{ f.radiotherapy_dose.errors|striptags }}
+                                                    </div>
+                                                {% else %}
+                                                    {{ f.radiotherapy_dose }}
+                                                {% endif %}
+                                            </td>
+
+                                            <!-- Frequency -->
+                                            <td>
+                                                {% if f.radiotherapy_frequency.errors %}
+                                                    {{ f.radiotherapy_frequency|add_class:"is-invalid" }}
+                                                    <div class="invalid-feedback d-block">
+                                                        {{ f.radiotherapy_frequency.errors|striptags }}
+                                                    </div>
+                                                {% else %}
+                                                    {{ f.radiotherapy_frequency }}
+                                                {% endif %}
+                                            </td>
+
+                                            <!-- Remarks -->
+                                            <td>
+                                                {% if f.radiotherapy_remarks.errors %}
+                                                    {{ f.radiotherapy_remarks|add_class:"is-invalid" }}
+                                                    <div class="invalid-feedback d-block">
+                                                        {{ f.radiotherapy_remarks.errors|striptags }}
+                                                    </div>
+                                                {% else %}
+                                                    {{ f.radiotherapy_remarks }}
+                                                {% endif %}
+                                            </td>
+
                                             <td>
                                                 {{ f.DELETE|add_class:"d-none" }}
-                                                <button type="button"
-                                                    class="btn btn-sm btn-danger remove-radio">✕</button>
+                                                <button type="button" class="btn btn-sm btn-danger remove-radio">✕</button>
                                             </td>
+
                                         </tr>
                                         {% endfor %}
                                     </tbody>
                                 </table>
 
-                                <script type="text/template" id="radio-empty">
+                                <!-- EMPTY FORM TEMPLATE -->
+                                <script type="text/template" id="radio-empty-form">
+                                {% autoescape off %}
                                 <tr class="radio-row">
+
+                                    {% for hidden in radio_formset.empty_form.hidden_fields %}
+                                        {{ hidden }}
+                                    {% endfor %}
+
                                     <td>{{ radio_formset.empty_form.radiotherapy }}</td>
                                     <td>{{ radio_formset.empty_form.radiotherapy_start }}</td>
                                     <td>{{ radio_formset.empty_form.radiotherapy_ongoing }}</td>
@@ -484,6 +824,7 @@
                                         <button type="button" class="btn btn-sm btn-danger remove-radio">✕</button>
                                     </td>
                                 </tr>
+                                {% endautoescape %}
                                 </script>
 
                                 <button type="button" class="btn btn-primary btn-sm" id="add-radio">
@@ -492,6 +833,7 @@
 
                             </div>
                         </div>
+
                         <hr>
                         <div id="chemo-table" style="display:none;" class="card mb-4 border-0 shadow-sm">
 
@@ -502,6 +844,12 @@
                             <div class="card-body">
 
                                 {{ chemo_formset.management_form }}
+
+                                {% if chemo_formset.non_form_errors %}
+                                    <div class="alert alert-danger">
+                                        {{ chemo_formset.non_form_errors }}
+                                    </div>
+                                {% endif %}
 
                                 <table class="table table-bordered">
                                     <thead>
@@ -520,25 +868,114 @@
                                     <tbody id="chemo-body">
                                         {% for f in chemo_formset %}
                                         <tr class="chemo-row">
-                                            <td>{{ f.chemotherapy }}</td>
-                                            <td>{{ f.chemotherapy_start }}</td>
-                                            <td>{{ f.chemotherapy_ongoing }}</td>
-                                            <td>{{ f.chemotherapy_end }}</td>
-                                            <td>{{ f.chemotherapy_dose }}</td>
-                                            <td>{{ f.chemotherapy_frequency }}</td>
-                                            <td>{{ f.chemotherapy_remarks }}</td>
+
+                                            {% for hidden in f.hidden_fields %}
+                                                {{ hidden }}
+                                            {% endfor %}
+
+                                            <!-- Type -->
+                                            <td>
+                                                {% if f.chemotherapy.errors %}
+                                                    {{ f.chemotherapy|add_class:"is-invalid" }}
+                                                    <div class="invalid-feedback d-block">
+                                                        {{ f.chemotherapy.errors|striptags }}
+                                                    </div>
+                                                {% else %}
+                                                    {{ f.chemotherapy }}
+                                                {% endif %}
+                                            </td>
+
+                                            <!-- Start -->
+                                            <td>
+                                                {% if f.chemotherapy_start.errors %}
+                                                    {{ f.chemotherapy_start|add_class:"is-invalid" }}
+                                                    <div class="invalid-feedback d-block">
+                                                        {{ f.chemotherapy_start.errors|striptags }}
+                                                    </div>
+                                                {% else %}
+                                                    {{ f.chemotherapy_start }}
+                                                {% endif %}
+                                            </td>
+
+                                            <!-- Ongoing -->
+                                            <td>
+                                                {% if f.chemotherapy_ongoing.errors %}
+                                                    {{ f.chemotherapy_ongoing|add_class:"is-invalid" }}
+                                                    <div class="invalid-feedback d-block">
+                                                        {{ f.chemotherapy_ongoing.errors|striptags }}
+                                                    </div>
+                                                {% else %}
+                                                    {{ f.chemotherapy_ongoing }}
+                                                {% endif %}
+                                            </td>
+
+                                            <!-- End -->
+                                            <td>
+                                                {% if f.chemotherapy_end.errors %}
+                                                    {{ f.chemotherapy_end|add_class:"is-invalid" }}
+                                                    <div class="invalid-feedback d-block">
+                                                        {{ f.chemotherapy_end.errors|striptags }}
+                                                    </div>
+                                                {% else %}
+                                                    {{ f.chemotherapy_end }}
+                                                {% endif %}
+                                            </td>
+
+                                            <!-- Dose -->
+                                            <td>
+                                                {% if f.chemotherapy_dose.errors %}
+                                                    {{ f.chemotherapy_dose|add_class:"is-invalid" }}
+                                                    <div class="invalid-feedback d-block">
+                                                        {{ f.chemotherapy_dose.errors|striptags }}
+                                                    </div>
+                                                {% else %}
+                                                    {{ f.chemotherapy_dose }}
+                                                {% endif %}
+                                            </td>
+
+                                            <!-- Frequency -->
+                                            <td>
+                                                {% if f.chemotherapy_frequency.errors %}
+                                                    {{ f.chemotherapy_frequency|add_class:"is-invalid" }}
+                                                    <div class="invalid-feedback d-block">
+                                                        {{ f.chemotherapy_frequency.errors|striptags }}
+                                                    </div>
+                                                {% else %}
+                                                    {{ f.chemotherapy_frequency }}
+                                                {% endif %}
+                                            </td>
+
+                                            <!-- Remarks -->
+                                            <td>
+                                                {% if f.chemotherapy_remarks.errors %}
+                                                    {{ f.chemotherapy_remarks|add_class:"is-invalid" }}
+                                                    <div class="invalid-feedback d-block">
+                                                        {{ f.chemotherapy_remarks.errors|striptags }}
+                                                    </div>
+                                                {% else %}
+                                                    {{ f.chemotherapy_remarks }}
+                                                {% endif %}
+                                            </td>
+
                                             <td>
                                                 {{ f.DELETE|add_class:"d-none" }}
-                                                <button type="button"
-                                                    class="btn btn-sm btn-danger remove-chemo">✕</button>
+                                                <button type="button" class="btn btn-sm btn-danger remove-chemo">✕</button>
                                             </td>
+
                                         </tr>
                                         {% endfor %}
                                     </tbody>
                                 </table>
 
-                                <script type="text/template" id="chemo-empty">
+                                <!-- EMPTY FORM TEMPLATE -->
+                                <script type="text/template" id="chemo-empty-form">
+                                {% autoescape off %}
                                 <tr class="chemo-row">
+
+                                    {% for hidden in chemo_formset.empty_form.hidden_fields %}
+                                        {{ hidden }}
+                                    {% endfor %}
+
                                     <td>{{ chemo_formset.empty_form.chemotherapy }}</td>
                                     <td>{{ chemo_formset.empty_form.chemotherapy_start }}</td>
                                     <td>{{ chemo_formset.empty_form.chemotherapy_ongoing }}</td>
@@ -551,6 +988,7 @@
                                         <button type="button" class="btn btn-sm btn-danger remove-chemo">✕</button>
                                     </td>
                                 </tr>
+                                {% endautoescape %}
                                 </script>
 
                                 <button type="button" class="btn btn-primary btn-sm" id="add-chemo">
@@ -559,6 +997,7 @@
 
                             </div>
                         </div>
+
                         <hr>
                         <div id="surgery-table" style="display:none;" class="card mb-4 border-0 shadow-sm">
 
@@ -569,6 +1008,12 @@
                             <div class="card-body">
 
                                 {{ surgery_formset.management_form }}
+
+                                {% if surgery_formset.non_form_errors %}
+                                    <div class="alert alert-danger">
+                                        {{ surgery_formset.non_form_errors }}
+                                    </div>
+                                {% endif %}
 
                                 <table class="table table-bordered">
                                     <thead>
@@ -584,32 +1029,89 @@
                                     <tbody id="surgery-body">
                                         {% for f in surgery_formset %}
                                         <tr class="surgery-row">
-                                            <td>{{ f.surgery }}</td>
-                                            <td>{{ f.surgery_start }}</td>
-                                            <td>{{ f.surgery_number }}</td>
-                                            <td>{{ f.surgery_remarks }}</td>
+
+                                            {% for hidden in f.hidden_fields %}
+                                                {{ hidden }}
+                                            {% endfor %}
+
+                                            <!-- Procedure -->
+                                            <td>
+                                                {% if f.surgery.errors %}
+                                                    {{ f.surgery|add_class:"is-invalid" }}
+                                                    <div class="invalid-feedback d-block">
+                                                        {{ f.surgery.errors|striptags }}
+                                                    </div>
+                                                {% else %}
+                                                    {{ f.surgery }}
+                                                {% endif %}
+                                            </td>
+
+                                            <!-- Date -->
+                                            <td>
+                                                {% if f.surgery_start.errors %}
+                                                    {{ f.surgery_start|add_class:"is-invalid" }}
+                                                    <div class="invalid-feedback d-block">
+                                                        {{ f.surgery_start.errors|striptags }}
+                                                    </div>
+                                                {% else %}
+                                                    {{ f.surgery_start }}
+                                                {% endif %}
+                                            </td>
+
+                                            <!-- Number -->
+                                            <td>
+                                                {% if f.surgery_number.errors %}
+                                                    {{ f.surgery_number|add_class:"is-invalid" }}
+                                                    <div class="invalid-feedback d-block">
+                                                        {{ f.surgery_number.errors|striptags }}
+                                                    </div>
+                                                {% else %}
+                                                    {{ f.surgery_number }}
+                                                {% endif %}
+                                            </td>
+
+                                            <!-- Remarks -->
+                                            <td>
+                                                {% if f.surgery_remarks.errors %}
+                                                    {{ f.surgery_remarks|add_class:"is-invalid" }}
+                                                    <div class="invalid-feedback d-block">
+                                                        {{ f.surgery_remarks.errors|striptags }}
+                                                    </div>
+                                                {% else %}
+                                                    {{ f.surgery_remarks }}
+                                                {% endif %}
+                                            </td>
+
                                             <td>
                                                 {{ f.DELETE|add_class:"d-none" }}
-                                                <button type="button"
-                                                    class="btn btn-sm btn-danger remove-surgery">✕</button>
+                                                <button type="button" class="btn btn-sm btn-danger remove-surgery">✕</button>
                                             </td>
+
                                         </tr>
                                         {% endfor %}
                                     </tbody>
                                 </table>
 
-                                <script type="text/template" id="surgery-empty">
-                                    <tr class="surgery-row">
-                                        <td>{{ surgery_formset.empty_form.surgery }}</td>
-                                        <td>{{ surgery_formset.empty_form.surgery_start }}</td>
-                                        <td>{{ surgery_formset.empty_form.surgery_number }}</td>
-                                        <td>{{ surgery_formset.empty_form.surgery_remarks }}</td>
-                                        <td>
-                                            {{ surgery_formset.empty_form.DELETE|add_class:"d-none" }}
-                                            <button type="button" class="btn btn-sm btn-danger remove-surgery">✕</button>
-                                        </td>
-                                    </tr>
-                                    </script>
+                                <!-- EMPTY FORM TEMPLATE -->
+                                <script type="text/template" id="surgery-empty-form">
+                                {% autoescape off %}
+                                <tr class="surgery-row">
+
+                                    {% for hidden in surgery_formset.empty_form.hidden_fields %}
+                                        {{ hidden }}
+                                    {% endfor %}
+
+                                    <td>{{ surgery_formset.empty_form.surgery }}</td>
+                                    <td>{{ surgery_formset.empty_form.surgery_start }}</td>
+                                    <td>{{ surgery_formset.empty_form.surgery_number }}</td>
+                                    <td>{{ surgery_formset.empty_form.surgery_remarks }}</td>
+                                    <td>
+                                        {{ surgery_formset.empty_form.DELETE|add_class:"d-none" }}
+                                        <button type="button" class="btn btn-sm btn-danger remove-surgery">✕</button>
+                                    </td>
+                                </tr>
+                                {% endautoescape %}
+                                </script>
 
                                 <button type="button" class="btn btn-primary btn-sm" id="add-surgery">
                                     + Add Surgery
@@ -617,6 +1119,7 @@
 
                             </div>
                         </div>
+
                     </div>
                 </div>
                 <hr>
@@ -655,7 +1158,6 @@
 
 {% block scripts %}
 <script src="{% static 'js/crfs/crf1/crf1.js' %}"></script>
-<!-- <script src="{% static 'js/utils/formset_helpers.js' %}"></script> -->
 <script src="{% static 'js/crfs/crf1/crf1_other_medications.js' %}"></script>
 <script src="{% static 'js/crfs/crf1/crf1_nimregenin.js' %}"></script>
 <script src="{% static 'js/crfs/crf1/crf1_other_herbal.js' %}"></script>

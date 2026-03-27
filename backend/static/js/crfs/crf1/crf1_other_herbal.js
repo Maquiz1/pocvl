@@ -7,22 +7,19 @@ document.addEventListener("DOMContentLoaded", function () {
     const totalForms = document.getElementById("id_otherherbals-TOTAL_FORMS");
     const emptyForm = document.getElementById("herbal-empty-form");
 
-    console.log({
-        OtherHerbal,
-        tableCard,
-        addBtn,
-        tbody,
-        totalForms,
-        emptyForm
-    });
+    // console.log({
+    //     OtherHerbal,
+    //     tableCard,
+    //     addBtn,
+    //     tbody,
+    //     totalForms,
+    //     emptyForm
+    // });
 
     // 🔥 SAFETY CHECK
     if (!OtherHerbal || !tableCard || !addBtn || !tbody || !totalForms || !emptyForm) {
         console.error("❌ OtherHerbal setup failed");
         return;
-    } else {
-        console.error("Good Herbal");
-
     }
 
     function isYes(select) {

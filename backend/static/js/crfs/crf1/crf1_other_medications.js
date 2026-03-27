@@ -9,14 +9,14 @@ document.addEventListener("DOMContentLoaded", function () {
     );
     const emptyForm = document.getElementById("other-empty-form");
 
-    console.log({
-        otherMedical,
-        tableCard,
-        addBtn,
-        tbody,
-        totalForms,
-        emptyForm
-    });
+    // console.log({
+    //     otherMedical,
+    //     tableCard,
+    //     addBtn,
+    //     tbody,
+    //     totalForms,
+    //     emptyForm
+    // });
 
     // // 🔥 SAFETY CHECK
     if (!otherMedical || !tableCard || !addBtn || !tbody || !totalForms || !emptyForm) {
