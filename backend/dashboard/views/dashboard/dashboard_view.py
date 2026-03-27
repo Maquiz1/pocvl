@@ -104,9 +104,47 @@ def dashboard_view(request):
         })
 
     # =========================
-    # 🧬 CANCER PROGRESS (FIXED)
+    # 🧬 CANCER PROGRESS
     # =========================
-    # 1. TARGETS (no joins → correct)
+
+    # 1. TARGETS (aggregate per cancer only)
+    target_data = targets.values(
+        "cancer_type__name"
+    ).annotate(
+        target=Sum("target_enrollment")
+    )
+
+    # 2. ENROLLMENTS (aggregate per cancer)
+    enrolled_data = Enrollment.objects.filter(
+        screening__subject__in=subjects
+    ).values(
+        "screening__cancer_types__name"
+    ).annotate(
+        enrolled=Count("id")
+    )
+
+    # 3. Map
+    enrolled_map = {
+        e["screening__cancer_types__name"]: e["enrolled"]
+        for e in enrolled_data
+    }
+
+    # 4. Merge
+    cancer_progress = []
+    for t in target_data:
+        cancer = t["cancer_type__name"]
+
+        cancer_progress.append({
+            "cancer_type__name": cancer,
+            "target": t["target"],
+            "enrolled": enrolled_map.get(cancer, 0)
+        })
+
+    # =========================
+    # 🔬 SITE × CANCER
+    # =========================
+
+    # target_data MUST be site + cancer
     target_data = targets.values(
         "site__name",
         "cancer_type__name"
@@ -114,7 +152,7 @@ def dashboard_view(request):
         target=Sum("target_enrollment")
     )
 
-    # 2. ENROLLMENTS (separate query)
+    # enrolled_data MUST be site + cancer
     enrolled_data = Enrollment.objects.filter(
         screening__subject__in=subjects
     ).values(
@@ -124,26 +162,14 @@ def dashboard_view(request):
         enrolled=Count("id")
     )
 
-    # 3. Merge manually
+    # map (site, cancer)
     enrolled_map = {
         (e["screening__subject__site__name"], e["screening__cancer_types__name"]): e["enrolled"]
         for e in enrolled_data
     }
 
-    cancer_progress = []
-    for t in target_data:
-        name = t["cancer_type__name"]
-        cancer_progress.append({
-            "cancer_type__name": name,
-            "target": t["target"],
-            "enrolled": enrolled_map.get(name, 0)
-        })
-
-    # =========================
-    # 🔬 SITE × CANCER (FIXED)
-    # =========================
+    # merge
     detailed_progress = []
-
     for t in target_data:
         site = t["site__name"]
         cancer = t["cancer_type__name"]
