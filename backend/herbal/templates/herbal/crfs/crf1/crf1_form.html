@@ -92,14 +92,25 @@
                             <div class="col-md-4">
                                 {{ form.diabetic.label_tag }}
                                 {{ form.diabetic|add_class:"form-select" }}
+                                {% if form.diabetic.errors %}
+                                <div class="text-danger small">{{ form.diabetic.errors }}</div>
+                                {% endif %}
                             </div>
-                            <div class="col-md-4 diabetic-med">
+
+                            <div class="col-md-4 diabetic-med" style="display:none;">
                                 {{ form.diabetic_medicatn.label_tag }}
                                 {{ form.diabetic_medicatn|add_class:"form-select" }}
+                                {% if form.diabetic_medicatn.errors %}
+                                <div class="text-danger small">{{ form.diabetic_medicatn.errors }}</div>
+                                {% endif %}
                             </div>
-                            <div class="col-md-4 diabetic-name">
+
+                            <div class="col-md-4 diabetic-name" style="display:none;">
                                 {{ form.diabetic_medicatn_name.label_tag }}
                                 {{ form.diabetic_medicatn_name|add_class:"form-control" }}
+                                {% if form.diabetic_medicatn_name.errors %}
+                                <div class="text-danger small">{{ form.diabetic_medicatn_name.errors }}</div>
+                                {% endif %}
                             </div>
                         </div>
                         <hr>
@@ -109,14 +120,25 @@
                             <div class="col-md-4">
                                 {{ form.hypertension.label_tag }}
                                 {{ form.hypertension|add_class:"form-select" }}
+                                {% if form.hypertension.errors %}
+                                <div class="text-danger small">{{ form.hypertension.errors }}</div>
+                                {% endif %}
                             </div>
-                            <div class="col-md-4 hypertension-med">
+
+                            <div class="col-md-4 hypertension-med" style="display:none;">
                                 {{ form.hypertension_medicatn.label_tag }}
                                 {{ form.hypertension_medicatn|add_class:"form-select" }}
+                                {% if form.hypertension_medicatn.errors %}
+                                <div class="text-danger small">{{ form.hypertension_medicatn.errors }}</div>
+                                {% endif %}
                             </div>
-                            <div class="col-md-4 hypertension-name">
+
+                            <div class="col-md-4 hypertension-name" style="display:none;">
                                 {{ form.hypertension_medicatn_name.label_tag }}
                                 {{ form.hypertension_medicatn_name|add_class:"form-control" }}
+                                {% if form.hypertension_medicatn_name.errors %}
+                                <div class="text-danger small">{{ form.hypertension_medicatn_name.errors }}</div>
+                                {% endif %}
                             </div>
                         </div>
                         <hr>
@@ -126,14 +148,25 @@
                             <div class="col-md-4">
                                 {{ form.heart.label_tag }}
                                 {{ form.heart|add_class:"form-select" }}
+                                {% if form.heart.errors %}
+                                <div class="text-danger small">{{ form.heart.errors }}</div>
+                                {% endif %}
                             </div>
-                            <div class="col-md-4 heart-med">
+
+                            <div class="col-md-4 heart-med" style="display:none;">
                                 {{ form.heart_medicatn.label_tag }}
                                 {{ form.heart_medicatn|add_class:"form-select" }}
+                                {% if form.heart_medicatn.errors %}
+                                <div class="text-danger small">{{ form.heart_medicatn.errors }}</div>
+                                {% endif %}
                             </div>
-                            <div class="col-md-4 heart-name">
+
+                            <div class="col-md-4 heart-name" style="display:none;">
                                 {{ form.heart_medicatn_name.label_tag }}
                                 {{ form.heart_medicatn_name|add_class:"form-control" }}
+                                {% if form.heart_medicatn_name.errors %}
+                                <div class="text-danger small">{{ form.heart_medicatn_name.errors }}</div>
+                                {% endif %}
                             </div>
                         </div>
                         <hr>
@@ -143,14 +176,25 @@
                             <div class="col-md-4">
                                 {{ form.asthma.label_tag }}
                                 {{ form.asthma|add_class:"form-select" }}
+                                {% if form.asthma.errors %}
+                                <div class="text-danger small">{{ form.asthma.errors }}</div>
+                                {% endif %}
                             </div>
-                            <div class="col-md-4 asthma-med">
+
+                            <div class="col-md-4 asthma-med" style="display:none;">
                                 {{ form.asthma_medicatn.label_tag }}
                                 {{ form.asthma_medicatn|add_class:"form-select" }}
+                                {% if form.asthma_medicatn.errors %}
+                                <div class="text-danger small">{{ form.asthma_medicatn.errors }}</div>
+                                {% endif %}
                             </div>
-                            <div class="col-md-4 asthma-name">
+
+                            <div class="col-md-4 asthma-name" style="display:none;">
                                 {{ form.asthma_medicatn_name.label_tag }}
                                 {{ form.asthma_medicatn_name|add_class:"form-control" }}
+                                {% if form.asthma_medicatn_name.errors %}
+                                <div class="text-danger small">{{ form.asthma_medicatn_name.errors }}</div>
+                                {% endif %}
                             </div>
                         </div>
                         <hr>
@@ -160,14 +204,25 @@
                             <div class="col-md-4">
                                 {{ form.hiv_aids.label_tag }}
                                 {{ form.hiv_aids|add_class:"form-select" }}
+                                {% if form.hiv_aids.errors %}
+                                <div class="text-danger small">{{ form.hiv_aids.errors }}</div>
+                                {% endif %}
                             </div>
-                            <div class="col-md-4 hiv-med">
+
+                            <div class="col-md-4 hiv-med" style="display:none;">
                                 {{ form.hiv_aids_medicatn.label_tag }}
                                 {{ form.hiv_aids_medicatn|add_class:"form-select" }}
+                                {% if form.hiv_aids_medicatn.errors %}
+                                <div class="text-danger small">{{ form.hiv_aids_medicatn.errors }}</div>
+                                {% endif %}
                             </div>
-                            <div class="col-md-4 hiv-name">
+
+                            <div class="col-md-4 hiv-name" style="display:none;">
                                 {{ form.hiv_aids_medicatn_name.label_tag }}
                                 {{ form.hiv_aids_medicatn_name|add_class:"form-control" }}
+                                {% if form.hiv_aids_medicatn_name.errors %}
+                                <div class="text-danger small">{{ form.hiv_aids_medicatn_name.errors }}</div>
+                                {% endif %}
                             </div>
                         </div>
 
@@ -210,16 +265,16 @@
                                 {{ other_formset.management_form }}
 
                                 {% if other_formset.non_form_errors %}
-                                    <div class="alert alert-danger">
-                                        {{ other_formset.non_form_errors }}
-                                    </div>
+                                <div class="alert alert-danger">
+                                    {{ other_formset.non_form_errors }}
+                                </div>
                                 {% endif %}
 
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <th>Other Specify</th>
-                                            <th>Medication</th>
+                                            <th>Medical Conditions</th>
+                                            <th>On Medication?</th>
                                             <th>Medication Name</th>
                                             <th>Remarks</th>
                                             <th>Action</th>
@@ -231,60 +286,61 @@
                                         <tr class="other-row">
 
                                             {% for hidden in f.hidden_fields %}
-                                                {{ hidden }}
+                                            {{ hidden }}
                                             {% endfor %}
 
                                             <!-- Other Specify -->
                                             <td>
                                                 {% if f.other_specify.errors %}
-                                                    {{ f.other_specify|add_class:"is-invalid" }}
-                                                    <div class="invalid-feedback d-block">
-                                                        {{ f.other_specify.errors|striptags }}
-                                                    </div>
+                                                {{ f.other_specify|add_class:"is-invalid" }}
+                                                <div class="invalid-feedback d-block">
+                                                    {{ f.other_specify.errors|striptags }}
+                                                </div>
                                                 {% else %}
-                                                    {{ f.other_specify }}
+                                                {{ f.other_specify }}
                                                 {% endif %}
                                             </td>
 
                                             <!-- Medication -->
                                             <td>
                                                 {% if f.other_medical_medicatn.errors %}
-                                                    {{ f.other_medical_medicatn|add_class:"is-invalid" }}
-                                                    <div class="invalid-feedback d-block">
-                                                        {{ f.other_medical_medicatn.errors|striptags }}
-                                                    </div>
+                                                {{ f.other_medical_medicatn|add_class:"is-invalid" }}
+                                                <div class="invalid-feedback d-block">
+                                                    {{ f.other_medical_medicatn.errors|striptags }}
+                                                </div>
                                                 {% else %}
-                                                    {{ f.other_medical_medicatn }}
+                                                {{ f.other_medical_medicatn }}
                                                 {% endif %}
                                             </td>
 
                                             <!-- Medication Name -->
                                             <td>
                                                 {% if f.other_medicatn_name.errors %}
-                                                    {{ f.other_medicatn_name|add_class:"is-invalid" }}
-                                                    <div class="invalid-feedback d-block">
-                                                        {{ f.other_medicatn_name.errors|striptags }}
-                                                    </div>
+                                                {{ f.other_medicatn_name|add_class:"is-invalid" }}
+                                                <div class="invalid-feedback d-block">
+                                                    {{ f.other_medicatn_name.errors|striptags }}
+                                                </div>
                                                 {% else %}
-                                                    {{ f.other_medicatn_name }}
+                                                {{ f.other_medicatn_name }}
                                                 {% endif %}
                                             </td>
 
                                             <!-- Remarks -->
                                             <td>
                                                 {% if f.medication_remarks.errors %}
-                                                    {{ f.medication_remarks|add_class:"is-invalid" }}
-                                                    <div class="invalid-feedback d-block">
-                                                        {{ f.medication_remarks.errors|striptags }}
-                                                    </div>
+                                                {{ f.medication_remarks|add_class:"is-invalid" }}
+                                                <div class="invalid-feedback d-block">
+                                                    {{ f.medication_remarks.errors|striptags }}
+                                                </div>
                                                 {% else %}
-                                                    {{ f.medication_remarks }}
+                                                {{ f.medication_remarks }}
                                                 {% endif %}
                                             </td>
 
                                             <td>
                                                 {{ f.DELETE|add_class:"d-none" }}
-                                                <button type="button" class="btn btn-sm btn-danger remove-row">✕</button>
+                                                <button type="button"
+                                                    class="btn btn-sm btn-danger remove-row">✕</button>
                                             </td>
 
                                         </tr>
@@ -330,9 +386,9 @@
                                 {{ nimregenin_formset.management_form }}
 
                                 {% if nimregenin_formset.non_form_errors %}
-                                    <div class="alert alert-danger">
-                                        {{ nimregenin_formset.non_form_errors }}
-                                    </div>
+                                <div class="alert alert-danger">
+                                    {{ nimregenin_formset.non_form_errors }}
+                                </div>
                                 {% endif %}
 
                                 <table class="table table-bordered">
@@ -354,96 +410,97 @@
                                         <tr class="nimregenin-row">
 
                                             {% for hidden in f.hidden_fields %}
-                                                {{ hidden }}
+                                            {{ hidden }}
                                             {% endfor %}
 
                                             <!-- Preparation -->
                                             <td>
                                                 {% if f.nimregenin_preparation.errors %}
-                                                    {{ f.nimregenin_preparation|add_class:"is-invalid" }}
-                                                    <div class="invalid-feedback d-block">
-                                                        {{ f.nimregenin_preparation.errors|striptags }}
-                                                    </div>
+                                                {{ f.nimregenin_preparation|add_class:"is-invalid" }}
+                                                <div class="invalid-feedback d-block">
+                                                    {{ f.nimregenin_preparation.errors|striptags }}
+                                                </div>
                                                 {% else %}
-                                                    {{ f.nimregenin_preparation }}
+                                                {{ f.nimregenin_preparation }}
                                                 {% endif %}
                                             </td>
 
                                             <!-- Start -->
                                             <td>
                                                 {% if f.nimregenin_start.errors %}
-                                                    {{ f.nimregenin_start|add_class:"is-invalid" }}
-                                                    <div class="invalid-feedback d-block">
-                                                        {{ f.nimregenin_start.errors|striptags }}
-                                                    </div>
+                                                {{ f.nimregenin_start|add_class:"is-invalid" }}
+                                                <div class="invalid-feedback d-block">
+                                                    {{ f.nimregenin_start.errors|striptags }}
+                                                </div>
                                                 {% else %}
-                                                    {{ f.nimregenin_start }}
+                                                {{ f.nimregenin_start }}
                                                 {% endif %}
                                             </td>
 
                                             <!-- Ongoing -->
                                             <td>
                                                 {% if f.nimregenin_ongoing.errors %}
-                                                    {{ f.nimregenin_ongoing|add_class:"is-invalid" }}
-                                                    <div class="invalid-feedback d-block">
-                                                        {{ f.nimregenin_ongoing.errors|striptags }}
-                                                    </div>
+                                                {{ f.nimregenin_ongoing|add_class:"is-invalid" }}
+                                                <div class="invalid-feedback d-block">
+                                                    {{ f.nimregenin_ongoing.errors|striptags }}
+                                                </div>
                                                 {% else %}
-                                                    {{ f.nimregenin_ongoing }}
+                                                {{ f.nimregenin_ongoing }}
                                                 {% endif %}
                                             </td>
 
                                             <!-- End -->
                                             <td>
                                                 {% if f.nimregenin_end.errors %}
-                                                    {{ f.nimregenin_end|add_class:"is-invalid" }}
-                                                    <div class="invalid-feedback d-block">
-                                                        {{ f.nimregenin_end.errors|striptags }}
-                                                    </div>
+                                                {{ f.nimregenin_end|add_class:"is-invalid" }}
+                                                <div class="invalid-feedback d-block">
+                                                    {{ f.nimregenin_end.errors|striptags }}
+                                                </div>
                                                 {% else %}
-                                                    {{ f.nimregenin_end }}
+                                                {{ f.nimregenin_end }}
                                                 {% endif %}
                                             </td>
 
                                             <!-- Dose -->
                                             <td>
                                                 {% if f.nimregenin_dose.errors %}
-                                                    {{ f.nimregenin_dose|add_class:"is-invalid" }}
-                                                    <div class="invalid-feedback d-block">
-                                                        {{ f.nimregenin_dose.errors|striptags }}
-                                                    </div>
+                                                {{ f.nimregenin_dose|add_class:"is-invalid" }}
+                                                <div class="invalid-feedback d-block">
+                                                    {{ f.nimregenin_dose.errors|striptags }}
+                                                </div>
                                                 {% else %}
-                                                    {{ f.nimregenin_dose }}
+                                                {{ f.nimregenin_dose }}
                                                 {% endif %}
                                             </td>
 
                                             <!-- Frequency -->
                                             <td>
                                                 {% if f.nimregenin_frequency.errors %}
-                                                    {{ f.nimregenin_frequency|add_class:"is-invalid" }}
-                                                    <div class="invalid-feedback d-block">
-                                                        {{ f.nimregenin_frequency.errors|striptags }}
-                                                    </div>
+                                                {{ f.nimregenin_frequency|add_class:"is-invalid" }}
+                                                <div class="invalid-feedback d-block">
+                                                    {{ f.nimregenin_frequency.errors|striptags }}
+                                                </div>
                                                 {% else %}
-                                                    {{ f.nimregenin_frequency }}
+                                                {{ f.nimregenin_frequency }}
                                                 {% endif %}
                                             </td>
 
                                             <!-- Remarks -->
                                             <td>
                                                 {% if f.nimregenin_remarks.errors %}
-                                                    {{ f.nimregenin_remarks|add_class:"is-invalid" }}
-                                                    <div class="invalid-feedback d-block">
-                                                        {{ f.nimregenin_remarks.errors|striptags }}
-                                                    </div>
+                                                {{ f.nimregenin_remarks|add_class:"is-invalid" }}
+                                                <div class="invalid-feedback d-block">
+                                                    {{ f.nimregenin_remarks.errors|striptags }}
+                                                </div>
                                                 {% else %}
-                                                    {{ f.nimregenin_remarks }}
+                                                {{ f.nimregenin_remarks }}
                                                 {% endif %}
                                             </td>
 
                                             <td>
                                                 {{ f.DELETE|add_class:"d-none" }}
-                                                <button type="button" class="btn btn-sm btn-danger remove-nimregenin">✕</button>
+                                                <button type="button"
+                                                    class="btn btn-sm btn-danger remove-nimregenin">✕</button>
                                             </td>
 
                                         </tr>
@@ -494,9 +551,9 @@
                                 {{ herbal_formset.management_form }}
 
                                 {% if herbal_formset.non_form_errors %}
-                                    <div class="alert alert-danger">
-                                        {{ herbal_formset.non_form_errors }}
-                                    </div>
+                                <div class="alert alert-danger">
+                                    {{ herbal_formset.non_form_errors }}
+                                </div>
                                 {% endif %}
 
                                 <table class="table table-bordered">
@@ -518,96 +575,97 @@
                                         <tr class="herbal-row">
 
                                             {% for hidden in f.hidden_fields %}
-                                                {{ hidden }}
+                                            {{ hidden }}
                                             {% endfor %}
 
                                             <!-- Preparation -->
                                             <td>
                                                 {% if f.herbal_preparation.errors %}
-                                                    {{ f.herbal_preparation|add_class:"is-invalid" }}
-                                                    <div class="invalid-feedback d-block">
-                                                        {{ f.herbal_preparation.errors|striptags }}
-                                                    </div>
+                                                {{ f.herbal_preparation|add_class:"is-invalid" }}
+                                                <div class="invalid-feedback d-block">
+                                                    {{ f.herbal_preparation.errors|striptags }}
+                                                </div>
                                                 {% else %}
-                                                    {{ f.herbal_preparation }}
+                                                {{ f.herbal_preparation }}
                                                 {% endif %}
                                             </td>
 
                                             <!-- Start -->
                                             <td>
                                                 {% if f.herbal_start.errors %}
-                                                    {{ f.herbal_start|add_class:"is-invalid" }}
-                                                    <div class="invalid-feedback d-block">
-                                                        {{ f.herbal_start.errors|striptags }}
-                                                    </div>
+                                                {{ f.herbal_start|add_class:"is-invalid" }}
+                                                <div class="invalid-feedback d-block">
+                                                    {{ f.herbal_start.errors|striptags }}
+                                                </div>
                                                 {% else %}
-                                                    {{ f.herbal_start }}
+                                                {{ f.herbal_start }}
                                                 {% endif %}
                                             </td>
 
                                             <!-- Ongoing -->
                                             <td>
                                                 {% if f.herbal_ongoing.errors %}
-                                                    {{ f.herbal_ongoing|add_class:"is-invalid" }}
-                                                    <div class="invalid-feedback d-block">
-                                                        {{ f.herbal_ongoing.errors|striptags }}
-                                                    </div>
+                                                {{ f.herbal_ongoing|add_class:"is-invalid" }}
+                                                <div class="invalid-feedback d-block">
+                                                    {{ f.herbal_ongoing.errors|striptags }}
+                                                </div>
                                                 {% else %}
-                                                    {{ f.herbal_ongoing }}
+                                                {{ f.herbal_ongoing }}
                                                 {% endif %}
                                             </td>
 
                                             <!-- End -->
                                             <td>
                                                 {% if f.herbal_end.errors %}
-                                                    {{ f.herbal_end|add_class:"is-invalid" }}
-                                                    <div class="invalid-feedback d-block">
-                                                        {{ f.herbal_end.errors|striptags }}
-                                                    </div>
+                                                {{ f.herbal_end|add_class:"is-invalid" }}
+                                                <div class="invalid-feedback d-block">
+                                                    {{ f.herbal_end.errors|striptags }}
+                                                </div>
                                                 {% else %}
-                                                    {{ f.herbal_end }}
+                                                {{ f.herbal_end }}
                                                 {% endif %}
                                             </td>
 
                                             <!-- Dose -->
                                             <td>
                                                 {% if f.herbal_dose.errors %}
-                                                    {{ f.herbal_dose|add_class:"is-invalid" }}
-                                                    <div class="invalid-feedback d-block">
-                                                        {{ f.herbal_dose.errors|striptags }}
-                                                    </div>
+                                                {{ f.herbal_dose|add_class:"is-invalid" }}
+                                                <div class="invalid-feedback d-block">
+                                                    {{ f.herbal_dose.errors|striptags }}
+                                                </div>
                                                 {% else %}
-                                                    {{ f.herbal_dose }}
+                                                {{ f.herbal_dose }}
                                                 {% endif %}
                                             </td>
 
                                             <!-- Frequency -->
                                             <td>
                                                 {% if f.herbal_frequency.errors %}
-                                                    {{ f.herbal_frequency|add_class:"is-invalid" }}
-                                                    <div class="invalid-feedback d-block">
-                                                        {{ f.herbal_frequency.errors|striptags }}
-                                                    </div>
+                                                {{ f.herbal_frequency|add_class:"is-invalid" }}
+                                                <div class="invalid-feedback d-block">
+                                                    {{ f.herbal_frequency.errors|striptags }}
+                                                </div>
                                                 {% else %}
-                                                    {{ f.herbal_frequency }}
+                                                {{ f.herbal_frequency }}
                                                 {% endif %}
                                             </td>
 
                                             <!-- Remarks -->
                                             <td>
                                                 {% if f.herbal_remarks.errors %}
-                                                    {{ f.herbal_remarks|add_class:"is-invalid" }}
-                                                    <div class="invalid-feedback d-block">
-                                                        {{ f.herbal_remarks.errors|striptags }}
-                                                    </div>
+                                                {{ f.herbal_remarks|add_class:"is-invalid" }}
+                                                <div class="invalid-feedback d-block">
+                                                    {{ f.herbal_remarks.errors|striptags }}
+                                                </div>
                                                 {% else %}
-                                                    {{ f.herbal_remarks }}
+                                                {{ f.herbal_remarks }}
                                                 {% endif %}
                                             </td>
 
                                             <td>
                                                 {{ f.DELETE|add_class:"d-none" }}
-                                                <button type="button" class="btn btn-sm btn-danger remove-herbal">✕</button>
+                                                <button type="button"
+                                                    class="btn btn-sm btn-danger remove-herbal">✕</button>
                                             </td>
 
                                         </tr>
@@ -682,9 +740,9 @@
                                 {{ radio_formset.management_form }}
 
                                 {% if radio_formset.non_form_errors %}
-                                    <div class="alert alert-danger">
-                                        {{ radio_formset.non_form_errors }}
-                                    </div>
+                                <div class="alert alert-danger">
+                                    {{ radio_formset.non_form_errors }}
+                                </div>
                                 {% endif %}
 
                                 <table class="table table-bordered">
@@ -706,96 +764,97 @@
                                         <tr class="radio-row">
 
                                             {% for hidden in f.hidden_fields %}
-                                                {{ hidden }}
+                                            {{ hidden }}
                                             {% endfor %}
 
                                             <!-- Type -->
                                             <td>
                                                 {% if f.radiotherapy.errors %}
-                                                    {{ f.radiotherapy|add_class:"is-invalid" }}
-                                                    <div class="invalid-feedback d-block">
-                                                        {{ f.radiotherapy.errors|striptags }}
-                                                    </div>
+                                                {{ f.radiotherapy|add_class:"is-invalid" }}
+                                                <div class="invalid-feedback d-block">
+                                                    {{ f.radiotherapy.errors|striptags }}
+                                                </div>
                                                 {% else %}
-                                                    {{ f.radiotherapy }}
+                                                {{ f.radiotherapy }}
                                                 {% endif %}
                                             </td>
 
                                             <!-- Start -->
                                             <td>
                                                 {% if f.radiotherapy_start.errors %}
-                                                    {{ f.radiotherapy_start|add_class:"is-invalid" }}
-                                                    <div class="invalid-feedback d-block">
-                                                        {{ f.radiotherapy_start.errors|striptags }}
-                                                    </div>
+                                                {{ f.radiotherapy_start|add_class:"is-invalid" }}
+                                                <div class="invalid-feedback d-block">
+                                                    {{ f.radiotherapy_start.errors|striptags }}
+                                                </div>
                                                 {% else %}
-                                                    {{ f.radiotherapy_start }}
+                                                {{ f.radiotherapy_start }}
                                                 {% endif %}
                                             </td>
 
                                             <!-- Ongoing -->
                                             <td>
                                                 {% if f.radiotherapy_ongoing.errors %}
-                                                    {{ f.radiotherapy_ongoing|add_class:"is-invalid" }}
-                                                    <div class="invalid-feedback d-block">
-                                                        {{ f.radiotherapy_ongoing.errors|striptags }}
-                                                    </div>
+                                                {{ f.radiotherapy_ongoing|add_class:"is-invalid" }}
+                                                <div class="invalid-feedback d-block">
+                                                    {{ f.radiotherapy_ongoing.errors|striptags }}
+                                                </div>
                                                 {% else %}
-                                                    {{ f.radiotherapy_ongoing }}
+                                                {{ f.radiotherapy_ongoing }}
                                                 {% endif %}
                                             </td>
 
                                             <!-- End -->
                                             <td>
                                                 {% if f.radiotherapy_end.errors %}
-                                                    {{ f.radiotherapy_end|add_class:"is-invalid" }}
-                                                    <div class="invalid-feedback d-block">
-                                                        {{ f.radiotherapy_end.errors|striptags }}
-                                                    </div>
+                                                {{ f.radiotherapy_end|add_class:"is-invalid" }}
+                                                <div class="invalid-feedback d-block">
+                                                    {{ f.radiotherapy_end.errors|striptags }}
+                                                </div>
                                                 {% else %}
-                                                    {{ f.radiotherapy_end }}
+                                                {{ f.radiotherapy_end }}
                                                 {% endif %}
                                             </td>
 
                                             <!-- Dose -->
                                             <td>
                                                 {% if f.radiotherapy_dose.errors %}
-                                                    {{ f.radiotherapy_dose|add_class:"is-invalid" }}
-                                                    <div class="invalid-feedback d-block">
-                                                        {{ f.radiotherapy_dose.errors|striptags }}
-                                                    </div>
+                                                {{ f.radiotherapy_dose|add_class:"is-invalid" }}
+                                                <div class="invalid-feedback d-block">
+                                                    {{ f.radiotherapy_dose.errors|striptags }}
+                                                </div>
                                                 {% else %}
-                                                    {{ f.radiotherapy_dose }}
+                                                {{ f.radiotherapy_dose }}
                                                 {% endif %}
                                             </td>
 
                                             <!-- Frequency -->
                                             <td>
                                                 {% if f.radiotherapy_frequency.errors %}
-                                                    {{ f.radiotherapy_frequency|add_class:"is-invalid" }}
-                                                    <div class="invalid-feedback d-block">
-                                                        {{ f.radiotherapy_frequency.errors|striptags }}
-                                                    </div>
+                                                {{ f.radiotherapy_frequency|add_class:"is-invalid" }}
+                                                <div class="invalid-feedback d-block">
+                                                    {{ f.radiotherapy_frequency.errors|striptags }}
+                                                </div>
                                                 {% else %}
-                                                    {{ f.radiotherapy_frequency }}
+                                                {{ f.radiotherapy_frequency }}
                                                 {% endif %}
                                             </td>
 
                                             <!-- Remarks -->
                                             <td>
                                                 {% if f.radiotherapy_remarks.errors %}
-                                                    {{ f.radiotherapy_remarks|add_class:"is-invalid" }}
-                                                    <div class="invalid-feedback d-block">
-                                                        {{ f.radiotherapy_remarks.errors|striptags }}
-                                                    </div>
+                                                {{ f.radiotherapy_remarks|add_class:"is-invalid" }}
+                                                <div class="invalid-feedback d-block">
+                                                    {{ f.radiotherapy_remarks.errors|striptags }}
+                                                </div>
                                                 {% else %}
-                                                    {{ f.radiotherapy_remarks }}
+                                                {{ f.radiotherapy_remarks }}
                                                 {% endif %}
                                             </td>
 
                                             <td>
                                                 {{ f.DELETE|add_class:"d-none" }}
-                                                <button type="button" class="btn btn-sm btn-danger remove-radio">✕</button>
+                                                <button type="button"
+                                                    class="btn btn-sm btn-danger remove-radio">✕</button>
                                             </td>
 
                                         </tr>
@@ -846,9 +905,9 @@
                                 {{ chemo_formset.management_form }}
 
                                 {% if chemo_formset.non_form_errors %}
-                                    <div class="alert alert-danger">
-                                        {{ chemo_formset.non_form_errors }}
-                                    </div>
+                                <div class="alert alert-danger">
+                                    {{ chemo_formset.non_form_errors }}
+                                </div>
                                 {% endif %}
 
                                 <table class="table table-bordered">
@@ -870,96 +929,97 @@
                                         <tr class="chemo-row">
 
                                             {% for hidden in f.hidden_fields %}
-                                                {{ hidden }}
+                                            {{ hidden }}
                                             {% endfor %}
 
                                             <!-- Type -->
                                             <td>
                                                 {% if f.chemotherapy.errors %}
-                                                    {{ f.chemotherapy|add_class:"is-invalid" }}
-                                                    <div class="invalid-feedback d-block">
-                                                        {{ f.chemotherapy.errors|striptags }}
-                                                    </div>
+                                                {{ f.chemotherapy|add_class:"is-invalid" }}
+                                                <div class="invalid-feedback d-block">
+                                                    {{ f.chemotherapy.errors|striptags }}
+                                                </div>
                                                 {% else %}
-                                                    {{ f.chemotherapy }}
+                                                {{ f.chemotherapy }}
                                                 {% endif %}
                                             </td>
 
                                             <!-- Start -->
                                             <td>
                                                 {% if f.chemotherapy_start.errors %}
-                                                    {{ f.chemotherapy_start|add_class:"is-invalid" }}
-                                                    <div class="invalid-feedback d-block">
-                                                        {{ f.chemotherapy_start.errors|striptags }}
-                                                    </div>
+                                                {{ f.chemotherapy_start|add_class:"is-invalid" }}
+                                                <div class="invalid-feedback d-block">
+                                                    {{ f.chemotherapy_start.errors|striptags }}
+                                                </div>
                                                 {% else %}
-                                                    {{ f.chemotherapy_start }}
+                                                {{ f.chemotherapy_start }}
                                                 {% endif %}
                                             </td>
 
                                             <!-- Ongoing -->
                                             <td>
                                                 {% if f.chemotherapy_ongoing.errors %}
-                                                    {{ f.chemotherapy_ongoing|add_class:"is-invalid" }}
-                                                    <div class="invalid-feedback d-block">
-                                                        {{ f.chemotherapy_ongoing.errors|striptags }}
-                                                    </div>
+                                                {{ f.chemotherapy_ongoing|add_class:"is-invalid" }}
+                                                <div class="invalid-feedback d-block">
+                                                    {{ f.chemotherapy_ongoing.errors|striptags }}
+                                                </div>
                                                 {% else %}
-                                                    {{ f.chemotherapy_ongoing }}
+                                                {{ f.chemotherapy_ongoing }}
                                                 {% endif %}
                                             </td>
 
                                             <!-- End -->
                                             <td>
                                                 {% if f.chemotherapy_end.errors %}
-                                                    {{ f.chemotherapy_end|add_class:"is-invalid" }}
-                                                    <div class="invalid-feedback d-block">
-                                                        {{ f.chemotherapy_end.errors|striptags }}
-                                                    </div>
+                                                {{ f.chemotherapy_end|add_class:"is-invalid" }}
+                                                <div class="invalid-feedback d-block">
+                                                    {{ f.chemotherapy_end.errors|striptags }}
+                                                </div>
                                                 {% else %}
-                                                    {{ f.chemotherapy_end }}
+                                                {{ f.chemotherapy_end }}
                                                 {% endif %}
                                             </td>
 
                                             <!-- Dose -->
                                             <td>
                                                 {% if f.chemotherapy_dose.errors %}
-                                                    {{ f.chemotherapy_dose|add_class:"is-invalid" }}
-                                                    <div class="invalid-feedback d-block">
-                                                        {{ f.chemotherapy_dose.errors|striptags }}
-                                                    </div>
+                                                {{ f.chemotherapy_dose|add_class:"is-invalid" }}
+                                                <div class="invalid-feedback d-block">
+                                                    {{ f.chemotherapy_dose.errors|striptags }}
+                                                </div>
                                                 {% else %}
-                                                    {{ f.chemotherapy_dose }}
+                                                {{ f.chemotherapy_dose }}
                                                 {% endif %}
                                             </td>
 
                                             <!-- Frequency -->
                                             <td>
                                                 {% if f.chemotherapy_frequency.errors %}
-                                                    {{ f.chemotherapy_frequency|add_class:"is-invalid" }}
-                                                    <div class="invalid-feedback d-block">
-                                                        {{ f.chemotherapy_frequency.errors|striptags }}
-                                                    </div>
+                                                {{ f.chemotherapy_frequency|add_class:"is-invalid" }}
+                                                <div class="invalid-feedback d-block">
+                                                    {{ f.chemotherapy_frequency.errors|striptags }}
+                                                </div>
                                                 {% else %}
-                                                    {{ f.chemotherapy_frequency }}
+                                                {{ f.chemotherapy_frequency }}
                                                 {% endif %}
                                             </td>
 
                                             <!-- Remarks -->
                                             <td>
                                                 {% if f.chemotherapy_remarks.errors %}
-                                                    {{ f.chemotherapy_remarks|add_class:"is-invalid" }}
-                                                    <div class="invalid-feedback d-block">
-                                                        {{ f.chemotherapy_remarks.errors|striptags }}
-                                                    </div>
+                                                {{ f.chemotherapy_remarks|add_class:"is-invalid" }}
+                                                <div class="invalid-feedback d-block">
+                                                    {{ f.chemotherapy_remarks.errors|striptags }}
+                                                </div>
                                                 {% else %}
-                                                    {{ f.chemotherapy_remarks }}
+                                                {{ f.chemotherapy_remarks }}
                                                 {% endif %}
                                             </td>
 
                                             <td>
                                                 {{ f.DELETE|add_class:"d-none" }}
-                                                <button type="button" class="btn btn-sm btn-danger remove-chemo">✕</button>
+                                                <button type="button"
+                                                    class="btn btn-sm btn-danger remove-chemo">✕</button>
                                             </td>
 
                                         </tr>
@@ -1010,9 +1070,9 @@
                                 {{ surgery_formset.management_form }}
 
                                 {% if surgery_formset.non_form_errors %}
-                                    <div class="alert alert-danger">
-                                        {{ surgery_formset.non_form_errors }}
-                                    </div>
+                                <div class="alert alert-danger">
+                                    {{ surgery_formset.non_form_errors }}
+                                </div>
                                 {% endif %}
 
                                 <table class="table table-bordered">
@@ -1031,60 +1091,61 @@
                                         <tr class="surgery-row">
 
                                             {% for hidden in f.hidden_fields %}
-                                                {{ hidden }}
+                                            {{ hidden }}
                                             {% endfor %}
 
                                             <!-- Procedure -->
                                             <td>
                                                 {% if f.surgery.errors %}
-                                                    {{ f.surgery|add_class:"is-invalid" }}
-                                                    <div class="invalid-feedback d-block">
-                                                        {{ f.surgery.errors|striptags }}
-                                                    </div>
+                                                {{ f.surgery|add_class:"is-invalid" }}
+                                                <div class="invalid-feedback d-block">
+                                                    {{ f.surgery.errors|striptags }}
+                                                </div>
                                                 {% else %}
-                                                    {{ f.surgery }}
+                                                {{ f.surgery }}
                                                 {% endif %}
                                             </td>
 
                                             <!-- Date -->
                                             <td>
                                                 {% if f.surgery_start.errors %}
-                                                    {{ f.surgery_start|add_class:"is-invalid" }}
-                                                    <div class="invalid-feedback d-block">
-                                                        {{ f.surgery_start.errors|striptags }}
-                                                    </div>
+                                                {{ f.surgery_start|add_class:"is-invalid" }}
+                                                <div class="invalid-feedback d-block">
+                                                    {{ f.surgery_start.errors|striptags }}
+                                                </div>
                                                 {% else %}
-                                                    {{ f.surgery_start }}
+                                                {{ f.surgery_start }}
                                                 {% endif %}
                                             </td>
 
                                             <!-- Number -->
                                             <td>
                                                 {% if f.surgery_number.errors %}
-                                                    {{ f.surgery_number|add_class:"is-invalid" }}
-                                                    <div class="invalid-feedback d-block">
-                                                        {{ f.surgery_number.errors|striptags }}
-                                                    </div>
+                                                {{ f.surgery_number|add_class:"is-invalid" }}
+                                                <div class="invalid-feedback d-block">
+                                                    {{ f.surgery_number.errors|striptags }}
+                                                </div>
                                                 {% else %}
-                                                    {{ f.surgery_number }}
+                                                {{ f.surgery_number }}
                                                 {% endif %}
                                             </td>
 
                                             <!-- Remarks -->
                                             <td>
                                                 {% if f.surgery_remarks.errors %}
-                                                    {{ f.surgery_remarks|add_class:"is-invalid" }}
-                                                    <div class="invalid-feedback d-block">
-                                                        {{ f.surgery_remarks.errors|striptags }}
-                                                    </div>
+                                                {{ f.surgery_remarks|add_class:"is-invalid" }}
+                                                <div class="invalid-feedback d-block">
+                                                    {{ f.surgery_remarks.errors|striptags }}
+                                                </div>
                                                 {% else %}
-                                                    {{ f.surgery_remarks }}
+                                                {{ f.surgery_remarks }}
                                                 {% endif %}
                                             </td>
 
                                             <td>
                                                 {{ f.DELETE|add_class:"d-none" }}
-                                                <button type="button" class="btn btn-sm btn-danger remove-surgery">✕</button>
+                                                <button type="button"
+                                                    class="btn btn-sm btn-danger remove-surgery">✕</button>
                                             </td>
 
                                         </tr>

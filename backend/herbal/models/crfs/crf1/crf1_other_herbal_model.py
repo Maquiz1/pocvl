@@ -3,6 +3,7 @@
 from django.db import models
 from choices.models import YesNoUnk
 from .crf1_model import CRF1
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class CRF1OtherHerbal(models.Model):
@@ -24,10 +25,12 @@ class CRF1OtherHerbal(models.Model):
 
     herbal_end = models.DateField(null=True, blank=True)
 
-    herbal_dose = models.CharField(max_length=255)
-
-    herbal_frequency = models.CharField(max_length=255)
-
+    herbal_dose = models.DecimalField(max_digits=10,decimal_places=2,null=True,blank=True)
+    herbal_frequency = models.IntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(255)],
+        null=True,
+        blank=True
+    )
     herbal_remarks = models.TextField(blank=True)
 
     def __str__(self):

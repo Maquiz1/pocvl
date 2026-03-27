@@ -33,11 +33,11 @@ class CRF1ChemotherapyForm(forms.ModelForm):
                 "class": "form-control",
                 "type": "date"
             }),
-            "chemotherapy_dose": forms.TextInput(attrs={
+            "chemotherapy_dose": forms.NumberInput(attrs={
                 "class": "form-control",
                 "placeholder": "Dose"
             }),
-            "chemotherapy_frequency": forms.TextInput(attrs={
+            "chemotherapy_frequency": forms.NumberInput(attrs={
                 "class": "form-control",
                 "placeholder": "Frequency"
             }),

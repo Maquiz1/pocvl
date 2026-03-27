@@ -33,11 +33,11 @@ class CRF1NimregeninForm(forms.ModelForm):
                 "class": "form-control",
                 "type": "date"
             }),
-            "nimregenin_dose": forms.TextInput(attrs={
+            "nimregenin_dose": forms.NumberInput(attrs={
                 "class": "form-control",
                 "placeholder": "Dose"
             }),
-            "nimregenin_frequency": forms.TextInput(attrs={
+            "nimregenin_frequency": forms.NumberInput(attrs={
                 "class": "form-control",
                 "placeholder": "Frequency"
             }),

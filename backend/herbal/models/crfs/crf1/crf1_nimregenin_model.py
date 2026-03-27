@@ -3,6 +3,7 @@
 from django.db import models
 from choices.models import YesNoUnk
 from .crf1_model import CRF1
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class CRF1Nimregenin(models.Model):
@@ -26,10 +27,12 @@ class CRF1Nimregenin(models.Model):
 
     nimregenin_end = models.DateField(null=True, blank=True)
 
-    nimregenin_dose = models.CharField(max_length=255)
-
-    nimregenin_frequency = models.CharField(max_length=255)
-
+    nimregenin_dose = models.DecimalField(max_digits=10,decimal_places=2,null=True,blank=True)
+    nimregenin_frequency = models.IntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(255)],
+        null=True,
+        blank=True
+    )
     nimregenin_remarks = models.TextField(blank=True)
 
     def __str__(self):

@@ -33,11 +33,11 @@ class CRF1OtherHerbalForm(forms.ModelForm):
                 "class": "form-control",
                 "type": "date"
             }),
-            "herbal_dose": forms.TextInput(attrs={
+            "herbal_dose": forms.NumberInput(attrs={
                 "class": "form-control",
                 "placeholder": "Dose"
             }),
-            "herbal_frequency": forms.TextInput(attrs={
+            "herbal_frequency": forms.NumberInput(attrs={
                 "class": "form-control",
                 "placeholder": "Frequency"
             }),

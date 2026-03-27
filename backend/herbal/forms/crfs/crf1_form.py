@@ -61,6 +61,21 @@ class CRF1Form(forms.ModelForm):
             "remarks": forms.Textarea(attrs={"class": "form-control", "rows": 3}),
         }
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields["diabetic"].required = True
+        self.fields["hypertension"].required = True
+        self.fields["heart"].required = True
+        self.fields["asthma"].required = True
+        self.fields["hiv_aids"].required = True
+        self.fields["other_medical"].required = True
+        self.fields["nimregenin_herbal"].required = True
+        self.fields["other_herbal"].required = True
+        self.fields["radiotherapy_performed"].required = True
+        self.fields["chemotherapy_performed"].required = True
+        self.fields["surgery_performed"].required = True
+
     # =========================
     # EXTRA CLEAN (UI LEVEL)
     # =========================

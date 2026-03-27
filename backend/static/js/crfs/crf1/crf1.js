@@ -1,31 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    function getText(select) {
-        return select?.options[select.selectedIndex]?.text?.toLowerCase() || "";
-    }
-
-    function isYes(select) {
-        return getText(select) === "yes";
-    }
-
-    function isNo(select) {
-        return getText(select) === "no";
-    }
-
-    function isUnknown(select) {
-        return getText(select) === "unknown";
-    }
-
-    function clearField(field) {
-        if (!field) return;
-        if (field.tagName === "SELECT") {
-            field.selectedIndex = 0;
-        } else {
-            field.value = "";
-        }
-    }
-
     function handleGroup(diseaseId, medClass, nameClass) {
+
         const disease = document.getElementById(`id_${diseaseId}`);
         const medWrapper = document.querySelector(`.${medClass}`);
         const nameWrapper = document.querySelector(`.${nameClass}`);
@@ -35,43 +11,39 @@ document.addEventListener("DOMContentLoaded", function () {
         const med = medWrapper.querySelector("select");
         const name = nameWrapper.querySelector("input");
 
-function update() {
-    const diseaseVal = getText(disease);
+        function toggleFields() {
 
-    if (diseaseVal === "yes") {
-        // Show medication select
-        medWrapper.style.display = "block";
+            if (disease.value === "1") {
 
-        // Show name only if medication = Yes
-        if (isYes(med)) {
-            nameWrapper.style.display = "block";
-        } else {
-            nameWrapper.style.display = "none";
-            clearField(name);
+                // Show medication field
+                medWrapper.style.display = "block";
+
+                if (med && med.value === "1") {
+                    nameWrapper.style.display = "block";
+                } else {
+                    nameWrapper.style.display = "none";
+                    if (name) name.value = "";
+                }
+
+            } else {
+                // Hide everything
+                medWrapper.style.display = "none";
+                nameWrapper.style.display = "none";
+
+                if (med) med.selectedIndex = 0;
+                if (name) name.value = "";
+            }
         }
 
-    } else {
-        // Disease = No or Unknown
-        medWrapper.style.display = "none";
-        nameWrapper.style.display = "none";
+        // Run on load
+        toggleFields();
 
-        clearField(med);
-        clearField(name);
-    }
-}
-
-
-        // Events
-        disease.addEventListener("change", update);
-        med?.addEventListener("change", update);
-
-        // Init
-        update();
+        // Run on change
+        disease.addEventListener("change", toggleFields);
+        if (med) med.addEventListener("change", toggleFields);
     }
 
-    // =========================
-    // APPLY TO ALL GROUPS
-    // =========================
+    // Apply to all groups
     handleGroup("diabetic", "diabetic-med", "diabetic-name");
     handleGroup("hypertension", "hypertension-med", "hypertension-name");
     handleGroup("heart", "heart-med", "heart-name");

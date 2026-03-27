@@ -33,11 +33,11 @@ class CRF1RadiotherapyForm(forms.ModelForm):
                 "class": "form-control",
                 "type": "date"
             }),
-            "radiotherapy_dose": forms.TextInput(attrs={
+            "radiotherapy_dose": forms.NumberInput(attrs={
                 "class": "form-control",
                 "placeholder": "Dose"
             }),
-            "radiotherapy_frequency": forms.TextInput(attrs={
+            "radiotherapy_frequency": forms.NumberInput(attrs={
                 "class": "form-control",
                 "placeholder": "Frequency"
             }),
