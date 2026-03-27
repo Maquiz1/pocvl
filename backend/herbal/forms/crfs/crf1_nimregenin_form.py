@@ -16,6 +16,6 @@ CRF1NimregeninFormSet = inlineformset_factory(
         "nimregenin_frequency",
         "nimregenin_remarks",
     ],
-    extra=0,  # 🔥 JS will control rows
+    extra=1,
     can_delete=True
 )

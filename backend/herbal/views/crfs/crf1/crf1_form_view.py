@@ -12,7 +12,6 @@ from herbal.forms.crfs.crf1_radiotherapy_form import CRF1RadiotherapyFormSet
 from herbal.forms.crfs.crf1_chemotherapy_form import CRF1ChemotherapyFormSet
 from herbal.forms.crfs.crf1_surgery_form import CRF1SurgeryFormSet
 
-
 @login_required
 def crf1_form_view(request, pk):
 
@@ -73,12 +72,14 @@ def crf1_form_view(request, pk):
             except IntegrityError:
                 form.add_error(None, "CRF1 already exists for this visit.")
 
-    else:
+    else:        
         form = CRF1Form(instance=crf_instance)
+
         other_formset = CRF1OtherMedicalFormSet(
             instance=crf_instance,
-            prefix="othermedicals"   # ✅ ADD THIS
+            prefix="othermedicals"
         )
+        
         nimregenin_formset = CRF1NimregeninFormSet(
             instance=crf_instance,
             prefix="nimregenins"

@@ -4,24 +4,42 @@ document.addEventListener("DOMContentLoaded", function () {
     const tableCard = document.getElementById("other-medical-table");
     const addBtn = document.getElementById("add-row");
     const tbody = document.getElementById("other-body");
-    const totalForms = document.getElementById("id_othermedical-TOTAL_FORMS");
+    const totalForms = document.getElementById("id_othermedicals-TOTAL_FORMS");
+    const emptyForm = document.getElementById("other-empty-form");
 
+    console.log({
+        otherMedical,
+        tableCard,
+        addBtn,
+        tbody,
+        totalForms,
+        emptyForm
+    });
+    // // 🔥 SAFETY CHECK
+    if (!otherMedical || !tableCard || !addBtn || !tbody || !totalForms || !emptyForm) {
+        console.error("❌ otherMedical setup failed");
+        return;
+    }
+
+    function isYes(select) {
+        if (!select) return false;
+        return ["1", "yes", "true", "True"].includes(select.value);
+    }
     // =========================
     // SHOW / HIDE TABLE
     // =========================
     function toggleTable() {
-        const valText = otherMedical.options[otherMedical.selectedIndex].text.toLowerCase();
+        const hasRows = tbody.querySelectorAll(
+            ".other-row:not([style*='display: none'])"
+        ).length > 0;
 
-        const hasRows = tbody.querySelectorAll(".other-row:not([style*='display: none'])").length > 0;
-
-        if (valText === "yes" || hasRows) {
-            tableCard.style.display = "";
+        if (isYes(otherMedical) || hasRows) {
+            tableCard.style.display = "block"; // force visible
         } else {
             tableCard.style.display = "none";
         }
 
-        // ✅ HERE
-        addBtn.disabled = valText !== "yes";
+        addBtn.disabled = !isYes(otherMedical);
     }
 
     otherMedical.addEventListener("change", toggleTable);

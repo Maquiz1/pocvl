@@ -6,19 +6,29 @@ document.addEventListener("DOMContentLoaded", function () {
     const tbody = document.getElementById("herbal-body");
     const totalForms = document.getElementById("id_herbal-TOTAL_FORMS");
 
+    // 🔥 SAFETY CHECK
+    if (!OtherHerbal || !tableCard || !addBtn || !tbody || !totalForms || !emptyForm) {
+        console.error("❌ OtherHerbal setup failed");
+        return;
+    }
+
+    function isYes(select) {
+        if (!select) return false;
+        return ["1", "yes", "true", "True"].includes(select.value);
+    }
+
     function toggleTable() {
-        const valText = OtherHerbal.options[OtherHerbal.selectedIndex].text.toLowerCase();
+        const hasRows = tbody.querySelectorAll(
+            ".herbal-row:not([style*='display: none'])"
+        ).length > 0;
 
-        const hasRows = tbody.querySelectorAll(".herbal-row:not([style*='display: none'])").length > 0;
-
-        if (valText === "yes" || hasRows) {
-            tableCard.style.display = "";
+        if (isYes(OtherHerbal) || hasRows) {
+            tableCard.style.display = "block"; // force visible
         } else {
             tableCard.style.display = "none";
         }
 
-        // ✅ HERE
-        addBtn.disabled = valText !== "yes";
+        addBtn.disabled = !isYes(OtherHerbal);
     }
 
     OtherHerbal.addEventListener("change", toggleTable);
