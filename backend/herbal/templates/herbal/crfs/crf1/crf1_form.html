@@ -242,16 +242,25 @@
                             <div class="col-md-4">
                                 {{ form.other_medical.label_tag }}
                                 {{ form.other_medical|add_class:"form-select" }}
+                                {% if form.other_medical.errors %}
+                                <div class="text-danger small">{{ form.other_medical.errors }}</div>
+                                {% endif %}
                             </div>
 
                             <div class="col-md-4">
                                 {{ form.nimregenin_herbal.label_tag }}
                                 {{ form.nimregenin_herbal|add_class:"form-select" }}
+                                {% if form.nimregenin_herbal.errors %}
+                                <div class="text-danger small">{{ form.nimregenin_herbal.errors }}</div>
+                                {% endif %}
                             </div>
 
                             <div class="col-md-4">
                                 {{ form.other_herbal.label_tag }}
                                 {{ form.other_herbal|add_class:"form-select" }}
+                                {% if form.other_herbal.errors %}
+                                <div class="text-danger small">{{ form.other_herbal.errors }}</div>
+                                {% endif %}
                             </div>
                         </div>
                         <hr>
@@ -719,14 +728,23 @@
                             <div class="col-md-4">
                                 {{ form.radiotherapy_performed.label_tag }}
                                 {{ form.radiotherapy_performed|add_class:"form-select" }}
+                                {% if form.radiotherapy_performed.errors %}
+                                <div class="text-danger small">{{ form.radiotherapy_performed.errors }}</div>
+                                {% endif %}
                             </div>
                             <div class="col-md-4">
                                 {{ form.chemotherapy_performed.label_tag }}
                                 {{ form.chemotherapy_performed|add_class:"form-select" }}
+                                {% if form.chemotherapy_performed.errors %}
+                                <div class="text-danger small">{{ form.chemotherapy_performed.errors }}</div>
+                                {% endif %}
                             </div>
                             <div class="col-md-4">
                                 {{ form.surgery_performed.label_tag }}
                                 {{ form.surgery_performed|add_class:"form-select" }}
+                                {% if form.surgery_performed.errors %}
+                                <div class="text-danger small">{{ form.surgery_performed.errors }}</div>
+                                {% endif %}
                             </div>
                         </div>
                         <div id="radio-table" style="display:none;" class="card mb-4 border-0 shadow-sm">
