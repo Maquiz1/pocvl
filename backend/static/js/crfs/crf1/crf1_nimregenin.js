@@ -4,13 +4,16 @@ document.addEventListener("DOMContentLoaded", function () {
     const tableCard = document.getElementById("nimregenin-table");
     const addBtn = document.getElementById("add-nimregenin");
     const tbody = document.getElementById("nimregenin-body");
-    const totalForms = document.getElementById("id_nimregenin-TOTAL_FORMS");
+    const totalForms = document.getElementById("id_nimregenins-TOTAL_FORMS");
     const emptyForm = document.getElementById("nimregenin-empty-form");
 
     // 🔥 SAFETY CHECK
     if (!NimregeninHerbal || !tableCard || !addBtn || !tbody || !totalForms || !emptyForm) {
         console.error("❌ Nimregenin setup failed");
         return;
+    }else {
+        console.error("Good Nimregeini");
+
     }
 
     function isYes(select) {

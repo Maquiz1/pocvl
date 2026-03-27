@@ -16,6 +16,6 @@ CRF1OtherHerbalFormSet = inlineformset_factory(
         "herbal_frequency",
         "herbal_remarks",
     ],
-    extra=1,
+    extra=0,
     can_delete=True
 )

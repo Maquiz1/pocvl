@@ -4,7 +4,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const tableCard = document.getElementById("other-medical-table");
     const addBtn = document.getElementById("add-row");
     const tbody = document.getElementById("other-body");
-    const totalForms = document.getElementById("id_othermedicals-TOTAL_FORMS");
+    const totalForms = document.querySelector(
+        "input[name='othermedicals-TOTAL_FORMS']"
+    );
     const emptyForm = document.getElementById("other-empty-form");
 
     console.log({
@@ -15,11 +17,13 @@ document.addEventListener("DOMContentLoaded", function () {
         totalForms,
         emptyForm
     });
+
     // // 🔥 SAFETY CHECK
     if (!otherMedical || !tableCard || !addBtn || !tbody || !totalForms || !emptyForm) {
         console.error("❌ otherMedical setup failed");
         return;
     }
+    
 
     function isYes(select) {
         if (!select) return false;
@@ -52,23 +56,33 @@ document.addEventListener("DOMContentLoaded", function () {
 
         let formCount = parseInt(totalForms.value);
 
-        let template = document.getElementById("other-empty-form")?.innerHTML;
+        let template = emptyForm.innerHTML;
 
         if (!template) {
             console.error("Empty form template not found!");
             return;
         }
 
-        // 🔥 CRITICAL FIX
+        // replace prefix
         template = template.replace(/__prefix__/g, formCount);
 
-        // 🔥 FORCE HTML parsing correctly
+        // create element safely
         const tempDiv = document.createElement("tbody");
-        tempDiv.innerHTML = template;
+        tempDiv.innerHTML = template.trim();
 
-        tbody.appendChild(tempDiv.firstElementChild);
+        const newRow = tempDiv.firstElementChild;
 
+        if (!newRow) {
+            console.error("Failed to create new row");
+            return;
+        }
+
+        tbody.appendChild(newRow);
+
+        // increment TOTAL_FORMS
         totalForms.value = formCount + 1;
+
+        console.log("TOTAL_FORMS:", totalForms.value);
 
         toggleTable();
     });
@@ -82,19 +96,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const row = e.target.closest("tr");
 
-            // 🔥 check if existing form (has DELETE checkbox)
-            const deleteInput = row.querySelector("input[type='checkbox']");
+            const deleteInput = row.querySelector("input[name$='-DELETE']");
 
             if (deleteInput) {
-                // EXISTING ROW → soft delete
+                // existing row → soft delete
                 deleteInput.checked = true;
                 row.style.display = "none";
             } else {
-                // NEW ROW → remove from DOM
+                // new row → remove only
                 row.remove();
-
-                // update TOTAL_FORMS
-                totalForms.value = tbody.querySelectorAll(".other-row").length;
             }
 
             toggleTable();

@@ -595,9 +595,9 @@
                 {% elif visit.visit_day.code == "D0" %}
 
                 {% if visit.crf1 %}
-                <a href="{% url 'herbal:crf1-update' visit.pk %}" class="btn btn-sm btn-info">Edit</a>
+                <a href="{% url 'herbal:crf1-form' visit.pk %}" class="btn btn-sm btn-info">Edit</a>
                 {% else %}
-                <a href="{% url 'herbal:crf1-create' visit.pk %}" class="btn btn-sm btn-warning">Create</a>
+                <a href="{% url 'herbal:crf1-form' visit.pk %}" class="btn btn-sm btn-warning">Create</a>
                 {% endif %}
 
                 {% else %}

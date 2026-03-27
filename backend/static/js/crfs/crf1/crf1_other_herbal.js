@@ -4,12 +4,25 @@ document.addEventListener("DOMContentLoaded", function () {
     const tableCard = document.getElementById("herbal-table");
     const addBtn = document.getElementById("add-herbal");
     const tbody = document.getElementById("herbal-body");
-    const totalForms = document.getElementById("id_herbal-TOTAL_FORMS");
+    const totalForms = document.getElementById("id_otherherbals-TOTAL_FORMS");
+    const emptyForm = document.getElementById("herbal-empty-form");
+
+    console.log({
+        OtherHerbal,
+        tableCard,
+        addBtn,
+        tbody,
+        totalForms,
+        emptyForm
+    });
 
     // 🔥 SAFETY CHECK
     if (!OtherHerbal || !tableCard || !addBtn || !tbody || !totalForms || !emptyForm) {
         console.error("❌ OtherHerbal setup failed");
         return;
+    } else {
+        console.error("Good Herbal");
+
     }
 
     function isYes(select) {

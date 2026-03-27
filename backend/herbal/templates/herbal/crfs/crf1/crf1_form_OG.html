@@ -223,9 +223,6 @@
                                     <tbody id="other-body">
                                         {% for f in other_formset %}
                                         <tr class="other-row">
-                                            {% for hidden in f.hidden_fields %}
-                                            {{ hidden }}
-                                            {% endfor %}
                                             <td>{{ f.other_specify }}</td>
                                             <td>{{ f.other_medical_medicatn }}</td>
                                             <td>{{ f.other_medicatn_name }}</td>
@@ -241,11 +238,7 @@
                                     </tbody>
                                 </table>
                                 <script type="text/template" id="other-empty-form">
-                                {% autoescape off %}
-                                <tr class="other-row">
-                                    {% for hidden in other_formset.empty_form.hidden_fields %}
-                                        {{ hidden }}
-                                    {% endfor %}
+                                    <tr class="other-row">
                                         <td>{{ other_formset.empty_form.other_specify }}</td>
                                         <td>{{ other_formset.empty_form.other_medical_medicatn }}</td>
                                         <td>{{ other_formset.empty_form.other_medicatn_name }}</td>
@@ -257,7 +250,6 @@
                                             </button>
                                         </td>
                                     </tr>
-                                {% endautoescape %}
                                 </script>
                                 <button type="button" class="btn btn-sm btn-primary" id="add-row">
                                     + Add Row
@@ -654,12 +646,12 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="{% static 'js/crfs/crf1/crf1.js' %}"></script>
+<!-- <script src="{% static 'js/crfs/crf1/crf1.js' %}"></script> -->
 <!-- <script src="{% static 'js/utils/formset_helpers.js' %}"></script> -->
 <script src="{% static 'js/crfs/crf1/crf1_other_medications.js' %}"></script>
-<script src="{% static 'js/crfs/crf1/crf1_nimregenin.js' %}"></script>
+<!-- <script src="{% static 'js/crfs/crf1/crf1_nimregenin.js' %}"></script>
 <script src="{% static 'js/crfs/crf1/crf1_other_herbal.js' %}"></script>
 <script src="{% static 'js/crfs/crf1/crf1_radiotherapy.js' %}"></script>
 <script src="{% static 'js/crfs/crf1/crf1_chemotherapy.js' %}"></script>
-<script src="{% static 'js/crfs/crf1/crf1_surgery.js' %}"></script>
+<script src="{% static 'js/crfs/crf1/crf1_surgery.js' %}"></script> -->
 {% endblock %}

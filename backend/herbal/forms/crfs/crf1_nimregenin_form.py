@@ -16,6 +16,6 @@ CRF1NimregeninFormSet = inlineformset_factory(
         "nimregenin_frequency",
         "nimregenin_remarks",
     ],
-    extra=1,
+    extra=0,
     can_delete=True
 )
