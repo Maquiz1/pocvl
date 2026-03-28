@@ -23,7 +23,7 @@
             <div class="card-body row g-3">
 
                 <!-- tdate -->
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <label>{{ form.tdate.label }}</label>
                     {% if form.tdate.errors %}
                         {{ form.tdate|add_class:"form-control is-invalid" }}
@@ -36,7 +36,7 @@
                 </div>
 
                 <!-- fdate -->
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <label>{{ form.fdate.label }}</label>
                     {% if form.fdate.errors %}
                         {{ form.fdate|add_class:"form-control is-invalid" }}
@@ -49,7 +49,7 @@
                 </div>
 
                 <!-- cdate -->
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <label>{{ form.cdate.label }}</label>
                     {% if form.cdate.errors %}
                         {{ form.cdate|add_class:"form-control is-invalid" }}
@@ -58,19 +58,6 @@
                         </div>
                     {% else %}
                         {{ form.cdate|add_class:"form-control" }}
-                    {% endif %}
-                </div>
-
-                <!-- cpersid -->
-                <div class="col-md-3">
-                    <label>{{ form.cpersid.label }}</label>
-                    {% if form.cpersid.errors %}
-                        {{ form.cpersid|add_class:"form-control is-invalid" }}
-                        <div class="invalid-feedback d-block">
-                            {{ form.cpersid.errors|striptags }}
-                        </div>
-                    {% else %}
-                        {{ form.cpersid|add_class:"form-control" }}
                     {% endif %}
                 </div>
 
@@ -127,7 +114,7 @@
                 </div>
 
                 <!-- pain -->
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <label>{{ form.pain.label }}</label>
                     {% if form.pain.errors %}
                         {{ form.pain|add_class:"form-control is-invalid" }}
@@ -140,7 +127,7 @@
                 </div>
 
                 <!-- anxiety -->
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <label>{{ form.anxiety.label }}</label>
                     {% if form.anxiety.errors %}
                         {{ form.anxiety|add_class:"form-control is-invalid" }}
@@ -149,6 +136,44 @@
                         </div>
                     {% else %}
                         {{ form.anxiety|add_class:"form-control" }}
+                    {% endif %}
+                </div>
+
+                <!-- cpersid -->
+                <div class="col-md-4">
+                    <label>{{ form.cpersid.label }}</label>
+                    {% if form.cpersid.errors %}
+                        {{ form.cpersid|add_class:"form-control is-invalid" }}
+                        <div class="invalid-feedback d-block">
+                            {{ form.cpersid.errors|striptags }}
+                        </div>
+                    {% else %}
+                        {{ form.cpersid|add_class:"form-control" }}
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ===================== -->
+        <!-- remarks -->
+        <!-- ===================== -->
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-light">
+                <strong>Remarks</strong>
+            </div>
+
+            <div class="card-body row g-3">
+                <!-- remarks -->
+                <div class="col-md-12">
+                    <label>{{ form.remarks.label }}</label>
+                    {% if form.remarks.errors %}
+                        {{ form.remarks|add_class:"form-control is-invalid" }}
+                        <div class="invalid-feedback d-block">
+                            {{ form.remarks.errors|striptags }}
+                        </div>
+                    {% else %}
+                        {{ form.remarks|add_class:"form-control" }}
                     {% endif %}
                 </div>
 
