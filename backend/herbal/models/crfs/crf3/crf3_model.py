@@ -51,7 +51,4 @@ class CRF3(BaseModel):
     herbal_medication = models.ForeignKey(YesNoUnk, null=True, blank=True, on_delete=models.SET_NULL, related_name="herbal_medication_crf3")
     herbal_ingredients = models.TextField(blank=True)
     
-    notes = models.TextField(blank=True)
-    
-    # Comments
-    other_comments = models.TextField(null=True, blank=True)
+    remarks = models.TextField(blank=True)

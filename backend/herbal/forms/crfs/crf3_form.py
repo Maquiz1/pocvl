@@ -13,9 +13,19 @@ class CRF3Form(forms.ModelForm):
             "symptoms_other", "symptoms_other_specify",
             "adherence", "adherence_specify",
             "herbal_medication", "herbal_ingredients",
-            "notes", "other_comments",
+            "remarks",
         ]
 
+        labels = {
+            "symptoms_other":"Other symptoms",
+            "symptoms_other_specify":"Specify",
+            "adherence":"Do you take NIMREGENIN as advised (i.e., daily)?",
+            "adherence_specify":"If No Specify why",
+            "herbal_medication":"Have you taken any herbal medication?",
+            "herbal_ingredients":"Specify type by name or ingredients",
+            "remarks":"Remarks"
+        }
+        
         widgets = {
             field: forms.Select(attrs={"class": "form-control"})
             for field in [
@@ -31,8 +41,7 @@ class CRF3Form(forms.ModelForm):
             "symptoms_other_specify": forms.TextInput(attrs={"class": "form-control"}),
             "adherence_specify": forms.TextInput(attrs={"class": "form-control"}),
             "herbal_ingredients": forms.Textarea(attrs={"class": "form-control", "rows": 2}),
-            "notes": forms.Textarea(attrs={"class": "form-control", "rows": 3}),
-            "other_comments": forms.Textarea(attrs={"class": "form-control", "rows": 3}),
+            "remarks": forms.Textarea(attrs={"class": "form-control", "rows": 3}),
         })
 
     def clean(self):
@@ -46,6 +55,7 @@ class CRF3Form(forms.ModelForm):
             "heartburn_indigestion", "swelling", "pv_bleeding", "pv_discharge",
             "micturition", "convulsions", "blood_urine","symptoms_other",
         ]
+        
         for field in symptom_fields:
             if not cleaned_data.get(field):
                 self.add_error(field, "This symptom is required.")
