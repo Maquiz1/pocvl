@@ -3,30 +3,44 @@
 
 {% block content %}
 <div class="container mt-4">
-    <h3>{{ is_update|yesno:"Update CRF3,Create CRF3" }}</h3>
+    {% with mode=is_update|yesno:"Update,Create" %}
+    <h3>{{ mode }} CRF3</h3>
 
     <!-- ===================== -->
     <!-- SUBJECT HEADER -->
     <!-- ===================== -->
     <div class="card shadow-sm mb-4 border-0">
         <div class="card-body d-flex justify-content-between align-items-center">
+
+            <!-- LEFT -->
             <div>
                 <h5 class="mb-1 text-primary">
                     <i class="bi bi-file-earmark-medical"></i> CRF3
                 </h5>
+
                 <small class="text-muted">
-                    Subject: <strong>{{ visit.subject.subject_id }}</strong> |
-                    Visit: <strong>{{ visit.get_visit_day_display }}</strong>
+                    Subject:
+                    <strong>
+                        {{ visit.subject.subject_id|default:"N/A" }}
+                    </strong>
+                    |
+                    Visit:
+                    <strong>
+                        {{ visit.visit_day.name|default:"N/A" }}
+                    </strong>
                 </small>
             </div>
 
+            <!-- RIGHT -->
             <div>
                 <span class="badge bg-{% if is_update %}warning{% else %}success{% endif %}">
-                    {% if is_update %}Update Mode{% else %}New Entry{% endif %}
+                    {{ mode }} Mode
                 </span>
             </div>
+
         </div>
     </div>
+    {% endwith %}
 
     <form method="post" novalidate>
         {% csrf_token %}
@@ -282,7 +296,7 @@
             </div>
         </div>
 
-        {% if visit.visit_day.code != "D0" and visit.enrollment.screening.consent_nimregenin and visit.enrollment.screening.consent_nimregenin.code == "yes" %}        <div class="card mb-4 shadow-sm">
+        {% if visit.visit_day.code != "D0" and visit.enrollment.screening.consent_nimregenin and visit.enrollment.screening.consent_nimregenin.code == "yes" %} <div class="card mb-4 shadow-sm">
             <div class="card-header bg-light">
                 <strong>Drug Adherence (To be asked on day 7, 14, 30, 60, 90, 120) For patients on NIMREGENIN
                     only</strong>
@@ -377,10 +391,22 @@
                 </div>
             </div>
         </div>
+        <hr>
+        <div class="d-flex gap-2">
 
-        <button type="submit" class="btn btn-primary">
-            {{ is_update|yesno:"Update,Create" }}
-        </button>
+            {% with mode=is_update|yesno:"Update,Create" %}
+            <button type="submit" class="btn {% if is_update %}btn-warning{% else %}btn-success{% endif %}">
+                <i class="bi {% if is_update %}bi-pencil-square{% else %}bi-plus-circle{% endif %}"></i>
+                {{ mode }} CRF3
+            </button>
+            {% endwith %}
+
+            <a href="{% url 'herbal:subjects-detail' visit.subject.pk %}" class="btn btn-outline-secondary">
+                <i class="bi bi-x-circle"></i>
+                Cancel
+            </a>
+
+        </div>
     </form>
 </div>
 {% endblock %}
