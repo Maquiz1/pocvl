@@ -11,13 +11,11 @@ from herbal.services.visit_completion import update_visit_status
 def crf3_form_view(request, pk):
     visit = get_object_or_404(VisitSchedule, pk=pk)
 
+    # Try to get existing CRF3 instance, or None if not created yet
     crf_instance = getattr(visit, "crf3", None)
 
     if request.method == "POST":
         form = CRF3Form(request.POST, instance=crf_instance)
-
-        # 🔥 REQUIRED
-        form.instance.visit = visit
 
         if form.is_valid():
             crf = form.save(commit=False)

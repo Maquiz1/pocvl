@@ -47,32 +47,147 @@ class CRF3Form(forms.ModelForm):
     def clean(self):
         cleaned_data = super().clean()
 
-        # Require all symptom fields
+        # ----------------------------
+        # REQUIRED SYMPTOMS
+        # ----------------------------
         symptom_fields = [
             "fever", "vomiting", "diarrhoea", "nausea", "loss_appetite",
             "headaches", "difficult_breathing", "sore_throat", "fatigue",
             "muscle_pain", "loss_consciousness", "backpain", "weight_loss",
             "heartburn_indigestion", "swelling", "pv_bleeding", "pv_discharge",
-            "micturition", "convulsions", "blood_urine","symptoms_other",
+            "micturition", "convulsions", "blood_urine", "symptoms_other",
         ]
-        
+
         for field in symptom_fields:
             if not cleaned_data.get(field):
                 self.add_error(field, "This symptom is required.")
 
-        # If symptoms_other = Yes, require specify
-        if cleaned_data.get("symptoms_other") and str(cleaned_data["symptoms_other"].code) == "1":
+        # ----------------------------
+        # OTHER SYMPTOMS
+        # ----------------------------
+        symptoms_other = cleaned_data.get("symptoms_other")
+        if symptoms_other and symptoms_other.code == "yes":
             if not cleaned_data.get("symptoms_other_specify"):
                 self.add_error("symptoms_other_specify", "Please specify other symptoms.")
 
-        # If adherence = Yes, require specify
-        if cleaned_data.get("adherence") and str(cleaned_data["adherence"].code) == "1":
-            if not cleaned_data.get("adherence_specify"):
-                self.add_error("adherence_specify", "Please provide adherence details.")
+        # ----------------------------
+        # GET VISIT + CONSENT SAFELY
+        # ----------------------------
+        visit = getattr(self.instance, "visit", None)
 
-        # If herbal_medication = Yes, require ingredients
-        if cleaned_data.get("herbal_medication") and str(cleaned_data["herbal_medication"].code) == "1":
-            if not cleaned_data.get("herbal_ingredients"):
-                self.add_error("herbal_ingredients", "Please provide herbal ingredients.")
+        consent_nimregenin = None
+        if visit and visit.enrollment and visit.enrollment.screening:
+            consent_nimregenin = visit.enrollment.screening.consent_nimregenin
+
+        # ----------------------------
+        # ADHERENCE LOGIC
+        # ----------------------------
+        if visit and visit.visit_day.code != "D0" and consent_nimregenin:
+
+            adherence = cleaned_data.get("adherence")
+            specify = cleaned_data.get("adherence_specify")
+
+            # =========================
+            # 🔴 CASE 1: ON NIMREGENIN
+            # =========================
+            if consent_nimregenin.code == "yes":
+
+                # REQUIRED
+                if not adherence:
+                    self.add_error(
+                        "adherence",
+                        "This field is required for patients on NIMREGENIN."
+                    )
+
+                # NO → require specify
+                elif adherence.code == "no":
+                    if not specify:
+                        self.add_error(
+                            "adherence_specify",
+                            "Please specify why not adhering."
+                        )
+
+                # YES or UNKNOWN → must be empty
+                elif adherence.code in ["yes", "unknown"]:
+                    if specify:
+                        self.add_error(
+                            "adherence_specify",
+                            "Must be empty unless patient is NOT adhering."
+                        )
+
+            # =========================
+            # 🔴 CASE 2: NOT ON NIMREGENIN / UNKNOWN
+            # =========================
+            elif consent_nimregenin.code in ["no", "unknown"]:
+
+                if adherence:
+                    self.add_error(
+                        "adherence",
+                        "This field must be empty for patients not on NIMREGENIN."
+                    )
+
+                if specify:
+                    self.add_error(
+                        "adherence_specify",
+                        "This field must be empty for patients not on NIMREGENIN."
+                    )
+
+        # else:
+        #     self.add_error(
+        #         "adherence",
+        #         "This field is is not required since patient is NOT on NIMREGENIN and the Day is Day '0'"
+        #     )
+        # ----------------------------
+        # HERBAL MEDICATION LOGIC
+        # ----------------------------
+        if consent_nimregenin:
+
+            herbal = cleaned_data.get("herbal_medication")
+            ingredients = cleaned_data.get("herbal_ingredients")
+
+            # =========================
+            # 🔴 CASE 1: NOT ON NIMREGENIN
+            # =========================
+            if consent_nimregenin.code == "no":
+
+                # REQUIRED
+                if not herbal:
+                    self.add_error(
+                        "herbal_medication",
+                        "This field is required since patient is NOT on NIMREGENIN."
+                    )
+
+                # YES → ingredients required
+                elif herbal.code == "yes":
+                    if not ingredients:
+                        self.add_error(
+                            "herbal_ingredients",
+                            "Please provide herbal ingredients."
+                        )
+
+                # NO → ingredients must be empty
+                elif herbal.code in ["no", "unknown"]:
+                    if ingredients:
+                        self.add_error(
+                            "herbal_ingredients",
+                            "Must be empty if no herbal medication was taken."
+                        )
+
+            # =========================
+            # 🔴 CASE 2: ON NIMREGENIN OR UNKNOWN
+            # =========================
+            elif consent_nimregenin.code in ["yes", "unknown"]:
+
+                if herbal:
+                    self.add_error(
+                        "herbal_medication",
+                        "This field must be empty for patients on NIMREGENIN."
+                    )
+
+                if ingredients:
+                    self.add_error(
+                        "herbal_ingredients",
+                        "This field must be empty for patients on NIMREGENIN."
+                    )
 
         return cleaned_data
