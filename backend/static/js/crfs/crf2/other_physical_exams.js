@@ -1,68 +1,85 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    const field = document.getElementById("id_physical_exams_other");
-    const section = document.getElementById("other-exams-section");
+    const trigger = document.getElementById("id_physical_exams_other");
+    const tableCard = document.getElementById("other-exams-section");
+    const addBtn = document.getElementById("add-other-exam");
+    const tbody = document.getElementById("other-exams-body");
+    const totalForms = document.querySelector("input[name='otherexams-TOTAL_FORMS']");
+    const emptyForm = document.getElementById("other-exams-empty-form");
 
-    const addBtn = document.getElementById("add-row");
-    const formsetBody = document.getElementById("formset-body");
-    const totalForms = document.getElementById("id_other_physcl_exams-TOTAL_FORMS");
+    // console.log({
+    //     trigger,
+    //     tableCard,
+    //     addBtn,
+    //     tbody,
+    //     totalForms,
+    //     emptyForm
+    // });
 
-    if (!totalForms) {
-        console.error("TOTAL_FORMS not found — check prefix!");
+    // 🔥 SAFETY CHECK
+    if (!trigger || !tableCard || !addBtn || !tbody || !totalForms || !emptyForm) {
+        console.error("❌ Other Physical Exams setup failed");
         return;
     }
 
-    // 🔥 SHOW / HIDE SECTION
-    function toggleSection() {
-        if (field.value === "1") {
-            section.style.display = "block";
-        } else {
-            section.style.display = "none";
-        }
+    function isYes(select) {
+        if (!select) return false;
+        return ["1", "yes", "true", "True"].includes(select.value);
     }
 
-    // run on load
-    toggleSection();
+    // =========================
+    // SHOW / HIDE TABLE
+    // =========================
+    function toggleTable() {
+        const hasRows = tbody.querySelectorAll(
+            ".other-exams-row:not([style*='display: none'])"
+        ).length > 0;
 
-    // run on change
-    field.addEventListener("change", toggleSection);
+        if (isYes(trigger) || hasRows) {
+            tableCard.style.display = "block";
+        } else {
+            tableCard.style.display = "none";
+        }
 
-    // 🔥 ADD ROW
+        addBtn.disabled = !isYes(trigger);
+    }
+
+    trigger.addEventListener("change", toggleTable);
+    toggleTable();
+
+    // =========================
+    // ADD ROW
+    // =========================
     addBtn.addEventListener("click", function () {
-        const formCount = parseInt(totalForms.value);
+        let count = parseInt(totalForms.value);
+        let template = emptyForm.innerHTML.replace(/__prefix__/g, count);
 
-        const firstRow = document.querySelector(".formset-row");
-        const newRow = firstRow.cloneNode(true);
+        const temp = document.createElement("tbody");
+        temp.innerHTML = template;
 
-        newRow.querySelectorAll("input, select, textarea").forEach(function (el) {
-            if (el.name) {
-                el.name = el.name.replace(/-\d+-/, `-${formCount}-`);
-            }
-            if (el.id) {
-                el.id = el.id.replace(/-\d+-/, `-${formCount}-`);
-            }
+        tbody.appendChild(temp.firstElementChild);
+        totalForms.value = count + 1;
 
-            if (el.type !== "hidden") {
-                el.value = "";
-            }
-        });
-
-        formsetBody.appendChild(newRow);
-        totalForms.value = formCount + 1;
+        toggleTable();
     });
 
-    // 🔥 REMOVE ROW (proper delete)
-    document.addEventListener("click", function (e) {
-        if (e.target.classList.contains("remove-row")) {
-            const row = e.target.closest(".formset-row");
-            const deleteInput = row.querySelector("input[type='checkbox']");
+    // =========================
+    // REMOVE ROW
+    // =========================
+    tbody.addEventListener("click", function (e) {
+        if (e.target.classList.contains("remove-other-exam")) {
+            const row = e.target.closest("tr");
+            const del = row.querySelector("input[type='checkbox']");
 
-            if (deleteInput) {
-                deleteInput.checked = true;
+            if (del) {
+                del.checked = true;
                 row.style.display = "none";
             } else {
                 row.remove();
+                totalForms.value = tbody.querySelectorAll(".other-exams-row").length;
             }
+
+            toggleTable();
         }
     });
 

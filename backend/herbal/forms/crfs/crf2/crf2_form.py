@@ -33,6 +33,7 @@ class CRF2Form(forms.ModelForm):
             "heart_rate": forms.NumberInput(attrs={"class": "form-control"}),
             "systolic": forms.NumberInput(attrs={"class": "form-control"}),
             "diastolic": forms.NumberInput(attrs={"class": "form-control"}),
+            "method": forms.Select(attrs={"class": "form-control"}),
 
             "appearance_comments": forms.Textarea(
                 attrs={"class": "form-control", "rows": 2}
@@ -71,9 +72,8 @@ class CRF2Form(forms.ModelForm):
             "local_examination_comments": forms.Textarea(
                 attrs={"class": "form-control", "rows": 2}
             ),
-            "physical_other_comments": forms.Textarea(
-                attrs={"class": "form-control", "rows": 2}
-            ),
+            
+            "physical_exams_other": forms.Select(attrs={"class": "form-control"}),
             
             # Textareas
             "remarks": forms.Textarea(attrs={"class": "form-control", "rows": 3}),
@@ -122,8 +122,8 @@ class CRF2Form(forms.ModelForm):
         for field in required_fields:
             if field in self.fields:
                 self.fields[field].required = True
-                # self.fields[field].widget.attrs["required"] = True
-                self.fields[field].widget.attrs["required"] = "required"
+                self.fields[field].widget.attrs["required"] = True
+                # self.fields[field].widget.attrs["required"] = "required"
                 
         # 🔥 Apply Bootstrap to ALL fields automatically
         for field_name, field in self.fields.items():
@@ -379,19 +379,19 @@ class CRF2Form(forms.ModelForm):
             cleaned_data["local_examination_signifcnt"] = None
             
             
-        # --------------------
-        # physical_exams_other
-        # --------------------
-        physical_exams_other = cleaned_data.get("physical_exams_other")
+        # # --------------------
+        # # physical_exams_other
+        # # --------------------
+        # physical_exams_other = cleaned_data.get("physical_exams_other")
 
-        if physical_exams_other and physical_exams_other.id == 2:
-            if not cleaned_data.get("physical_other_specify"):
-                self.add_error("physical_other_specify", "This field is required when finding is abnormal")
-            if not cleaned_data.get("physical_other_system"):
-                self.add_error("physical_other_system", "This field is required when finding is abnormal")
-            if not cleaned_data.get("physical_other_signifcnt"):
-                self.add_error("physical_other_signifcnt", "This field is required when finding is abnormal")
-        else:
-            cleaned_data["physical_other_signifcnt"] = None
+        # if physical_exams_other and physical_exams_other.id == 2:
+        #     if not cleaned_data.get("physical_other_specify"):
+        #         self.add_error("physical_other_specify", "This field is required when finding is abnormal")
+        #     if not cleaned_data.get("physical_other_system"):
+        #         self.add_error("physical_other_system", "This field is required when finding is abnormal")
+        #     if not cleaned_data.get("physical_other_signifcnt"):
+        #         self.add_error("physical_other_signifcnt", "This field is required when finding is abnormal")
+        # else:
+        #     cleaned_data["physical_other_signifcnt"] = None
 
         return cleaned_data

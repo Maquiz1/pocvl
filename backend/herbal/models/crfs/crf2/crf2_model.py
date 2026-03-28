@@ -185,10 +185,10 @@ class CRF2(BaseModel):
     # OTHER EXAMS
     # =========================
     physical_exams_other = yn_field()
-    physical_other_specify = models.CharField(max_length=255, blank=True)
-    physical_other_system = appearance_field()
-    physical_other_comments = models.TextField(blank=True)
-    physical_other_signifcnt = yn_field()
+    # physical_other_specify = models.CharField(max_length=255, blank=True)
+    # physical_other_system = appearance_field()
+    # physical_other_comments = models.TextField(blank=True)
+    # physical_other_signifcnt = yn_field()
 
     # =========================
     # FINAL

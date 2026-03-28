@@ -1,72 +1,64 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.forms import inlineformset_factory
+from django.db import IntegrityError
 
 from herbal.models import VisitSchedule
-from herbal.models.crfs import CRF2
-from herbal.models import CRF2OtherPhysclExam
+from herbal.forms.crfs.crf2.crf2_form import CRF2Form
 from herbal.services.visit_completion import update_visit_status
-
-from herbal.forms import CRF2Form
+from herbal.forms.crfs.crf2.crf2_other_form import CRF2OtherPhysclExamFormSet
 
 
 @login_required
 def crf2_form_view(request, pk):
     visit = get_object_or_404(VisitSchedule, pk=pk)
-    site = visit.site
-
     crf_instance = getattr(visit, "crf2", None)
 
-    # 🔥 FORMSET
-    OtherPhysclExamFormSet = inlineformset_factory(
-        CRF2,
-        CRF2OtherPhysclExam,
-        fields=["system", "finding", "comments", "signifcnt"],
-        extra=1,
-        can_delete=True
-    )
-
     if request.method == "POST":
-        try:
-            form = CRF2Form(request.POST, instance=crf_instance, site=site)
-        except TypeError:
-            form = CRF2Form(request.POST, instance=crf_instance)
+        form = CRF2Form(request.POST, instance=crf_instance)
 
-        formset = OtherPhysclExamFormSet(request.POST, instance=crf_instance,prefix="other_physcl_exams"
-)
-
-        if form.is_valid() and formset.is_valid():
+        if form.is_valid():
             crf = form.save(commit=False)
             crf.visit = visit
-            crf.save()
 
-            # 🔥 IMPORTANT: save formset AFTER crf exists
-            formset.instance = crf
-            formset.save()
+            try:
+                crf.save()
 
-            # # 🔥 Optional: clean if NOT YES
-            # if not crf.physical_exams_other or crf.physical_exams_other.id != 1:
-            #     crf.other_exams.all().delete()
+                # Always bind formset with the saved instance
+                exam_formset = CRF2OtherPhysclExamFormSet(
+                    request.POST, instance=crf, prefix="otherexams"
+                )
 
-            update_visit_status(visit)
+                if exam_formset.is_valid():
+                    exam_formset.save()
+                    update_visit_status(visit)
+                    return redirect("herbal:subjects-detail", pk=visit.subject.pk)
+                else:
+                    print("FORMSET ERRORS:", exam_formset.errors)
 
-            return redirect("herbal:subjects-detail", pk=visit.subject.pk)
+            except IntegrityError:
+                form.add_error(None, "CRF2 already exists for this visit.")
+                exam_formset = CRF2OtherPhysclExamFormSet(
+                    request.POST, instance=crf_instance, prefix="otherexams"
+                )
+        else:
+            # Form invalid → still bind formset so template can re-render
+            exam_formset = CRF2OtherPhysclExamFormSet(
+                request.POST, instance=crf_instance, prefix="otherexams"
+            )
 
-    else:
-        try:
-            form = CRF2Form(instance=crf_instance, site=site)
-        except TypeError:
-            form = CRF2Form(instance=crf_instance)
-
-        formset = OtherPhysclExamFormSet(instance=crf_instance)
+    else:  # GET request
+        form = CRF2Form(instance=crf_instance)
+        exam_formset = CRF2OtherPhysclExamFormSet(
+            instance=crf_instance, prefix="otherexams"
+        )
 
     return render(
         request,
         "herbal/crfs/crf2/crf2_form.html",
         {
             "form": form,
-            "formset": formset,   # 🔥 pass to template
+            "exam_formset": exam_formset,
             "visit": visit,
             "is_update": crf_instance is not None,
-        }
+        },
     )
