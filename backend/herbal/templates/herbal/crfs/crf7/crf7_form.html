@@ -1,34 +1,178 @@
 {% extends "base.html" %}
+{% load widget_tweaks %}
 
 {% block content %}
 
-<div class="container">
+<div class="container mt-4">
 
-    <h3>
+    {% with mode=is_update|yesno:"Update,Create" %}
+    <h3>{{ mode }} CRF7 — {{ visit.visit_day.name }}</h3>
+    {% endwith %}
 
-        {% if is_update %}
-        Edit CRF7
-        {% else %}
-        Create CRF7
-        {% endif %}
-
-        — {{ visit.get_visit_day_display }}
-
-    </h3>
-
-    <form method="post">
-
+    <form method="post" novalidate>
         {% csrf_token %}
 
-        {{ form.as_p }}
+        <!-- ===================== -->
+        <!-- GENERAL INFO -->
+        <!-- ===================== -->
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-light">
+                <strong>General Information</strong>
+            </div>
 
-        <button class="btn btn-success">
-            Save
-        </button>
+            <div class="card-body row g-3">
 
-        <a href="{% url 'herbal:subjects-detail' visit.subject.pk %}" class="btn btn-secondary">
-            Cancel
-        </a>
+                <!-- tdate -->
+                <div class="col-md-3">
+                    <label>{{ form.tdate.label }}</label>
+                    {% if form.tdate.errors %}
+                        {{ form.tdate|add_class:"form-control is-invalid" }}
+                        <div class="invalid-feedback d-block">
+                            {{ form.tdate.errors|striptags }}
+                        </div>
+                    {% else %}
+                        {{ form.tdate|add_class:"form-control" }}
+                    {% endif %}
+                </div>
+
+                <!-- fdate -->
+                <div class="col-md-3">
+                    <label>{{ form.fdate.label }}</label>
+                    {% if form.fdate.errors %}
+                        {{ form.fdate|add_class:"form-control is-invalid" }}
+                        <div class="invalid-feedback d-block">
+                            {{ form.fdate.errors|striptags }}
+                        </div>
+                    {% else %}
+                        {{ form.fdate|add_class:"form-control" }}
+                    {% endif %}
+                </div>
+
+                <!-- cdate -->
+                <div class="col-md-3">
+                    <label>{{ form.cdate.label }}</label>
+                    {% if form.cdate.errors %}
+                        {{ form.cdate|add_class:"form-control is-invalid" }}
+                        <div class="invalid-feedback d-block">
+                            {{ form.cdate.errors|striptags }}
+                        </div>
+                    {% else %}
+                        {{ form.cdate|add_class:"form-control" }}
+                    {% endif %}
+                </div>
+
+                <!-- cpersid -->
+                <div class="col-md-3">
+                    <label>{{ form.cpersid.label }}</label>
+                    {% if form.cpersid.errors %}
+                        {{ form.cpersid|add_class:"form-control is-invalid" }}
+                        <div class="invalid-feedback d-block">
+                            {{ form.cpersid.errors|striptags }}
+                        </div>
+                    {% else %}
+                        {{ form.cpersid|add_class:"form-control" }}
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ===================== -->
+        <!-- EQ5D / SCORES -->
+        <!-- ===================== -->
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-light">
+                <strong>Health Status</strong>
+            </div>
+
+            <div class="card-body row g-3">
+
+                <!-- mobility -->
+                <div class="col-md-4">
+                    <label>{{ form.mobility.label }}</label>
+                    {% if form.mobility.errors %}
+                        {{ form.mobility|add_class:"form-control is-invalid" }}
+                        <div class="invalid-feedback d-block">
+                            {{ form.mobility.errors|striptags }}
+                        </div>
+                    {% else %}
+                        {{ form.mobility|add_class:"form-control" }}
+                    {% endif %}
+                </div>
+
+                <!-- self care -->
+                <div class="col-md-4">
+                    <label>{{ form.self_care.label }}</label>
+                    {% if form.self_care.errors %}
+                        {{ form.self_care|add_class:"form-control is-invalid" }}
+                        <div class="invalid-feedback d-block">
+                            {{ form.self_care.errors|striptags }}
+                        </div>
+                    {% else %}
+                        {{ form.self_care|add_class:"form-control" }}
+                    {% endif %}
+                </div>
+
+                <!-- usual activities -->
+                <div class="col-md-4">
+                    <label>{{ form.usual_active.label }}</label>
+                    {% if form.usual_active.errors %}
+                        {{ form.usual_active|add_class:"form-control is-invalid" }}
+                        <div class="invalid-feedback d-block">
+                            {{ form.usual_active.errors|striptags }}
+                        </div>
+                    {% else %}
+                        {{ form.usual_active|add_class:"form-control" }}
+                    {% endif %}
+                </div>
+
+                <!-- pain -->
+                <div class="col-md-6">
+                    <label>{{ form.pain.label }}</label>
+                    {% if form.pain.errors %}
+                        {{ form.pain|add_class:"form-control is-invalid" }}
+                        <div class="invalid-feedback d-block">
+                            {{ form.pain.errors|striptags }}
+                        </div>
+                    {% else %}
+                        {{ form.pain|add_class:"form-control" }}
+                    {% endif %}
+                </div>
+
+                <!-- anxiety -->
+                <div class="col-md-6">
+                    <label>{{ form.anxiety.label }}</label>
+                    {% if form.anxiety.errors %}
+                        {{ form.anxiety|add_class:"form-control is-invalid" }}
+                        <div class="invalid-feedback d-block">
+                            {{ form.anxiety.errors|striptags }}
+                        </div>
+                    {% else %}
+                        {{ form.anxiety|add_class:"form-control" }}
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ===================== -->
+        <!-- BUTTONS -->
+        <!-- ===================== -->
+        <div class="d-flex gap-2">
+
+            {% with mode=is_update|yesno:"Update,Create" %}
+            <button type="submit"
+                    class="btn {% if is_update %}btn-warning{% else %}btn-success{% endif %}">
+                {{ mode }} CRF7
+            </button>
+            {% endwith %}
+
+            <a href="{% url 'herbal:subjects-detail' visit.subject.pk %}"
+               class="btn btn-outline-secondary">
+                Cancel
+            </a>
+
+        </div>
 
     </form>
 

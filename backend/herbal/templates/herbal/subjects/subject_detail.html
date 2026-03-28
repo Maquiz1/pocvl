@@ -698,13 +698,13 @@
                 <span class="badge bg-secondary">N/A</span>
                 {% elif visit.crf7 %}
 
-                <a href="{% url 'herbal:crf7-update' visit.pk %}" class="btn btn-sm btn-info">
+                <a href="{% url 'herbal:crf7-form' visit.pk %}" class="btn btn-sm btn-info">
                     Edit
                 </a>
 
                 {% else %}
 
-                <a href="{% url 'herbal:crf7-create' visit.pk %}" class="btn btn-sm btn-warning">
+                <a href="{% url 'herbal:crf7-form' visit.pk %}" class="btn btn-sm btn-warning">
                     Create
                 </a>
 

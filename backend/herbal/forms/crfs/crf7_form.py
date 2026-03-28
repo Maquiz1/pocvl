@@ -5,17 +5,43 @@ from herbal.models.crfs.crf7.crf7_model import CRF7
 class CRF7Form(forms.ModelForm):
 
     class Meta:
-
         model = CRF7
-
         fields = [
-            "investigator_notes",
-            "follow_up_needed",
+            "tdate",
+            "mobility",
+            "self_care",
+            "usual_active",
+            "pain",
+            "anxiety",
+            "fdate",
+            "cpersid",
+            "cdate",
+            "remarks",
         ]
+        
+        labels={
+            "tdate":"Tarehe ya Leo",
+            "cdate":"DATE FORM CHECKED",
+            "fdate":"DATE FORM COMPLETED",
+            "cpersid":"NAME OF PERSON CHECKING FORM:",
+            "mobility":"A. Uwezo wa kutembea",
+            "self_care":"B. Uwezo wa kujihudumia",
+            "usual_active":"C. Shughuli za kila siku",
+            "pain":"D. Maumivu/Kutojisikia vizuri",
+            "anxiety":"E. Wasiwasi/sonona",
+            "remarks":"Remarks",
+        }
 
         widgets = {
-            "investigator_notes": forms.Textarea(attrs={"class": "form-control"}),
-            "follow_up_needed": forms.CheckboxInput(
-                attrs={"class": "form-check-input"}
-            ),
+            "tdate": forms.DateInput(attrs={"type": "date", "class": "form-control"}),
+            "fdate": forms.DateInput(attrs={"type": "date", "class": "form-control"}),
+            "cdate": forms.DateInput(attrs={"type": "date", "class": "form-control"}),
+            "cpersid": forms.Select(attrs={"class": "form-control"}),
+            # ✅ FK → SELECT
+            "mobility": forms.Select(attrs={"class": "form-control"}),
+            "self_care": forms.Select(attrs={"class": "form-control"}),
+            "usual_active": forms.Select(attrs={"class": "form-control"}),
+            "pain": forms.Select(attrs={"class": "form-control"}),
+            "anxiety": forms.Select(attrs={"class": "form-control"}),
+            "remarks": forms.Textarea(attrs={"class": "form-control", "rows": 3}),
         }
