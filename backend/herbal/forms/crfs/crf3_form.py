@@ -44,7 +44,7 @@ class CRF3Form(forms.ModelForm):
             "headaches", "difficult_breathing", "sore_throat", "fatigue",
             "muscle_pain", "loss_consciousness", "backpain", "weight_loss",
             "heartburn_indigestion", "swelling", "pv_bleeding", "pv_discharge",
-            "micturition", "convulsions", "blood_urine",
+            "micturition", "convulsions", "blood_urine","symptoms_other",
         ]
         for field in symptom_fields:
             if not cleaned_data.get(field):
