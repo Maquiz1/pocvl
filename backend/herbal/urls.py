@@ -32,6 +32,9 @@ from .views.crfs.crf2.crf2_form_view import crf2_form_view
 
 from .views.crfs.crf3.crf3_create_view import crf3_create_view
 from .views.crfs.crf3.crf3_update_view import crf3_update_view
+from .views.crfs.crf3.crf3_form_view import crf3_form_view
+
+
 from .views.crfs.crf4.crf4_create_view import crf4_create_view
 from .views.crfs.crf4.crf4_update_view import crf4_update_view
 from .views.crfs.crf5.crf5_create_view import crf5_create_view
@@ -89,8 +92,9 @@ urlpatterns = [
     # path("crf2/<int:pk>/update/", crf2_update_view, name="crf2-update"),
     path("crf2/<int:pk>/", crf2_form_view, name="crf2-form"),
     # CRF3
-    path("crf3/<int:pk>/", crf3_create_view, name="crf3-create"),
-    path("crf3/<int:pk>/update/", crf3_update_view, name="crf3-update"),
+    # path("crf3/<int:pk>/", crf3_create_view, name="crf3-create"),
+    # path("crf3/<int:pk>/update/", crf3_update_view, name="crf3-update"),
+    path("crf3/<int:pk>/update/", crf3_form_view, name="crf3-form"),
     # CRF4
     path("crf4/<int:pk>/", crf4_create_view, name="crf4-create"),
     path("crf4/<int:pk>/update/", crf4_update_view, name="crf4-update"),

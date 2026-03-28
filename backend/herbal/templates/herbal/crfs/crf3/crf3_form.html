@@ -1,37 +1,349 @@
 {% extends "base.html" %}
+{% load widget_tweaks %}
 
 {% block content %}
+<div class="container mt-4">
+    <h3>{{ is_update|yesno:"Update CRF3,Create CRF3" }}</h3>
 
-<div class="container">
-
-    <h3>
-
-        {% if is_update %}
-        Edit CRF3
-        {% else %}
-        Create CRF3
-        {% endif %}
-
-        — {{ visit.get_visit_day_display }}
-
-    </h3>
-
-    <form method="post">
-
+    <form method="post" novalidate>
         {% csrf_token %}
 
-        {{ form.as_p }}
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-light">
+                <strong>Symptoms</strong>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label>{{ form.fever.label }}</label>
+                        {% if form.fever.errors %}
+                        {{ form.fever|add_class:"form-control is-invalid" }}
+                        <div class="invalid-feedback d-block">{{ form.fever.errors|striptags }}</div>
+                        {% else %}
+                        {{ form.fever|add_class:"form-control" }}
+                        {% endif %}
+                    </div>
 
-        <button class="btn btn-success">
-            Save
+                    <div class="col-md-4 mb-3">
+                        <label>{{ form.vomiting.label }}</label>
+                        {% if form.vomiting.errors %}
+                        {{ form.vomiting|add_class:"form-control is-invalid" }}
+                        <div class="invalid-feedback d-block">{{ form.vomiting.errors|striptags }}</div>
+                        {% else %}
+                        {{ form.vomiting|add_class:"form-control" }}
+                        {% endif %}
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label>{{ form.diarrhoea.label }}</label>
+                        {% if form.diarrhoea.errors %}
+                        {{ form.diarrhoea|add_class:"form-control is-invalid" }}
+                        <div class="invalid-feedback d-block">{{ form.diarrhoea.errors|striptags }}</div>
+                        {% else %}
+                        {{ form.diarrhoea|add_class:"form-control" }}
+                        {% endif %}
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label>{{ form.nausea.label }}</label>
+                        {% if form.nausea.errors %}
+                        {{ form.nausea|add_class:"form-control is-invalid" }}
+                        <div class="invalid-feedback d-block">{{ form.nausea.errors|striptags }}</div>
+                        {% else %}
+                        {{ form.nausea|add_class:"form-control" }}
+                        {% endif %}
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label>{{ form.loss_appetite.label }}</label>
+                        {% if form.loss_appetite.errors %}
+                        {{ form.loss_appetite|add_class:"form-control is-invalid" }}
+                        <div class="invalid-feedback d-block">{{ form.loss_appetite.errors|striptags }}</div>
+                        {% else %}
+                        {{ form.loss_appetite|add_class:"form-control" }}
+                        {% endif %}
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label>{{ form.headaches.label }}</label>
+                        {% if form.headaches.errors %}
+                        {{ form.headaches|add_class:"form-control is-invalid" }}
+                        <div class="invalid-feedback d-block">{{ form.headaches.errors|striptags }}</div>
+                        {% else %}
+                        {{ form.headaches|add_class:"form-control" }}
+                        {% endif %}
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label>{{ form.difficult_breathing.label }}</label>
+                        {% if form.difficult_breathing.errors %}
+                        {{ form.difficult_breathing|add_class:"form-control is-invalid" }}
+                        <div class="invalid-feedback d-block">{{ form.difficult_breathing.errors|striptags }}</div>
+                        {% else %}
+                        {{ form.difficult_breathing|add_class:"form-control" }}
+                        {% endif %}
+                    </div>
+
+
+                    <div class="col-md-4 mb-3">
+                        <label>{{ form.sore_throat.label }}</label>
+                        {% if form.sore_throat.errors %}
+                        {{ form.sore_throat|add_class:"form-control is-invalid" }}
+                        <div class="invalid-feedback d-block">{{ form.sore_throat.errors|striptags }}</div>
+                        {% else %}
+                        {{ form.sore_throat|add_class:"form-control" }}
+                        {% endif %}
+                    </div>
+
+
+                    <div class="col-md-4 mb-3">
+                        <label>{{ form.fatigue.label }}</label>
+                        {% if form.fatigue.errors %}
+                        {{ form.fatigue|add_class:"form-control is-invalid" }}
+                        <div class="invalid-feedback d-block">{{ form.fatigue.errors|striptags }}</div>
+                        {% else %}
+                        {{ form.fatigue|add_class:"form-control" }}
+                        {% endif %}
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label>{{ form.muscle_pain.label }}</label>
+                        {% if form.muscle_pain.errors %}
+                        {{ form.muscle_pain|add_class:"form-control is-invalid" }}
+                        <div class="invalid-feedback d-block">{{ form.muscle_pain.errors|striptags }}</div>
+                        {% else %}
+                        {{ form.muscle_pain|add_class:"form-control" }}
+                        {% endif %}
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label>{{ form.loss_consciousness.label }}</label>
+                        {% if form.loss_consciousness.errors %}
+                        {{ form.loss_consciousness|add_class:"form-control is-invalid" }}
+                        <div class="invalid-feedback d-block">{{ form.loss_consciousness.errors|striptags }}</div>
+                        {% else %}
+                        {{ form.loss_consciousness|add_class:"form-control" }}
+                        {% endif %}
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label>{{ form.backpain.label }}</label>
+                        {% if form.backpain.errors %}
+                        {{ form.backpain|add_class:"form-control is-invalid" }}
+                        <div class="invalid-feedback d-block">{{ form.backpain.errors|striptags }}</div>
+                        {% else %}
+                        {{ form.backpain|add_class:"form-control" }}
+                        {% endif %}
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label>{{ form.weight_loss.label }}</label>
+                        {% if form.weight_loss.errors %}
+                        {{ form.weight_loss|add_class:"form-control is-invalid" }}
+                        <div class="invalid-feedback d-block">{{ form.weight_loss.errors|striptags }}</div>
+                        {% else %}
+                        {{ form.weight_loss|add_class:"form-control" }}
+                        {% endif %}
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label>{{ form.heartburn_indigestion.label }}</label>
+                        {% if form.heartburn_indigestion.errors %}
+                        {{ form.heartburn_indigestion|add_class:"form-control is-invalid" }}
+                        <div class="invalid-feedback d-block">{{ form.heartburn_indigestion.errors|striptags }}</div>
+                        {% else %}
+                        {{ form.heartburn_indigestion|add_class:"form-control" }}
+                        {% endif %}
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label>{{ form.swelling.label }}</label>
+                        {% if form.swelling.errors %}
+                        {{ form.swelling|add_class:"form-control is-invalid" }}
+                        <div class="invalid-feedback d-block">{{ form.swelling.errors|striptags }}</div>
+                        {% else %}
+                        {{ form.swelling|add_class:"form-control" }}
+                        {% endif %}
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label>{{ form.pv_bleeding.label }}</label>
+                        {% if form.pv_bleeding.errors %}
+                        {{ form.pv_bleeding|add_class:"form-control is-invalid" }}
+                        <div class="invalid-feedback d-block">{{ form.pv_bleeding.errors|striptags }}</div>
+                        {% else %}
+                        {{ form.pv_bleeding|add_class:"form-control" }}
+                        {% endif %}
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label>{{ form.pv_discharge.label }}</label>
+                        {% if form.pv_discharge.errors %}
+                        {{ form.pv_discharge|add_class:"form-control is-invalid" }}
+                        <div class="invalid-feedback d-block">{{ form.pv_discharge.errors|striptags }}</div>
+                        {% else %}
+                        {{ form.pv_discharge|add_class:"form-control" }}
+                        {% endif %}
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label>{{ form.micturition.label }}</label>
+                        {% if form.micturition.errors %}
+                        {{ form.micturition|add_class:"form-control is-invalid" }}
+                        <div class="invalid-feedback d-block">{{ form.micturition.errors|striptags }}</div>
+                        {% else %}
+                        {{ form.micturition|add_class:"form-control" }}
+                        {% endif %}
+                    </div>
+
+
+                    <div class="col-md-4 mb-3">
+                        <label>{{ form.convulsions.label }}</label>
+                        {% if form.convulsions.errors %}
+                        {{ form.convulsions|add_class:"form-control is-invalid" }}
+                        <div class="invalid-feedback d-block">{{ form.convulsions.errors|striptags }}</div>
+                        {% else %}
+                        {{ form.convulsions|add_class:"form-control" }}
+                        {% endif %}
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label>{{ form.blood_urine.label }}</label>
+                        {% if form.blood_urine.errors %}
+                        {{ form.blood_urine|add_class:"form-control is-invalid" }}
+                        <div class="invalid-feedback d-block">{{ form.blood_urine.errors|striptags }}</div>
+                        {% else %}
+                        {{ form.blood_urine|add_class:"form-control" }}
+                        {% endif %}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-light">
+                <strong>Other Symptoms</strong>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label>{{ form.symptoms_other.label }}</label>
+                    {% if form.symptoms_other.errors %}
+                    {{ form.symptoms_other|add_class:"form-control is-invalid" }}
+                    <div class="invalid-feedback d-block">
+                        {{ form.symptoms_other.errors|striptags }}
+                    </div>
+                    {% else %}
+                    {{ form.symptoms_other|add_class:"form-control" }}
+                    {% endif %}
+                </div>
+                <div class="mb-3">
+                    <label>{{ form.symptoms_other_specify.label }}</label>
+                    {% if form.symptoms_other_specify.errors %}
+                    {{ form.symptoms_other_specify|add_class:"form-control is-invalid" }}
+                    <div class="invalid-feedback d-block">
+                        {{ form.symptoms_other_specify.errors|striptags }}
+                    </div>
+                    {% else %}
+                    {{ form.symptoms_other_specify|add_class:"form-control" }}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-light">
+                <strong>Adherence</strong>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label>{{ form.adherence.label }}</label>
+                    {% if form.adherence.errors %}
+                    {{ form.adherence|add_class:"form-control is-invalid" }}
+                    <div class="invalid-feedback d-block">
+                        {{ form.adherence.errors|striptags }}
+                    </div>
+                    {% else %}
+                    {{ form.adherence|add_class:"form-control" }}
+                    {% endif %}
+                </div>
+                <div class="mb-3">
+                    <label>{{ form.adherence_specify.label }}</label>
+                    {% if form.adherence_specify.errors %}
+                    {{ form.adherence_specify|add_class:"form-control is-invalid" }}
+                    <div class="invalid-feedback d-block">
+                        {{ form.adherence_specify.errors|striptags }}
+                    </div>
+                    {% else %}
+                    {{ form.adherence_specify|add_class:"form-control" }}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-light">
+                <strong>Herbal Medication</strong>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label>{{ form.herbal_medication.label }}</label>
+                    {% if form.herbal_medication.errors %}
+                    {{ form.herbal_medication|add_class:"form-control is-invalid" }}
+                    <div class="invalid-feedback d-block">
+                        {{ form.herbal_medication.errors|striptags }}
+                    </div>
+                    {% else %}
+                    {{ form.herbal_medication|add_class:"form-control" }}
+                    {% endif %}
+                </div>
+                <div class="mb-3">
+                    <label>{{ form.herbal_ingredients.label }}</label>
+                    {% if form.herbal_ingredients.errors %}
+                    {{ form.herbal_ingredients|add_class:"form-control is-invalid" }}
+                    <div class="invalid-feedback d-block">
+                        {{ form.herbal_ingredients.errors|striptags }}
+                    </div>
+                    {% else %}
+                    {{ form.herbal_ingredients|add_class:"form-control" }}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-light">
+                <strong>Notes & Comments</strong>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label>{{ form.notes.label }}</label>
+                    {% if form.notes.errors %}
+                    {{ form.notes|add_class:"form-control is-invalid" }}
+                    <div class="invalid-feedback d-block">
+                        {{ form.notes.errors|striptags }}
+                    </div>
+                    {% else %}
+                    {{ form.notes|add_class:"form-control" }}
+                    {% endif %}
+                </div>
+                <div class="mb-3">
+                    <label>{{ form.other_comments.label }}</label>
+                    {% if form.other_comments.errors %}
+                    {{ form.other_comments|add_class:"form-control is-invalid" }}
+                    <div class="invalid-feedback d-block">
+                        {{ form.other_comments.errors|striptags }}
+                    </div>
+                    {% else %}
+                    {{ form.other_comments|add_class:"form-control" }}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            {{ is_update|yesno:"Update,Create" }}
         </button>
-
-        <a href="{% url 'herbal:subjects-detail' visit.subject.pk %}" class="btn btn-secondary">
-            Cancel
-        </a>
-
     </form>
-
 </div>
-
 {% endblock %}

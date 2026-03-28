@@ -644,13 +644,13 @@
 
                 {% elif visit.crf3 %}
 
-                <a href="{% url 'herbal:crf3-update' visit.pk %}" class="btn btn-sm btn-info">
+                <a href="{% url 'herbal:crf3-form' visit.pk %}" class="btn btn-sm btn-info">
                     Edit
                 </a>
 
                 {% else %}
 
-                <a href="{% url 'herbal:crf3-create' visit.pk %}" class="btn btn-sm btn-warning">
+                <a href="{% url 'herbal:crf3-form' visit.pk %}" class="btn btn-sm btn-warning">
                     Create
                 </a>
 
