@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h3>CRF Registry</h3>
+
+    <div class="row">
+
+        {% for crf in crfs %}
+        <div class="col-md-4 mb-4">
+
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+
+                    <h5 class="card-title">{{ crf.name }}</h5>
+
+                    <p>
+                        Total Records:
+                        <span class="badge bg-primary">
+                            {{ crf.count }}
+                        </span>
+                    </p>
+
+                    <hr>
+
+                    <small class="text-muted">Recent entries:</small>
+
+                    <ul class="list-unstyled mt-2">
+                        {% for item in crf.recent %}
+                        <li>
+                            {{ item.visit.subject.subject_id }} —
+                            {{ item.visit.visit_day.code }}
+                        </li>
+                        {% empty %}
+                        <li class="text-muted">No data</li>
+                        {% endfor %}
+                    </ul>
+
+                </div>
+            </div>
+
+        </div>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

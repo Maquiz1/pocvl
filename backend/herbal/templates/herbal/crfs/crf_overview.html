@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h3>CRF Overview — {{ subject.subject_id }}</h3>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <table class="table table-bordered text-center">
+
+                <thead class="table-light">
+                    <tr>
+                        <th>Visit</th>
+                        <th>Date</th>
+                        <th>CRF1</th>
+                        <th>CRF2</th>
+                        <th>CRF3</th>
+                        <th>CRF4</th>
+                        <th>CRF7</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for visit in visits %}
+                    <tr>
+
+                        <td>{{ visit.visit_day.code }}</td>
+                        <td>{{ visit.scheduled_date }}</td>
+
+                        <!-- CRF1 -->
+                        <td>
+                            {% if visit.crf1 %}
+                                <a href="{% url 'herbal:crf1-form' visit.pk %}" class="btn btn-sm btn-info">Edit</a>
+                            {% else %}
+                                <a href="{% url 'herbal:crf1-form' visit.pk %}" class="btn btn-sm btn-warning">Create</a>
+                            {% endif %}
+                        </td>
+
+                        <!-- CRF2 -->
+                        <td>
+                            {% if visit.crf2 %}
+                                <a href="{% url 'herbal:crf2-form' visit.pk %}" class="btn btn-sm btn-info">Edit</a>
+                            {% else %}
+                                <a href="{% url 'herbal:crf2-form' visit.pk %}" class="btn btn-sm btn-warning">Create</a>
+                            {% endif %}
+                        </td>
+
+                        <!-- CRF3 -->
+                        <td>
+                            {% if visit.crf3 %}
+                                <a href="{% url 'herbal:crf3-form' visit.pk %}" class="btn btn-sm btn-info">Edit</a>
+                            {% else %}
+                                <a href="{% url 'herbal:crf3-form' visit.pk %}" class="btn btn-sm btn-warning">Create</a>
+                            {% endif %}
+                        </td>
+
+                        <!-- CRF4 -->
+                        <td>
+                            {% if visit.crf4 %}
+                                <a href="{% url 'herbal:crf4-update' visit.pk %}" class="btn btn-sm btn-info">Edit</a>
+                            {% else %}
+                                <a href="{% url 'herbal:crf4-create' visit.pk %}" class="btn btn-sm btn-warning">Create</a>
+                            {% endif %}
+                        </td>
+
+                        <!-- CRF7 -->
+                        <td>
+                            {% if visit.crf7 %}
+                                <a href="{% url 'herbal:crf7-form' visit.pk %}" class="btn btn-sm btn-info">Edit</a>
+                            {% else %}
+                                <a href="{% url 'herbal:crf7-form' visit.pk %}" class="btn btn-sm btn-warning">Create</a>
+                            {% endif %}
+                        </td>
+
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

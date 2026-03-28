@@ -45,6 +45,10 @@ from .views.crfs.crf7.crf7_create_view import crf7_create_view
 from .views.crfs.crf7.crf7_update_view import crf7_update_view
 from .views.crfs.crf7.crf7_form_view import crf7_form_view
 
+from .views.crfs.crf_registry_view import crf_registry_view
+from .views.crfs.crf_list_view import crf_list_view
+from .views.crfs.subject_crf_overview import subject_crf_overview
+
 from .views.crfs.crf1.test_other_medicals_view import test_other_medicals_view
 
 # QUERIES
@@ -82,6 +86,9 @@ urlpatterns = [
     path("visits/<int:pk>/start/", visit_update_view, name="visit-start"),
     path("visits/<int:pk>/update/", visit_update_view, name="visit-update"),
     # CRFS
+    path("registry-crfs/crfs/", crf_registry_view, name="registry-crfs"),
+    path("list-crfs/crfs/", crf_list_view, name="list-crfs"),
+    path("subjects/<int:pk>/crfs/", subject_crf_overview, name="subject-crfs"),
     # CRF1
     # path("crf1/<int:pk>/", crf1_create_view, name="crf1-create"),
     # path("crf1/<int:pk>/update/", crf1_update_view, name="crf1-update"),
