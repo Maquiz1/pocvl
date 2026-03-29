@@ -17,12 +17,14 @@ class CRF7(BaseModel):
     fdate = models.DateField(null=True, blank=True)
     cdate = models.DateField(null=True, blank=True)
 
-    cpersid = models.CharField(
-        max_length=150,
+    cpersid = models.ForeignKey(
+        "accounts.StaffProfile",   # 🔥 string reference (NO import)
+        on_delete=models.SET_NULL,
+        null=True,
         blank=True,
-        help_text="Name of person entering data"
+        limit_choices_to={'site__isnull': False},  # basic safety
     )
-
+    
     # ✅ FK fields (not integers)
     mobility = models.ForeignKey(
         Mobility, on_delete=models.SET_NULL, null=True, blank=True, related_name="+"
@@ -41,3 +43,4 @@ class CRF7(BaseModel):
     )
 
     remarks = models.TextField(blank=True)
+    remarks2 = models.TextField(blank=True)

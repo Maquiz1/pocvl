@@ -45,3 +45,35 @@ class CRF7Form(forms.ModelForm):
             "anxiety": forms.Select(attrs={"class": "form-control"}),
             "remarks": forms.Textarea(attrs={"class": "form-control", "rows": 3}),
         }
+        
+    def __init__(self, *args, site=None, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        required_fields = [
+            "tdate",
+            "fdate",
+            "cdate",
+            "cpersid",
+            "mobility",
+            "self_care",
+            "usual_active",
+            "pain",
+            "anxiety",
+        ]
+
+        for field in required_fields:
+            if field in self.fields:
+                self.fields[field].required = True
+                self.fields[field].widget.attrs["required"] = True
+                # self.fields[field].widget.attrs["required"] = "required"
+                
+        # 🔥 Apply Bootstrap to ALL fields automatically
+        for field_name, field in self.fields.items():
+            if not isinstance(field.widget, (forms.CheckboxInput, forms.RadioSelect)):
+                field.widget.attrs.setdefault("class", "form-control")
+
+        # 🔥 Optional: filter staff by site
+        if site and "cpersid" in self.fields:
+            self.fields["cpersid"].queryset = self.fields[
+                "cpersid"
+            ].queryset.filter(site=site)
