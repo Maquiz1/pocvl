@@ -93,15 +93,12 @@ class StaffProfile(models.Model):
     def display_name(self):
         name = self.full_name
 
-        # fallback if no names at all
         if not name:
-            name = self.user.username
+            name = self.user.email  # ✅ FIX (no username in your system)
 
-        # prefix
         if self.prefix:
             name = f"{self.prefix.name} {name}"
 
-        # position
         if self.position:
             name = f"{name} ({self.position.name})"
 
