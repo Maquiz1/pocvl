@@ -2,6 +2,21 @@ from django.contrib import admin
 from .models import User, StaffProfile, Prefix, Position
 from django.contrib.auth.admin import UserAdmin
 
+
+# class StaffProfileInline(admin.StackedInline):
+#     model = StaffProfile
+#     can_delete = False
+#     extra = 0
+
+
+# @admin.register(User)
+# class CustomUserAdmin(UserAdmin):
+#     model = User
+
+#     inlines = [StaffProfileInline]   # 🔥 add this
+
+#     list_display = ("email", "first_name", "last_name", "is_staff", "is_active")
+    
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
     model = User
