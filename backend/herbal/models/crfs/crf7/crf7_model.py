@@ -43,4 +43,3 @@ class CRF7(BaseModel):
     )
 
     remarks = models.TextField(blank=True)
-    remarks2 = models.TextField(blank=True)
