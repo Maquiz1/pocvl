@@ -1,45 +1,45 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
-
-from .models import User, StaffProfile
-
-
-@admin.register(User)
-class CustomUserAdmin(UserAdmin):
-    model = User
-
-    list_display = ("email", "is_staff", "is_active")
-    ordering = ("email",)
-
-    fieldsets = (
-        (None, {"fields": ("email", "password")}),
-        ("Permissions", {
-            "fields": (
-                "is_staff",
-                "is_superuser",
-                "is_active",
-                "groups",
-                "user_permissions",
-            )
-        }),
-        ("Important dates", {"fields": ("last_login",)}),
-    )
-
-    add_fieldsets = (
-        (None, {
-            "classes": ("wide",),
-            "fields": (
-                "email",
-                "password1",
-                "password2",
-                "is_staff",
-                "is_active",
-            ),
-        }),
-    )
+from .models import User, StaffProfile, Prefix, Position,Us
 
 
 @admin.register(StaffProfile)
 class StaffProfileAdmin(admin.ModelAdmin):
-    list_display = ("user", "role", "site")
+
+    list_display = (
+        "display_name",   # 🔥 custom full name
+        "role",
+        "site",
+        "position",
+        "prefix",
+    )
+
+    search_fields = (
+        "user__first_name",
+        "user__last_name",
+        "middle_name",
+        "user__email",
+    )
+
+    list_filter = (
+        "role",
+        "site",
+        "position",
+        "prefix",
+    )
+
     filter_horizontal = ("assigned_sites",)
+
+    def display_name(self, obj):
+        return obj.display_name
+
+    display_name.short_description = "Full Name"
+    
+    
+@admin.register(Prefix)
+class PrefixAdmin(admin.ModelAdmin):
+    search_fields = ["name"]
+
+
+@admin.register(Position)
+class PositionAdmin(admin.ModelAdmin):
+    search_fields = ["name"]

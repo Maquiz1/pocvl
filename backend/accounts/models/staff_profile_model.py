@@ -1,7 +1,8 @@
 from django.db import models
 from django.conf import settings
 from herbal.models import Site
-
+from core.models import BaseModel
+from choices.models import BaseChoiceModel
 
 ROLE_CHOICES = [
     ("admin", "Admin"),
@@ -13,6 +14,20 @@ ROLE_CHOICES = [
     ("pi", "Principal Investigator"),
 ]
 
+class Prefix(BaseChoiceModel):
+    # name = models.CharField(max_length=20, unique=True)  
+    # e.g. Dr., Mr., Ms., Prof., Nurse
+
+    def __str__(self):
+        return self.name
+
+
+class Position(BaseChoiceModel):
+    # name = models.CharField(max_length=100, unique=True)  
+    # e.g. Cardiologist, Study Coordinator, Nurse
+
+    def __str__(self):
+        return self.name
 
 class StaffProfile(models.Model):
 
@@ -35,6 +50,25 @@ class StaffProfile(models.Model):
         related_name="site_staff"
     )
 
+    middle_name = models.CharField(
+        max_length=150,
+        blank=True
+    )
+    # ✅ NEW RELATIONS
+    prefix = models.ForeignKey(
+        Prefix,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
+
+    position = models.ForeignKey(
+        Position,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
+        
     assigned_sites = models.ManyToManyField(
         Site,
         blank=True,
@@ -46,5 +80,32 @@ class StaffProfile(models.Model):
         blank=True
     )
 
+    @property
+    def full_name(self):
+        first = self.user.first_name or ""
+        middle = self.middle_name or ""
+        last = self.user.last_name or ""
+
+        # join safely (avoids extra spaces)
+        return " ".join(part for part in [first, middle, last] if part).strip()
+
+    @property
+    def display_name(self):
+        name = self.full_name
+
+        # fallback if no names at all
+        if not name:
+            name = self.user.username
+
+        # prefix
+        if self.prefix:
+            name = f"{self.prefix.name} {name}"
+
+        # position
+        if self.position:
+            name = f"{name} ({self.position.name})"
+
+        return name
+    
     def __str__(self):
-        return f"{self.user} - {self.get_role_display()}"
+        return f"{self.display_name} - {self.get_position_display()}"
