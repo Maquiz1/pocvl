@@ -108,4 +108,4 @@ class StaffProfile(models.Model):
         return name
     
     def __str__(self):
-        return f"{self.display_name} - {self.get_position_display()}"
+        return f"{self.display_name}"

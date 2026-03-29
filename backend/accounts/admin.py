@@ -1,7 +1,49 @@
 from django.contrib import admin
-from .models import User, StaffProfile, Prefix, Position,Us
+from .models import User, StaffProfile, Prefix, Position
+from django.contrib.auth.admin import UserAdmin
 
+@admin.register(User)
+class CustomUserAdmin(UserAdmin):
+    model = User
 
+    list_display = ("email", "first_name", "last_name", "is_staff", "is_active")
+    ordering = ("email",)
+
+    fieldsets = (
+        (None, {"fields": ("email", "password")}),
+
+        ("Personal Info", {   # 🔥 NEW
+            "fields": ("first_name", "last_name")
+        }),
+
+        ("Permissions", {
+            "fields": (
+                "is_staff",
+                "is_superuser",
+                "is_active",
+                "groups",
+                "user_permissions",
+            )
+        }),
+
+        ("Important dates", {"fields": ("last_login",)}),
+    )
+
+    add_fieldsets = (
+        (None, {
+            "classes": ("wide",),
+            "fields": (
+                "email",
+                "first_name",   # 🔥 NEW
+                "last_name",    # 🔥 NEW
+                "password1",
+                "password2",
+                "is_staff",
+                "is_active",
+            ),
+        }),
+    )
+    
 @admin.register(StaffProfile)
 class StaffProfileAdmin(admin.ModelAdmin):
 
