@@ -3,7 +3,7 @@
 from django.db import models
 from ...visits.visit_schedule_model import VisitSchedule
 from core.models import BaseModel
-from choices.models import YesNo, YesNoNa, YesNoUnk
+from choices.models import Anxiety,Mobility,SelfCare, Pain, UsualActive
 
 class CRF7(BaseModel):
 
@@ -25,19 +25,19 @@ class CRF7(BaseModel):
 
     # ✅ FK fields (not integers)
     mobility = models.ForeignKey(
-        YesNoUnk, on_delete=models.SET_NULL, null=True, blank=True, related_name="+"
+        Mobility, on_delete=models.SET_NULL, null=True, blank=True, related_name="+"
     )
     self_care = models.ForeignKey(
-        YesNoUnk, on_delete=models.SET_NULL, null=True, blank=True, related_name="+"
+        SelfCare, on_delete=models.SET_NULL, null=True, blank=True, related_name="+"
     )
     usual_active = models.ForeignKey(
-        YesNoUnk, on_delete=models.SET_NULL, null=True, blank=True, related_name="+"
+        UsualActive, on_delete=models.SET_NULL, null=True, blank=True, related_name="+"
     )
     pain = models.ForeignKey(
-        YesNoUnk, on_delete=models.SET_NULL, null=True, blank=True, related_name="+"
+        Pain, on_delete=models.SET_NULL, null=True, blank=True, related_name="+"
     )
     anxiety = models.ForeignKey(
-        YesNoUnk, on_delete=models.SET_NULL, null=True, blank=True, related_name="+"
+        Anxiety, on_delete=models.SET_NULL, null=True, blank=True, related_name="+"
     )
 
     remarks = models.TextField(blank=True)
