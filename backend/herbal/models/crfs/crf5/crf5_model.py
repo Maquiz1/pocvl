@@ -17,25 +17,25 @@ class CRF5(BaseModel):
     event_date = models.DateField()
 
     # 🔥 THIS IS WHERE IT GOES
-    after_visit = models.ForeignKey(
-        VisitSchedule,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name="adverse_after"
-    )
+    # after_visit = models.ForeignKey(
+    #     VisitSchedule,
+    #     on_delete=models.SET_NULL,
+    #     null=True,
+    #     blank=True,
+    #     related_name="adverse_after"
+    # )
     
-    event_description = models.TextField()
+    # event_description = models.TextField()
 
-    severity = models.CharField(
-        max_length=20,
-        choices=[
-            ("mild","Mild"),
-            ("moderate","Moderate"),
-            ("severe","Severe")
-        ]
-    )
+    # severity = models.CharField(
+    #     max_length=20,
+    #     choices=[
+    #         ("mild","Mild"),
+    #         ("moderate","Moderate"),
+    #         ("severe","Severe")
+    #     ]
+    # )
 
-    action_taken = models.TextField(blank=True)
+    # action_taken = models.TextField(blank=True)
 
-    outcome = models.TextField(blank=True)
+    # outcome = models.TextField(blank=True)
