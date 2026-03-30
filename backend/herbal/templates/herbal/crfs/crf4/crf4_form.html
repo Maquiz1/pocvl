@@ -87,10 +87,14 @@
                     {{ form.renal_egfr.label_tag }}
                     <div class="input-group">
                         {{ form.renal_egfr }}
-                        <span class="input-group-text">mL/min/1.73m²</span>
+                        <span class="input-group-text">
+                            mL/min/1.73m²
+                        </span>
                     </div>
                     {% if form.renal_egfr.errors %}
-                        <div class="text-danger small">{{ form.renal_egfr.errors }}</div>
+                        <div class="text-danger small">
+                            {{ form.renal_egfr.errors }}
+                        </div>
                     {% endif %}
                 </div>
 
@@ -98,7 +102,9 @@
                     {{ form.renal_egfr_grade.label_tag }}
                     {{ form.renal_egfr_grade }}
                     {% if form.renal_egfr_grade.errors %}
-                        <div class="text-danger small">{{ form.renal_egfr_grade.errors }}</div>
+                        <div class="text-danger small">
+                            {{ form.renal_egfr_grade.errors }}
+                        </div>
                     {% endif %}
                 </div>
 
@@ -115,7 +121,7 @@
                     {{ form.liver_ast.label_tag }}
                     <div class="input-group">
                         {{ form.liver_ast }}
-                        <span class="input-group-text">U/L</span>
+                        <span class="input-group-text">units/L</span>
                     </div>
                     {% if form.liver_ast.errors %}<div class="text-danger small">{{ form.liver_ast.errors }}</div>{% endif %}
                 </div>
@@ -131,7 +137,7 @@
                     {{ form.liver_alt.label_tag }}
                     <div class="input-group">
                         {{ form.liver_alt }}
-                        <span class="input-group-text">U/L</span>
+                        <span class="input-group-text">units/L</span>
                     </div>
                     {% if form.liver_alt.errors %}<div class="text-danger small">{{ form.liver_alt.errors }}</div>{% endif %}
                 </div>
@@ -147,7 +153,7 @@
                     {{ form.liver_alp.label_tag }}
                     <div class="input-group">
                         {{ form.liver_alp }}
-                        <span class="input-group-text">U/L</span>
+                        <span class="input-group-text">units/L</span>
                     </div>
                     {% if form.liver_alp.errors %}<div class="text-danger small">{{ form.liver_alp.errors }}</div>{% endif %}
                 </div>
@@ -195,7 +201,7 @@
                     {{ form.liver_inr.label_tag }}
                     <div class="input-group">
                         {{ form.liver_inr }}
-                        <span class="input-group-text">ratio</span>
+                        <span class="input-group-text">units/L</span>
                     </div>
                     {% if form.liver_inr.errors %}<div class="text-danger small">{{ form.liver_inr.errors }}</div>{% endif %}
                 </div>
@@ -283,7 +289,7 @@
                     {{ form.rbg.label_tag }}
                     <div class="input-group">
                         {{ form.rbg }}
-                        <span class="input-group-text">mg/dL</span>
+                        <span class="input-group-text">mmol/l</span>
                     </div>
                     {% if form.rbg.errors %}
                         <div class="text-danger small">{{ form.rbg.errors }}</div>
