@@ -9,3 +9,10 @@ VISIT_SCHEDULE = {
     "D90": 90,
     "D120": 120,
 }
+
+
+LAB_UNITS = {
+    "wbc": "×10³/µL",
+    "hb": "g/dL",
+    "plt": "×10³/µL",
+}

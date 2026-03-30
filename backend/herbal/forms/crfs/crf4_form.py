@@ -12,11 +12,14 @@ class CRF4Form(forms.ModelForm):
             "sample_date",
 
             # --- Renal ---
-            "renal_urea",
-            "renal_urea_units",
             "renal_creatinine",
             "renal_creatinine_units",
             "renal_creatinine_grade",
+            
+            "renal_urea",
+            "renal_urea_units",
+            "renal_urea_grade",
+            
             "renal_egfr",
             "renal_egfr_units",
             "renal_egfr_grade",
@@ -28,29 +31,36 @@ class CRF4Form(forms.ModelForm):
             "liver_pt", "liver_pt_grade",
             "liver_ptt", "liver_ptt_grade",
             "liver_inr", "liver_inr_grade",
-            "liver_ggt",
+            "liver_ggt", "liver_ggt_grade",
             "liver_albumin", "liver_albumin_grade",
             "liver_bilirubin_total", "liver_bilirubin_total_units", "bilirubin_total_grade",
             "liver_bilirubin_direct", "liver_bilirubin_direct_units", "bilirubin_direct_grade",
 
             # --- Glucose / Inflammation ---
-            "rbg", "rbg_units", "rbg_grade",
-            "ldh", "crp", "d_dimer", "ferritin",
+            "rbg","rbg_units","rbg_grade",
+            "ldh","ldh_grade",
+            "crp","crp_grade",
+            "d_dimer", "d_dimer_grade",
+            "ferritin","ferritin_grade",
 
             # --- Hematology ---
+            "hb", "hb_grade",
+            "rbc","rbc_grade",
+            "hct","hct_grade",
             "wbc", "wbc_grade",
+            "plt", "plt_grade",
             "abs_neutrophil", "abs_neutrophil_grade",
             "abs_lymphocytes", "abs_lymphocytes_grade",
-            "abs_eosinophils",
-            "abs_monocytes",
-            "abs_basophils",
-            "hb", "hb_grade",
-            "mcv", "mch", "hct", "rbc",
-            "plt", "plt_grade",
+            "abs_eosinophils","abs_eosinophils_grade",
+            "abs_monocytes","abs_monocytes_grade",
+            "abs_basophils","abs_basophils_grade",
+            "mcv", "mcv_grade",
+            "mch", "mch_grade",
 
             # --- Imaging ---
             "cancer",
             "prostate",
+            
             "chest_xray", "chest_specify",
             "ct_chest", "ct_chest_specify",
             "ultrasound", "ultrasound_specify",
@@ -58,16 +68,36 @@ class CRF4Form(forms.ModelForm):
             # --- Medication ---
             "remarks",
         ]
+        
+        labels={
+            "sample_date":"Date of Sample Collection",
+            
+            # --- Renal ---
+            "renal_creatinine":"Serum Creatinine Levels",
+            "renal_creatinine_units":"Serum Creatinine Levels Units",
+            "renal_creatinine_grade":"Serum Creatinine Levels Grade",
+            
+            "renal_urea":"Serum Urea Levels",
+            "renal_urea_units":"Serum Urea Levels Units",
+            "renal_urea_grade":"Serum Urea Levels Grade",
+
+            "renal_egfr":"eGFR",
+            "renal_egfr_units":"eGFR (mL/min per 1.73 m²) Units",
+            "renal_egfr_grade":"eGFR Grade",
+            
+            "cancer":"Cancer",
+            "prostate":"Prostate",
+        }
 
         widgets = {
             # --- Booleans ---
             "medication_given": forms.CheckboxInput(attrs={"class": "form-check-input"}),
             "adherence": forms.CheckboxInput(attrs={"class": "form-check-input"}),
-            "cancer": forms.CheckboxInput(attrs={"class": "form-check-input"}),
-            "prostate": forms.CheckboxInput(attrs={"class": "form-check-input"}),
-            "chest_xray": forms.CheckboxInput(attrs={"class": "form-check-input"}),
-            "ct_chest": forms.CheckboxInput(attrs={"class": "form-check-input"}),
-            "ultrasound": forms.CheckboxInput(attrs={"class": "form-check-input"}),
+            "cancer": forms.NumberInput(attrs={"class": "form-control"}),
+            "prostate": forms.NumberInput(attrs={"class": "form-control"}),
+            # "chest_xray": forms.CheckboxInput(attrs={"class": "form-check-input"}),
+            # "ct_chest": forms.CheckboxInput(attrs={"class": "form-check-input"}),
+            # "ultrasound": forms.CheckboxInput(attrs={"class": "form-check-input"}),
 
             # --- Text ---
             "dosage": forms.TextInput(attrs={"class": "form-control"}),

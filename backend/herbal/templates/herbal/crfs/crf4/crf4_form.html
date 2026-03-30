@@ -20,7 +20,7 @@
             <div class="card-header bg-light"><strong>📅 General Info</strong></div>
             <div class="card-body row g-3">
 
-                <div class="col-md-4">
+                <div class="col-md-6">
                     {{ form.sample_date.label_tag }}
                     {{ form.sample_date }}
                     {% if form.sample_date.errors %}
@@ -33,55 +33,66 @@
 
         <!-- ================= Renal ================= -->
         <div class="card mb-4 shadow-sm border-0">
-            <div class="card-header bg-light"><strong>🧪 Renal Function</strong></div>
+            <div class="card-header bg-light"><strong>🧪 1. Renal Function Test</strong></div>
             <div class="card-body row g-3">
 
-                <div class="col-md-3">
-                    {{ form.renal_urea.label_tag }}
-                    {{ form.renal_urea }}
-                    {% if form.renal_urea.errors %}<div class="text-danger small">{{ form.renal_urea.errors }}</div>{% endif %}
-                </div>
-
-                <div class="col-md-3">
-                    {{ form.renal_urea_units.label_tag }}
-                    {{ form.renal_urea_units }}
-                    {% if form.renal_urea_units.errors %}<div class="text-danger small">{{ form.renal_urea_units.errors }}</div>{% endif %}
-                </div>
-
+                <!-- Creatinine -->
                 <div class="col-md-3">
                     {{ form.renal_creatinine.label_tag }}
-                    {{ form.renal_creatinine }}
-                    {% if form.renal_creatinine.errors %}<div class="text-danger small">{{ form.renal_creatinine.errors }}</div>{% endif %}
-                </div>
-
-                <div class="col-md-3">
-                    {{ form.renal_creatinine_units.label_tag }}
-                    {{ form.renal_creatinine_units }}
-                    {% if form.renal_creatinine_units.errors %}<div class="text-danger small">{{ form.renal_creatinine_units.errors }}</div>{% endif %}
+                    <div class="input-group">
+                        {{ form.renal_creatinine }}
+                        <span class="input-group-text">mg/dL</span>
+                    </div>
+                    {% if form.renal_creatinine.errors %}
+                        <div class="text-danger small">{{ form.renal_creatinine.errors }}</div>
+                    {% endif %}
                 </div>
 
                 <div class="col-md-3">
                     {{ form.renal_creatinine_grade.label_tag }}
                     {{ form.renal_creatinine_grade }}
-                    {% if form.renal_creatinine_grade.errors %}<div class="text-danger small">{{ form.renal_creatinine_grade.errors }}</div>{% endif %}
+                    {% if form.renal_creatinine_grade.errors %}
+                        <div class="text-danger small">{{ form.renal_creatinine_grade.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Urea -->
+                <div class="col-md-3">
+                    {{ form.renal_urea.label_tag }}
+                    <div class="input-group">
+                        {{ form.renal_urea }}
+                        <span class="input-group-text">mmol/L</span>
+                    </div>
+                    {% if form.renal_urea.errors %}
+                        <div class="text-danger small">{{ form.renal_urea.errors }}</div>
+                    {% endif %}
                 </div>
 
                 <div class="col-md-3">
+                    {{ form.renal_urea_grade.label_tag }}
+                    {{ form.renal_urea_grade }}
+                    {% if form.renal_urea_grade.errors %}
+                        <div class="text-danger small">{{ form.renal_urea_grade.errors }}</div>
+                    {% endif %}
+                </div>
+                <!-- eGFR -->
+                <div class="col-md-6">
                     {{ form.renal_egfr.label_tag }}
-                    {{ form.renal_egfr }}
-                    {% if form.renal_egfr.errors %}<div class="text-danger small">{{ form.renal_egfr.errors }}</div>{% endif %}
+                    <div class="input-group">
+                        {{ form.renal_egfr }}
+                        <span class="input-group-text">mL/min/1.73m²</span>
+                    </div>
+                    {% if form.renal_egfr.errors %}
+                        <div class="text-danger small">{{ form.renal_egfr.errors }}</div>
+                    {% endif %}
                 </div>
 
-                <div class="col-md-3">
-                    {{ form.renal_egfr_units.label_tag }}
-                    {{ form.renal_egfr_units }}
-                    {% if form.renal_egfr_units.errors %}<div class="text-danger small">{{ form.renal_egfr_units.errors }}</div>{% endif %}
-                </div>
-
-                <div class="col-md-3">
+                <div class="col-md-6">
                     {{ form.renal_egfr_grade.label_tag }}
                     {{ form.renal_egfr_grade }}
-                    {% if form.renal_egfr_grade.errors %}<div class="text-danger small">{{ form.renal_egfr_grade.errors }}</div>{% endif %}
+                    {% if form.renal_egfr_grade.errors %}
+                        <div class="text-danger small">{{ form.renal_egfr_grade.errors }}</div>
+                    {% endif %}
                 </div>
 
             </div>
@@ -89,88 +100,464 @@
 
         <!-- ================= Liver ================= -->
         <div class="card mb-4 shadow-sm border-0">
-            <div class="card-header bg-light"><strong>🧬 Liver Function</strong></div>
+            <div class="card-header bg-light"><strong>🧬 2. Liver Function Test</strong></div>
             <div class="card-body row g-3">
 
-                <div class="col-md-3">{{ form.liver_ast.label_tag }}{{ form.liver_ast }}{% if form.liver_ast.errors %}<div class="text-danger small">{{ form.liver_ast.errors }}</div>{% endif %}</div>
-                <div class="col-md-3">{{ form.liver_ast_grade.label_tag }}{{ form.liver_ast_grade }}{% if form.liver_ast_grade.errors %}<div class="text-danger small">{{ form.liver_ast_grade.errors }}</div>{% endif %}</div>
+                <!-- AST -->
+                <div class="col-md-3">
+                    {{ form.liver_ast.label_tag }}
+                    <div class="input-group">
+                        {{ form.liver_ast }}
+                        <span class="input-group-text">U/L</span>
+                    </div>
+                    {% if form.liver_ast.errors %}<div class="text-danger small">{{ form.liver_ast.errors }}</div>{% endif %}
+                </div>
 
-                <div class="col-md-3">{{ form.liver_alt.label_tag }}{{ form.liver_alt }}{% if form.liver_alt.errors %}<div class="text-danger small">{{ form.liver_alt.errors }}</div>{% endif %}</div>
-                <div class="col-md-3">{{ form.liver_alt_grade.label_tag }}{{ form.liver_alt_grade }}{% if form.liver_alt_grade.errors %}<div class="text-danger small">{{ form.liver_alt_grade.errors }}</div>{% endif %}</div>
+                <div class="col-md-3">
+                    {{ form.liver_ast_grade.label_tag }}
+                    {{ form.liver_ast_grade }}
+                    {% if form.liver_ast_grade.errors %}<div class="text-danger small">{{ form.liver_ast_grade.errors }}</div>{% endif %}
+                </div>
 
-                <div class="col-md-3">{{ form.liver_alp.label_tag }}{{ form.liver_alp }}{% if form.liver_alp.errors %}<div class="text-danger small">{{ form.liver_alp.errors }}</div>{% endif %}</div>
-                <div class="col-md-3">{{ form.liver_alp_grade.label_tag }}{{ form.liver_alp_grade }}{% if form.liver_alp_grade.errors %}<div class="text-danger small">{{ form.liver_alp_grade.errors }}</div>{% endif %}</div>
+                <!-- ALT -->
+                <div class="col-md-3">
+                    {{ form.liver_alt.label_tag }}
+                    <div class="input-group">
+                        {{ form.liver_alt }}
+                        <span class="input-group-text">U/L</span>
+                    </div>
+                    {% if form.liver_alt.errors %}<div class="text-danger small">{{ form.liver_alt.errors }}</div>{% endif %}
+                </div>
 
-                <div class="col-md-3">{{ form.liver_pt.label_tag }}{{ form.liver_pt }}{% if form.liver_pt.errors %}<div class="text-danger small">{{ form.liver_pt.errors }}</div>{% endif %}</div>
-                <div class="col-md-3">{{ form.liver_pt_grade.label_tag }}{{ form.liver_pt_grade }}{% if form.liver_pt_grade.errors %}<div class="text-danger small">{{ form.liver_pt_grade.errors }}</div>{% endif %}</div>
+                <div class="col-md-3">
+                    {{ form.liver_alt_grade.label_tag }}
+                    {{ form.liver_alt_grade }}
+                    {% if form.liver_alt_grade.errors %}<div class="text-danger small">{{ form.liver_alt_grade.errors }}</div>{% endif %}
+                </div>
 
-                <div class="col-md-3">{{ form.liver_ptt.label_tag }}{{ form.liver_ptt }}{% if form.liver_ptt.errors %}<div class="text-danger small">{{ form.liver_ptt.errors }}</div>{% endif %}</div>
-                <div class="col-md-3">{{ form.liver_ptt_grade.label_tag }}{{ form.liver_ptt_grade }}{% if form.liver_ptt_grade.errors %}<div class="text-danger small">{{ form.liver_ptt_grade.errors }}</div>{% endif %}</div>
+                <!-- ALP -->
+                <div class="col-md-3">
+                    {{ form.liver_alp.label_tag }}
+                    <div class="input-group">
+                        {{ form.liver_alp }}
+                        <span class="input-group-text">U/L</span>
+                    </div>
+                    {% if form.liver_alp.errors %}<div class="text-danger small">{{ form.liver_alp.errors }}</div>{% endif %}
+                </div>
 
-                <div class="col-md-3">{{ form.liver_inr.label_tag }}{{ form.liver_inr }}{% if form.liver_inr.errors %}<div class="text-danger small">{{ form.liver_inr.errors }}</div>{% endif %}</div>
-                <div class="col-md-3">{{ form.liver_inr_grade.label_tag }}{{ form.liver_inr_grade }}{% if form.liver_inr_grade.errors %}<div class="text-danger small">{{ form.liver_inr_grade.errors }}</div>{% endif %}</div>
+                <div class="col-md-3">
+                    {{ form.liver_alp_grade.label_tag }}
+                    {{ form.liver_alp_grade }}
+                    {% if form.liver_alp_grade.errors %}<div class="text-danger small">{{ form.liver_alp_grade.errors }}</div>{% endif %}
+                </div>
 
-                <div class="col-md-3">{{ form.liver_ggt.label_tag }}{{ form.liver_ggt }}{% if form.liver_ggt.errors %}<div class="text-danger small">{{ form.liver_ggt.errors }}</div>{% endif %}</div>
+                <!-- PT -->
+                <div class="col-md-3">
+                    {{ form.liver_pt.label_tag }}
+                    <div class="input-group">
+                        {{ form.liver_pt }}
+                        <span class="input-group-text">sec</span>
+                    </div>
+                    {% if form.liver_pt.errors %}<div class="text-danger small">{{ form.liver_pt.errors }}</div>{% endif %}
+                </div>
 
-                <div class="col-md-3">{{ form.liver_albumin.label_tag }}{{ form.liver_albumin }}{% if form.liver_albumin.errors %}<div class="text-danger small">{{ form.liver_albumin.errors }}</div>{% endif %}</div>
-                <div class="col-md-3">{{ form.liver_albumin_grade.label_tag }}{{ form.liver_albumin_grade }}{% if form.liver_albumin_grade.errors %}<div class="text-danger small">{{ form.liver_albumin_grade.errors }}</div>{% endif %}</div>
+                <div class="col-md-3">
+                    {{ form.liver_pt_grade.label_tag }}
+                    {{ form.liver_pt_grade }}
+                    {% if form.liver_pt_grade.errors %}<div class="text-danger small">{{ form.liver_pt_grade.errors }}</div>{% endif %}
+                </div>
 
-                <div class="col-md-3">{{ form.liver_bilirubin_total.label_tag }}{{ form.liver_bilirubin_total }}{% if form.liver_bilirubin_total.errors %}<div class="text-danger small">{{ form.liver_bilirubin_total.errors }}</div>{% endif %}</div>
-                <div class="col-md-3">{{ form.liver_bilirubin_total_units.label_tag }}{{ form.liver_bilirubin_total_units }}{% if form.liver_bilirubin_total_units.errors %}<div class="text-danger small">{{ form.liver_bilirubin_total_units.errors }}</div>{% endif %}</div>
-                <div class="col-md-3">{{ form.bilirubin_total_grade.label_tag }}{{ form.bilirubin_total_grade }}{% if form.bilirubin_total_grade.errors %}<div class="text-danger small">{{ form.bilirubin_total_grade.errors }}</div>{% endif %}</div>
+                <!-- PTT -->
+                <div class="col-md-3">
+                    {{ form.liver_ptt.label_tag }}
+                    <div class="input-group">
+                        {{ form.liver_ptt }}
+                        <span class="input-group-text">sec</span>
+                    </div>
+                    {% if form.liver_ptt.errors %}<div class="text-danger small">{{ form.liver_ptt.errors }}</div>{% endif %}
+                </div>
 
-                <div class="col-md-3">{{ form.liver_bilirubin_direct.label_tag }}{{ form.liver_bilirubin_direct }}{% if form.liver_bilirubin_direct.errors %}<div class="text-danger small">{{ form.liver_bilirubin_direct.errors }}</div>{% endif %}</div>
-                <div class="col-md-3">{{ form.liver_bilirubin_direct_units.label_tag }}{{ form.liver_bilirubin_direct_units }}{% if form.liver_bilirubin_direct_units.errors %}<div class="text-danger small">{{ form.liver_bilirubin_direct_units.errors }}</div>{% endif %}</div>
-                <div class="col-md-3">{{ form.bilirubin_direct_grade.label_tag }}{{ form.bilirubin_direct_grade }}{% if form.bilirubin_direct_grade.errors %}<div class="text-danger small">{{ form.bilirubin_direct_grade.errors }}</div>{% endif %}</div>
+                <div class="col-md-3">
+                    {{ form.liver_ptt_grade.label_tag }}
+                    {{ form.liver_ptt_grade }}
+                    {% if form.liver_ptt_grade.errors %}<div class="text-danger small">{{ form.liver_ptt_grade.errors }}</div>{% endif %}
+                </div>
+
+                <!-- INR -->
+                <div class="col-md-3">
+                    {{ form.liver_inr.label_tag }}
+                    <div class="input-group">
+                        {{ form.liver_inr }}
+                        <span class="input-group-text">ratio</span>
+                    </div>
+                    {% if form.liver_inr.errors %}<div class="text-danger small">{{ form.liver_inr.errors }}</div>{% endif %}
+                </div>
+
+                <div class="col-md-3">
+                    {{ form.liver_inr_grade.label_tag }}
+                    {{ form.liver_inr_grade }}
+                    {% if form.liver_inr_grade.errors %}<div class="text-danger small">{{ form.liver_inr_grade.errors }}</div>{% endif %}
+                </div>
+
+                <!-- GGT -->
+                <div class="col-md-3">
+                    {{ form.liver_ggt.label_tag }}
+                    <div class="input-group">
+                        {{ form.liver_ggt }}
+                        <span class="input-group-text">U/L</span>
+                    </div>
+                    {% if form.liver_ggt.errors %}<div class="text-danger small">{{ form.liver_ggt.errors }}</div>{% endif %}
+                </div>
+
+                <div class="col-md-3">
+                    {{ form.liver_ggt_grade.label_tag }}
+                    {{ form.liver_ggt_grade }}
+                    {% if form.liver_ggt_grade.errors %}<div class="text-danger small">{{ form.liver_ggt_grade.errors }}</div>{% endif %}
+                </div>
+
+                <!-- Albumin -->
+                <div class="col-md-3">
+                    {{ form.liver_albumin.label_tag }}
+                    <div class="input-group">
+                        {{ form.liver_albumin }}
+                        <span class="input-group-text">g/dL</span>
+                    </div>
+                    {% if form.liver_albumin.errors %}<div class="text-danger small">{{ form.liver_albumin.errors }}</div>{% endif %}
+                </div>
+
+                <div class="col-md-3">
+                    {{ form.liver_albumin_grade.label_tag }}
+                    {{ form.liver_albumin_grade }}
+                    {% if form.liver_albumin_grade.errors %}<div class="text-danger small">{{ form.liver_albumin_grade.errors }}</div>{% endif %}
+                </div>
+
+                <!-- Total Bilirubin -->
+                <div class="col-md-3">
+                    {{ form.liver_bilirubin_total.label_tag }}
+                    <div class="input-group">
+                        {{ form.liver_bilirubin_total }}
+                        <span class="input-group-text">mg/dL</span>
+                    </div>
+                    {% if form.liver_bilirubin_total.errors %}<div class="text-danger small">{{ form.liver_bilirubin_total.errors }}</div>{% endif %}
+                </div>
+
+                <div class="col-md-3">
+                    {{ form.bilirubin_total_grade.label_tag }}
+                    {{ form.bilirubin_total_grade }}
+                    {% if form.bilirubin_total_grade.errors %}<div class="text-danger small">{{ form.bilirubin_total_grade.errors }}</div>{% endif %}
+                </div>
+
+                <!-- Direct Bilirubin -->
+                <div class="col-md-3">
+                    {{ form.liver_bilirubin_direct.label_tag }}
+                    <div class="input-group">
+                        {{ form.liver_bilirubin_direct }}
+                        <span class="input-group-text">mg/dL</span>
+                    </div>
+                    {% if form.liver_bilirubin_direct.errors %}<div class="text-danger small">{{ form.liver_bilirubin_direct.errors }}</div>{% endif %}
+                </div>
+
+                <div class="col-md-3">
+                    {{ form.bilirubin_direct_grade.label_tag }}
+                    {{ form.bilirubin_direct_grade }}
+                    {% if form.bilirubin_direct_grade.errors %}<div class="text-danger small">{{ form.bilirubin_direct_grade.errors }}</div>{% endif %}
+                </div>
 
             </div>
         </div>
 
         <!-- ================= Glucose / Inflammation ================= -->
         <div class="card mb-4 shadow-sm border-0">
-            <div class="card-header bg-light"><strong>🧫 Glucose & Inflammation</strong></div>
+            <div class="card-header bg-light"><strong>🧫 3. Full blood count (Glucose & Inflammation)</strong></div>
             <div class="card-body row g-3">
 
-                <div class="col-md-3">{{ form.rbg.label_tag }}{{ form.rbg }}{% if form.rbg.errors %}<div class="text-danger small">{{ form.rbg.errors }}</div>{% endif %}</div>
-                <div class="col-md-3">{{ form.rbg_units.label_tag }}{{ form.rbg_units }}{% if form.rbg_units.errors %}<div class="text-danger small">{{ form.rbg_units.errors }}</div>{% endif %}</div>
-                <div class="col-md-3">{{ form.rbg_grade.label_tag }}{{ form.rbg_grade }}{% if form.rbg_grade.errors %}<div class="text-danger small">{{ form.rbg_grade.errors }}</div>{% endif %}</div>
+                <!-- RBG -->
+                <div class="col-md-3">
+                    {{ form.rbg.label_tag }}
+                    <div class="input-group">
+                        {{ form.rbg }}
+                        <span class="input-group-text">mg/dL</span>
+                    </div>
+                    {% if form.rbg.errors %}
+                        <div class="text-danger small">{{ form.rbg.errors }}</div>
+                    {% endif %}
+                </div>
 
-                <div class="col-md-3">{{ form.ldh.label_tag }}{{ form.ldh }}{% if form.ldh.errors %}<div class="text-danger small">{{ form.ldh.errors }}</div>{% endif %}</div>
-                <div class="col-md-3">{{ form.crp.label_tag }}{{ form.crp }}{% if form.crp.errors %}<div class="text-danger small">{{ form.crp.errors }}</div>{% endif %}</div>
-                <div class="col-md-3">{{ form.d_dimer.label_tag }}{{ form.d_dimer }}{% if form.d_dimer.errors %}<div class="text-danger small">{{ form.d_dimer.errors }}</div>{% endif %}</div>
-                <div class="col-md-3">{{ form.ferritin.label_tag }}{{ form.ferritin }}{% if form.ferritin.errors %}<div class="text-danger small">{{ form.ferritin.errors }}</div>{% endif %}</div>
+                <div class="col-md-3">
+                    {{ form.rbg_grade.label_tag }}
+                    {{ form.rbg_grade }}
+                    {% if form.rbg_grade.errors %}
+                        <div class="text-danger small">{{ form.rbg_grade.errors }}</div>
+                    {% endif %}
+                </div>
 
+                <!-- LDH -->
+                <div class="col-md-3">
+                    {{ form.ldh.label_tag }}
+                    <div class="input-group">
+                        {{ form.ldh }}
+                        <span class="input-group-text">U/L</span>
+                    </div>
+                    {% if form.ldh.errors %}
+                        <div class="text-danger small">{{ form.ldh.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="col-md-3">
+                    {{ form.ldh_grade.label_tag }}
+                    {{ form.ldh_grade }}
+                    {% if form.ldh_grade.errors %}
+                        <div class="text-danger small">{{ form.ldh_grade.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- CRP -->
+                <div class="col-md-3">
+                    {{ form.crp.label_tag }}
+                    <div class="input-group">
+                        {{ form.crp }}
+                        <span class="input-group-text">mg/L</span>
+                    </div>
+                    {% if form.crp.errors %}
+                        <div class="text-danger small">{{ form.crp.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="col-md-3">
+                    {{ form.crp_grade.label_tag }}
+                    {{ form.crp_grade }}
+                    {% if form.crp_grade.errors %}
+                        <div class="text-danger small">{{ form.crp_grade.errors }}</div>
+                    {% endif %}
+                </div>
+                <!-- D-Dimer -->
+                <div class="col-md-3">
+                    {{ form.d_dimer.label_tag }}
+                    <div class="input-group">
+                        {{ form.d_dimer }}
+                        <span class="input-group-text">µg/mL</span>
+                    </div>
+                    {% if form.d_dimer.errors %}
+                        <div class="text-danger small">{{ form.d_dimer.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="col-md-3">
+                    {{ form.d_dimer_grade.label_tag }}
+                    {{ form.d_dimer_grade }}
+                    {% if form.d_dimer_grade.errors %}
+                        <div class="text-danger small">{{ form.d_dimer_grade.errors }}</div>
+                    {% endif %}
+                </div>
+                <!-- Ferritin -->
+                <div class="col-md-6">
+                    {{ form.ferritin.label_tag }}
+                    <div class="input-group">
+                        {{ form.ferritin }}
+                        <span class="input-group-text">ng/mL</span>
+                    </div>
+                    {% if form.ferritin.errors %}
+                        <div class="text-danger small">{{ form.ferritin.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="col-md-6">
+                    {{ form.ferritin_grade.label_tag }}
+                    {{ form.ferritin_grade }}
+                    {% if form.ferritin_grade.errors %}
+                        <div class="text-danger small">{{ form.ferritin_grade.errors }}</div>
+                    {% endif %}
+                </div>
             </div>
         </div>
 
         <!-- ================= Hematology ================= -->
         <div class="card mb-4 shadow-sm border-0">
-            <div class="card-header bg-light"><strong>🩸 Hematology</strong></div>
+            <div class="card-header bg-light"><strong>🩸 3. Full blood count (Hematology)</strong></div>
             <div class="card-body row g-3">
 
-                <div class="col-md-3">{{ form.wbc.label_tag }}{{ form.wbc }}{% if form.wbc.errors %}<div class="text-danger small">{{ form.wbc.errors }}</div>{% endif %}</div>
-                <div class="col-md-3">{{ form.wbc_grade.label_tag }}{{ form.wbc_grade }}{% if form.wbc_grade.errors %}<div class="text-danger small">{{ form.wbc_grade.errors }}</div>{% endif %}</div>
+                <!-- Hemoglobin -->
+                <div class="col-md-3">
+                    {{ form.hb.label_tag }}
+                    <div class="input-group">
+                        {{ form.hb }}
+                        <span class="input-group-text">g/dL</span>
+                    </div>
+                    {% if form.hb.errors %}<div class="text-danger small">{{ form.hb.errors }}</div>{% endif %}
+                </div>
 
-                <div class="col-md-3">{{ form.abs_neutrophil.label_tag }}{{ form.abs_neutrophil }}{% if form.abs_neutrophil.errors %}<div class="text-danger small">{{ form.abs_neutrophil.errors }}</div>{% endif %}</div>
-                <div class="col-md-3">{{ form.abs_neutrophil_grade.label_tag }}{{ form.abs_neutrophil_grade }}{% if form.abs_neutrophil_grade.errors %}<div class="text-danger small">{{ form.abs_neutrophil_grade.errors }}</div>{% endif %}</div>
+                <div class="col-md-3">
+                    {{ form.hb_grade.label_tag }}
+                    {{ form.hb_grade }}
+                    {% if form.hb_grade.errors %}<div class="text-danger small">{{ form.hb_grade.errors }}</div>{% endif %}
+                </div>
 
-                <div class="col-md-3">{{ form.abs_lymphocytes.label_tag }}{{ form.abs_lymphocytes }}{% if form.abs_lymphocytes.errors %}<div class="text-danger small">{{ form.abs_lymphocytes.errors }}</div>{% endif %}</div>
-                <div class="col-md-3">{{ form.abs_lymphocytes_grade.label_tag }}{{ form.abs_lymphocytes_grade }}{% if form.abs_lymphocytes_grade.errors %}<div class="text-danger small">{{ form.abs_lymphocytes_grade.errors }}</div>{% endif %}</div>
+                <!-- HCT -->
+                <div class="col-md-3">
+                    {{ form.hct.label_tag }}
+                    <div class="input-group">
+                        {{ form.hct }}
+                        <span class="input-group-text">%</span>
+                    </div>
+                    {% if form.hct.errors %}<div class="text-danger small">{{ form.hct.errors }}</div>{% endif %}
+                </div>
 
-                <div class="col-md-3">{{ form.abs_eosinophils.label_tag }}{{ form.abs_eosinophils }}{% if form.abs_eosinophils.errors %}<div class="text-danger small">{{ form.abs_eosinophils.errors }}</div>{% endif %}</div>
-                <div class="col-md-3">{{ form.abs_monocytes.label_tag }}{{ form.abs_monocytes }}{% if form.abs_monocytes.errors %}<div class="text-danger small">{{ form.abs_monocytes.errors }}</div>{% endif %}</div>
-                <div class="col-md-3">{{ form.abs_basophils.label_tag }}{{ form.abs_basophils }}{% if form.abs_basophils.errors %}<div class="text-danger small">{{ form.abs_basophils.errors }}</div>{% endif %}</div>
+                <div class="col-md-3">
+                    {{ form.hct_grade.label_tag }}
+                    {{ form.hct_grade }}
+                    {% if form.hct_grade.errors %}<div class="text-danger small">{{ form.hct_grade.errors }}</div>{% endif %}
+                </div>
 
-                <div class="col-md-3">{{ form.hb.label_tag }}{{ form.hb }}{% if form.hb.errors %}<div class="text-danger small">{{ form.hb.errors }}</div>{% endif %}</div>
-                <div class="col-md-3">{{ form.hb_grade.label_tag }}{{ form.hb_grade }}{% if form.hb_grade.errors %}<div class="text-danger small">{{ form.hb_grade.errors }}</div>{% endif %}</div>
+                <!-- RBC -->
+                <div class="col-md-3">
+                    {{ form.rbc.label_tag }}
+                    <div class="input-group">
+                        {{ form.rbc }}
+                        <span class="input-group-text">×10⁶/µL</span>
+                    </div>
+                    {% if form.rbc.errors %}<div class="text-danger small">{{ form.rbc.errors }}</div>{% endif %}
+                </div>
 
-                <div class="col-md-3">{{ form.mcv.label_tag }}{{ form.mcv }}{% if form.mcv.errors %}<div class="text-danger small">{{ form.mcv.errors }}</div>{% endif %}</div>
-                <div class="col-md-3">{{ form.mch.label_tag }}{{ form.mch }}{% if form.mch.errors %}<div class="text-danger small">{{ form.mch.errors }}</div>{% endif %}</div>
-                <div class="col-md-3">{{ form.hct.label_tag }}{{ form.hct }}{% if form.hct.errors %}<div class="text-danger small">{{ form.hct.errors }}</div>{% endif %}</div>
-                <div class="col-md-3">{{ form.rbc.label_tag }}{{ form.rbc }}{% if form.rbc.errors %}<div class="text-danger small">{{ form.rbc.errors }}</div>{% endif %}</div>
+                <div class="col-md-3">
+                    {{ form.rbc_grade.label_tag }}
+                    {{ form.rbc_grade }}
+                    {% if form.rbc_grade.errors %}<div class="text-danger small">{{ form.rbc_grade.errors }}</div>{% endif %}
+                </div>
+                <!-- WBC -->
+                <div class="col-md-3">
+                    {{ form.wbc.label_tag }}
+                    <div class="input-group">
+                        {{ form.wbc }}
+                        <span class="input-group-text">×10³/µL</span>
+                    </div>
+                    {% if form.wbc.errors %}<div class="text-danger small">{{ form.wbc.errors }}</div>{% endif %}
+                </div>
 
-                <div class="col-md-3">{{ form.plt.label_tag }}{{ form.plt }}{% if form.plt.errors %}<div class="text-danger small">{{ form.plt.errors }}</div>{% endif %}</div>
-                <div class="col-md-3">{{ form.plt_grade.label_tag }}{{ form.plt_grade }}{% if form.plt_grade.errors %}<div class="text-danger small">{{ form.plt_grade.errors }}</div>{% endif %}</div>
+                <div class="col-md-3">
+                    {{ form.wbc_grade.label_tag }}
+                    {{ form.wbc_grade }}
+                    {% if form.wbc_grade.errors %}<div class="text-danger small">{{ form.wbc_grade.errors }}</div>{% endif %}
+                </div>
+
+                <!-- Platelets -->
+                <div class="col-md-3">
+                    {{ form.plt.label_tag }}
+                    <div class="input-group">
+                        {{ form.plt }}
+                        <span class="input-group-text">×10³/µL</span>
+                    </div>
+                    {% if form.plt.errors %}<div class="text-danger small">{{ form.plt.errors }}</div>{% endif %}
+                </div>
+
+                <div class="col-md-3">
+                    {{ form.plt_grade.label_tag }}
+                    {{ form.plt_grade }}
+                    {% if form.plt_grade.errors %}<div class="text-danger small">{{ form.plt_grade.errors }}</div>{% endif %}
+                </div>
+
+                <!-- Lymphocytes -->
+                <div class="col-md-3">
+                    {{ form.abs_lymphocytes.label_tag }}
+                    <div class="input-group">
+                        {{ form.abs_lymphocytes }}
+                        <span class="input-group-text">×10³/µL</span>
+                    </div>
+                    {% if form.abs_lymphocytes.errors %}<div class="text-danger small">{{ form.abs_lymphocytes.errors }}</div>{% endif %}
+                </div>
+
+                <div class="col-md-3">
+                    {{ form.abs_lymphocytes_grade.label_tag }}
+                    {{ form.abs_lymphocytes_grade }}
+                    {% if form.abs_lymphocytes_grade.errors %}<div class="text-danger small">{{ form.abs_lymphocytes_grade.errors }}</div>{% endif %}
+                </div>
+
+                <!-- Neutrophils -->
+                <div class="col-md-3">
+                    {{ form.abs_neutrophil.label_tag }}
+                    <div class="input-group">
+                        {{ form.abs_neutrophil }}
+                        <span class="input-group-text">×10³/µL</span>
+                    </div>
+                    {% if form.abs_neutrophil.errors %}<div class="text-danger small">{{ form.abs_neutrophil.errors }}</div>{% endif %}
+                </div>
+
+                <div class="col-md-3">
+                    {{ form.abs_neutrophil_grade.label_tag }}
+                    {{ form.abs_neutrophil_grade }}
+                    {% if form.abs_neutrophil_grade.errors %}<div class="text-danger small">{{ form.abs_neutrophil_grade.errors }}</div>{% endif %}
+                </div>
+
+                <!-- Eosinophils -->
+                <div class="col-md-3">
+                    {{ form.abs_eosinophils.label_tag }}
+                    <div class="input-group">
+                        {{ form.abs_eosinophils }}
+                        <span class="input-group-text">×10³/µL</span>
+                    </div>
+                    {% if form.abs_eosinophils.errors %}<div class="text-danger small">{{ form.abs_eosinophils.errors }}</div>{% endif %}
+                </div>
+
+                <div class="col-md-3">
+                    {{ form.abs_eosinophils_grade.label_tag }}
+                    {{ form.abs_eosinophils_grade }}
+                    {% if form.abs_eosinophils_grade.errors %}<div class="text-danger small">{{ form.abs_eosinophils_grade.errors }}</div>{% endif %}
+                </div>
+                <!-- Monocytes -->
+                <div class="col-md-3">
+                    {{ form.abs_monocytes.label_tag }}
+                    <div class="input-group">
+                        {{ form.abs_monocytes }}
+                        <span class="input-group-text">×10³/µL</span>
+                    </div>
+                    {% if form.abs_monocytes.errors %}<div class="text-danger small">{{ form.abs_monocytes.errors }}</div>{% endif %}
+                </div>
+
+                <div class="col-md-3">
+                    {{ form.abs_monocytes_grade.label_tag }}
+                    {{ form.abs_monocytes_grade }}
+                    {% if form.abs_monocytes_grade.errors %}<div class="text-danger small">{{ form.abs_monocytes_grade.errors }}</div>{% endif %}
+                </div>
+                <!-- Basophils -->
+                <div class="col-md-3">
+                    {{ form.abs_basophils.label_tag }}
+                    <div class="input-group">
+                        {{ form.abs_basophils }}
+                        <span class="input-group-text">×10³/µL</span>
+                    </div>
+                    {% if form.abs_basophils.errors %}<div class="text-danger small">{{ form.abs_basophils.errors }}</div>{% endif %}
+                </div>
+
+                <div class="col-md-3">
+                    {{ form.abs_basophils_grade.label_tag }}
+                    {{ form.abs_basophils_grade }}
+                    {% if form.abs_basophils_grade.errors %}<div class="text-danger small">{{ form.abs_basophils_grade.errors }}</div>{% endif %}
+                </div>
+                <!-- MCV -->
+                <div class="col-md-3">
+                    {{ form.mcv.label_tag }}
+                    <div class="input-group">
+                        {{ form.mcv }}
+                        <span class="input-group-text">fL</span>
+                    </div>
+                    {% if form.mcv.errors %}<div class="text-danger small">{{ form.mcv.errors }}</div>{% endif %}
+                </div>
+                <div class="col-md-3">
+                    {{ form.mcv_grade.label_tag }}
+                    {{ form.mcv_grade }}
+                    {% if form.mcv_grade.errors %}<div class="text-danger small">{{ form.mcv_grade.errors }}</div>{% endif %}
+                </div>
+                <!-- MCH -->
+                <div class="col-md-3">
+                    {{ form.mch.label_tag }}
+                    <div class="input-group">
+                        {{ form.mch }}
+                        <span class="input-group-text">pg</span>
+                    </div>
+                    {% if form.mch.errors %}<div class="text-danger small">{{ form.mch.errors }}</div>{% endif %}
+                </div>
+
+                <div class="col-md-3">
+                    {{ form.mch_grade.label_tag }}
+                    {{ form.mch_grade }}
+                    {% if form.mch_grade.errors %}<div class="text-danger small">{{ form.mch_grade.errors }}</div>{% endif %}
+                </div>
 
             </div>
         </div>
@@ -178,19 +565,103 @@
         <!-- ================= Imaging ================= -->
         <div class="card mb-4 shadow-sm border-0">
             <div class="card-header bg-light"><strong>🩻 Imaging</strong></div>
-            <div class="card-body row g-3">
 
-                <div class="col-md-2 form-check">{{ form.cancer }} {{ form.cancer.label_tag }}</div>
-                <div class="col-md-2 form-check">{{ form.prostate }} {{ form.prostate.label_tag }}</div>
+            <div class="card-body">
 
-                <div class="col-md-3 form-check">{{ form.chest_xray }} {{ form.chest_xray.label_tag }}</div>
-                <div class="col-md-9">{{ form.chest_specify.label_tag }}{{ form.chest_specify }}{% if form.chest_specify.errors %}<div class="text-danger small">{{ form.chest_specify.errors }}</div>{% endif %}</div>
+                <!-- Cancer Screening -->
+                <div class="mb-4">
+                    <h6 class="fw-bold text-primary mb-3">🧬 Cancer Screening</h6>
 
-                <div class="col-md-3 form-check">{{ form.ct_chest }} {{ form.ct_chest.label_tag }}</div>
-                <div class="col-md-9">{{ form.ct_chest_specify.label_tag }}{{ form.ct_chest_specify }}{% if form.ct_chest_specify.errors %}<div class="text-danger small">{{ form.ct_chest_specify.errors }}</div>{% endif %}</div>
+                    <div class="row g-3">
 
-                <div class="col-md-3 form-check">{{ form.ultrasound }} {{ form.ultrasound.label_tag }}</div>
-                <div class="col-md-9">{{ form.ultrasound_specify.label_tag }}{{ form.ultrasound_specify }}{% if form.ultrasound_specify.errors %}<div class="text-danger small">{{ form.ultrasound_specify.errors }}</div>{% endif %}</div>
+                        <div class="col-md-6">
+                            <label class="form-label">{{ form.cancer.label }}</label>
+                            <div class="form-check">
+                                {{ form.cancer }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">{{ form.prostate.label }}</label>
+                            <div class="form-check">
+                                {{ form.prostate }}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Imaging -->
+                <div>
+                    <h6 class="fw-bold text-primary mb-3">🩻 Imaging Details</h6>
+
+                    <!-- Chest X-Ray -->
+                    <div class="row g-3 mb-3">
+
+                        <div class="col-md-3">
+                            <label class="form-label">{{ form.chest_xray.label }}</label>
+                            <div class="form-check">
+                                {{ form.chest_xray }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-9">
+                            <label class="form-label">{{ form.chest_specify.label }}</label>
+                            {{ form.chest_specify }}
+                            {% if form.chest_specify.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ form.chest_specify.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                    </div>
+
+                    <!-- CT Chest -->
+                    <div class="row g-3 mb-3">
+
+                        <div class="col-md-3">
+                            <label class="form-label">{{ form.ct_chest.label }}</label>
+                            <div class="form-check">
+                                {{ form.ct_chest }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-9">
+                            <label class="form-label">{{ form.ct_chest_specify.label }}</label>
+                            {{ form.ct_chest_specify }}
+                            {% if form.ct_chest_specify.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ form.ct_chest_specify.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                    </div>
+
+                    <!-- Ultrasound -->
+                    <div class="row g-3">
+
+                        <div class="col-md-3">
+                            <label class="form-label">{{ form.ultrasound.label }}</label>
+                            <div class="form-check">
+                                {{ form.ultrasound }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-9">
+                            <label class="form-label">{{ form.ultrasound_specify.label }}</label>
+                            {{ form.ultrasound_specify }}
+                            {% if form.ultrasound_specify.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ form.ultrasound_specify.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                    </div>
+
+                </div>
 
             </div>
         </div>

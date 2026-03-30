@@ -5,6 +5,8 @@ class BaseChoiceAdmin(admin.ModelAdmin):
     search_fields = ("code", "name", "label", "description")
     list_filter = ("value",)
     ordering = ("id","value",)
+    # ✅ Enable inline editing
+    list_editable = ("value",)
 
     fieldsets = (
         ("Basic Information", {
