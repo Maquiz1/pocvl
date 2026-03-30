@@ -5,24 +5,172 @@
 <div class="container">
 
     <h3>
-
         {% if is_update %}
             Edit Adverse Event (CRF5)
         {% else %}
             Record Adverse Event (CRF5)
         {% endif %}
-
         — Subject {{ enrollment.screening.subject.subject_id }}
-
     </h3>
 
     <hr>
 
     <form method="post">
-
         {% csrf_token %}
 
-        {{ form.as_p }}
+        <div class="row g-3">
+
+            <!-- ================= BASIC INFO ================= -->
+            <div class="col-md-4">
+                {{ form.date_reported.label_tag }}
+                {{ form.date_reported }}
+                {% if form.date_reported.errors %}
+                    <div class="text-danger small">{{ form.date_reported.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-4">
+                {{ form.after_visit.label_tag }}
+                {{ form.after_visit }}
+                {% if form.after_visit.errors %}
+                    <div class="text-danger small">{{ form.after_visit.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-4">
+                {{ form.ae_date.label_tag }}
+                {{ form.ae_date }}
+                {% if form.ae_date.errors %}
+                    <div class="text-danger small">{{ form.ae_date.errors }}</div>
+                {% endif %}
+            </div>
+
+            <!-- ================= DESCRIPTION ================= -->
+            <div class="col-md-12">
+                {{ form.ae_description.label_tag }}
+                {{ form.ae_description }}
+                {% if form.ae_description.errors %}
+                    <div class="text-danger small">{{ form.ae_description.errors }}</div>
+                {% endif %}
+            </div>
+
+            <hr>
+
+            <!-- ================= AE DETAILS ================= -->
+            <div class="col-md-3">
+                {{ form.ae_category.label_tag }}
+                {{ form.ae_category }}
+                {% if form.ae_category.errors %}
+                    <div class="text-danger small">{{ form.ae_category.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-3">
+                {{ form.ae_severity.label_tag }}
+                {{ form.ae_severity }}
+                {% if form.ae_severity.errors %}
+                    <div class="text-danger small">{{ form.ae_severity.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-3">
+                {{ form.ae_serious.label_tag }}
+                {{ form.ae_serious }}
+                {% if form.ae_serious.errors %}
+                    <div class="text-danger small">{{ form.ae_serious.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-3">
+                {{ form.ae_expected.label_tag }}
+                {{ form.ae_expected }}
+                {% if form.ae_expected.errors %}
+                    <div class="text-danger small">{{ form.ae_expected.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-3">
+                {{ form.ae_relationship.label_tag }}
+                {{ form.ae_relationship }}
+                {% if form.ae_relationship.errors %}
+                    <div class="text-danger small">{{ form.ae_relationship.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-3">
+                {{ form.ae_treatment.label_tag }}
+                {{ form.ae_treatment }}
+                {% if form.ae_treatment.errors %}
+                    <div class="text-danger small">{{ form.ae_treatment.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-3">
+                {{ form.ae_action_taken.label_tag }}
+                {{ form.ae_action_taken }}
+                {% if form.ae_action_taken.errors %}
+                    <div class="text-danger small">{{ form.ae_action_taken.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-3">
+                {{ form.ae_outcome.label_tag }}
+                {{ form.ae_outcome }}
+                {% if form.ae_outcome.errors %}
+                    <div class="text-danger small">{{ form.ae_outcome.errors }}</div>
+                {% endif %}
+            </div>
+
+            <hr>
+
+            <!-- ================= TIMELINE ================= -->
+            <div class="col-md-4">
+                {{ form.ae_start_date.label_tag }}
+                {{ form.ae_start_date }}
+                {% if form.ae_start_date.errors %}
+                    <div class="text-danger small">{{ form.ae_start_date.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-4">
+                {{ form.ae_ongoing.label_tag }}
+                {{ form.ae_ongoing }}
+                {% if form.ae_ongoing.errors %}
+                    <div class="text-danger small">{{ form.ae_ongoing.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-4">
+                {{ form.ae_end_date.label_tag }}
+                {{ form.ae_end_date }}
+                {% if form.ae_end_date.errors %}
+                    <div class="text-danger small">{{ form.ae_end_date.errors }}</div>
+                {% endif %}
+            </div>
+
+            <hr>
+
+            <!-- ================= STAFF ================= -->
+            <div class="col-md-6">
+                {{ form.ae_staff.label_tag }}
+                {{ form.ae_staff }}
+                {% if form.ae_staff.errors %}
+                    <div class="text-danger small">{{ form.ae_staff.errors }}</div>
+                {% endif %}
+            </div>
+
+            <!-- ================= REMARKS ================= -->
+            <div class="col-md-12">
+                {{ form.remarks.label_tag }}
+                {{ form.remarks }}
+                {% if form.remarks.errors %}
+                    <div class="text-danger small">{{ form.remarks.errors }}</div>
+                {% endif %}
+            </div>
+
+        </div>
+
+        <hr>
 
         <button type="submit" class="btn btn-success">
             Save

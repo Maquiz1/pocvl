@@ -56,7 +56,7 @@ def subject_detail_view(request, pk):
         adverse_events = (
             CRF5.objects
             .filter(enrollment=enrollment)
-            .order_by("-event_date")
+            .order_by("-date_reported")
         )
 
     # ---------------- LTFU ----------------
