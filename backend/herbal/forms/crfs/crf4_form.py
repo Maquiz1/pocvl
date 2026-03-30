@@ -108,9 +108,9 @@ class CRF4Form(forms.ModelForm):
 
             # --- Textareas ---
             "remarks": forms.Textarea(attrs={"class": "form-control", "rows": 2}),
-            "chest_specify": forms.Textarea(attrs={"class": "form-control", "rows": 2}),
-            "ct_chest_specify": forms.Textarea(attrs={"class": "form-control", "rows": 2}),
-            "ultrasound_specify": forms.Textarea(attrs={"class": "form-control", "rows": 2}),
+            "chest_specify": forms.TextInput(attrs={"class": "form-control"}),
+            "ct_chest_specify": forms.TextInput(attrs={"class": "form-control"}),
+            "ultrasound_specify": forms.TextInput(attrs={"class": "form-control"}),
 
             # --- Dates ---
             "sample_date": forms.DateInput(attrs={"class": "form-control", "type": "date"}),
