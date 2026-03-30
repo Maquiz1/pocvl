@@ -21,10 +21,14 @@
             <div class="card-body row g-3">
 
                 <div class="col-md-6">
-                    {{ form.sample_date.label_tag }}
-                    {{ form.sample_date }}
+                    <label class="form-label">{{ form.sample_date.label }}</label>
+                    <div class="form-check">
+                        {{ form.sample_date }}
+                    </div>
                     {% if form.sample_date.errors %}
-                        <div class="text-danger small">{{ form.sample_date.errors }}</div>
+                        <div class="text-danger small mt-1">
+                            {{ form.sample_date.errors }}
+                        </div>
                     {% endif %}
                 </div>
 
@@ -636,9 +640,8 @@
                         <!-- Value -->
                         <div class="col-md-8">
                             <label class="form-label">{{ form.prostate.label }}</label>
-                            <div class="input-group">
+                            <div class="form-check">
                                 {{ form.prostate }}
-                                <span class="input-group-text">ng/ml</span>
                             </div>
                             {% if form.prostate.errors %}
                                 <div class="text-danger small mt-1">
@@ -662,11 +665,18 @@
                             <div class="form-check">
                                 {{ form.chest_xray }}
                             </div>
+                            {% if form.chest_xray.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ form.chest_xray.errors }}
+                                </div>
+                            {% endif %}
                         </div>
 
                         <div class="col-md-9">
                             <label class="form-label">{{ form.chest_specify.label }}</label>
-                            {{ form.chest_specify }}
+                            <div class="form-check">
+                                {{ form.chest_specify }}
+                            </div>
                             {% if form.chest_specify.errors %}
                                 <div class="text-danger small mt-1">
                                     {{ form.chest_specify.errors }}
@@ -684,11 +694,18 @@
                             <div class="form-check">
                                 {{ form.ct_chest }}
                             </div>
+                            {% if form.ct_chest.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ form.ct_chest.errors }}
+                                </div>
+                            {% endif %}
                         </div>
 
                         <div class="col-md-9">
                             <label class="form-label">{{ form.ct_chest_specify.label }}</label>
-                            {{ form.ct_chest_specify }}
+                            <div class="form-check">
+                                {{ form.ct_chest_specify }}
+                            </div>
                             {% if form.ct_chest_specify.errors %}
                                 <div class="text-danger small mt-1">
                                     {{ form.ct_chest_specify.errors }}
@@ -706,11 +723,18 @@
                             <div class="form-check">
                                 {{ form.ultrasound }}
                             </div>
+                            {% if form.ultrasound.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ form.ultrasound.errors }}
+                                </div>
+                            {% endif %}
                         </div>
 
                         <div class="col-md-9">
                             <label class="form-label">{{ form.ultrasound_specify.label }}</label>
-                            {{ form.ultrasound_specify }}
+                            <div class="form-check">
+                                {{ form.ultrasound_specify }}
+                            </div>
                             {% if form.ultrasound_specify.errors %}
                                 <div class="text-danger small mt-1">
                                     {{ form.ultrasound_specify.errors }}

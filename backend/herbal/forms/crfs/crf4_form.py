@@ -131,13 +131,102 @@ class CRF4Form(forms.ModelForm):
     def clean(self):
         cleaned_data = super().clean()
 
-        if cleaned_data.get("chest_xray") and not cleaned_data.get("chest_specify"):
+        # =============================
+        # Cancer
+        # =============================
+        cancer_test = cleaned_data.get("cancer_test")
+        cancer = cleaned_data.get("cancer")
+
+        if cancer_test == 1 and not cancer:
+            self.add_error("cancer", "Cancer value is required when test is done")
+
+        if cancer_test != 1:
+            cleaned_data["cancer"] = None
+
+        # =============================
+        # Prostate
+        # =============================
+        prostate_test = cleaned_data.get("prostate_test")
+        prostate = cleaned_data.get("prostate")
+
+        if prostate_test == 1 and not prostate:
+            self.add_error("prostate", "Prostate value is required when test is done")
+
+        if prostate_test != 1:
+            cleaned_data["prostate"] = None
+
+        # =============================
+        # Imaging
+        # =============================
+        if cleaned_data.get("chest_xray") == 2 and not cleaned_data.get("chest_specify"):
             self.add_error("chest_specify", "Please specify chest X-ray findings")
 
-        if cleaned_data.get("ct_chest") and not cleaned_data.get("ct_chest_specify"):
+        if cleaned_data.get("ct_chest") == 2 and not cleaned_data.get("ct_chest_specify"):
             self.add_error("ct_chest_specify", "Please specify CT chest findings")
 
-        if cleaned_data.get("ultrasound") and not cleaned_data.get("ultrasound_specify"):
+        if cleaned_data.get("ultrasound") == 2 and not cleaned_data.get("ultrasound_specify"):
             self.add_error("ultrasound_specify", "Please specify ultrasound findings")
 
+        # =============================
+        # Grades (GLOBAL RULE)
+        # =============================
+        grade_fields = [
+            ("renal_creatinine", "renal_creatinine_grade"),
+            ("renal_urea", "renal_urea_grade"),
+            ("renal_egfr", "renal_egfr_grade"),
+
+            ("liver_ast", "liver_ast_grade"),
+            ("liver_alt", "liver_alt_grade"),
+            ("liver_alp", "liver_alp_grade"),
+            ("liver_pt", "liver_pt_grade"),
+            ("liver_ptt", "liver_ptt_grade"),
+            ("liver_inr", "liver_inr_grade"),
+            ("liver_ggt", "liver_ggt_grade"),
+            ("liver_albumin", "liver_albumin_grade"),
+
+            ("liver_bilirubin_total", "bilirubin_total_grade"),
+            ("liver_bilirubin_direct", "bilirubin_direct_grade"),
+
+            ("rbg", "rbg_grade"),
+            ("ldh", "ldh_grade"),
+            ("crp", "crp_grade"),
+            ("d_dimer", "d_dimer_grade"),
+            ("ferritin", "ferritin_grade"),
+
+            ("hb", "hb_grade"),
+            ("rbc", "rbc_grade"),
+            ("hct", "hct_grade"),
+            ("wbc", "wbc_grade"),
+            ("plt", "plt_grade"),
+
+            ("abs_neutrophil", "abs_neutrophil_grade"),
+            ("abs_lymphocytes", "abs_lymphocytes_grade"),
+            ("abs_eosinophils", "abs_eosinophils_grade"),
+            ("abs_monocytes", "abs_monocytes_grade"),
+            ("abs_basophils", "abs_basophils_grade"),
+
+            ("mcv", "mcv_grade"),
+            ("mch", "mch_grade"),
+        ]
+
+        for value_field, grade_field in grade_fields:
+            value = cleaned_data.get(value_field)
+            grade = cleaned_data.get(grade_field)
+
+            if value is not None and value != "":
+                if not grade:
+                    self.add_error(grade_field, "Grade is required when value is provided")
+
+        # ----------------------------
+        # REQUIRED SYMPTOMS
+        # ----------------------------
+        required_fields = [
+            "sample_date", "cancer_test", "prostate_test", "chest_xray", "ct_chest",
+            "ultrasound"
+        ]
+
+        for field in required_fields:
+            if not cleaned_data.get(field):
+                self.add_error(field, "This field is required.")
+                
         return cleaned_data
