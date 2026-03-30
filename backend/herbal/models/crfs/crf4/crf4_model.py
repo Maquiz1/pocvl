@@ -124,12 +124,12 @@ class CRF4(BaseModel):
     prostate = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
 
     chest_xray = models.ForeignKey(Appearance, null=True, blank=True, on_delete=models.SET_NULL,related_name="+")
-    chest_specify = models.TextField(blank=True)
+    chest_specify = models.CharField(max_length=255,blank=True)
 
     ct_chest = models.ForeignKey(Appearance, null=True, blank=True, on_delete=models.SET_NULL,related_name="+")
-    ct_chest_specify = models.TextField(blank=True)
+    ct_chest_specify = models.CharField(max_length=255,blank=True)
 
     ultrasound = models.ForeignKey(Appearance, null=True, blank=True, on_delete=models.SET_NULL,related_name="+")
-    ultrasound_specify = models.TextField(blank=True)
+    ultrasound_specify = models.CharField(max_length=255,blank=True)
 
     remarks = models.TextField(blank=True)
