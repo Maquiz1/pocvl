@@ -99,10 +99,7 @@ class CRF4Form(forms.ModelForm):
             "adherence": forms.CheckboxInput(attrs={"class": "form-check-input"}),
             "cancer": forms.NumberInput(attrs={"class": "form-control"}),
             "prostate": forms.NumberInput(attrs={"class": "form-control"}),
-            # "chest_xray": forms.CheckboxInput(attrs={"class": "form-check-input"}),
-            # "ct_chest": forms.CheckboxInput(attrs={"class": "form-check-input"}),
-            # "ultrasound": forms.CheckboxInput(attrs={"class": "form-check-input"}),
-
+            
             # --- Text ---
             "dosage": forms.TextInput(attrs={"class": "form-control"}),
 
