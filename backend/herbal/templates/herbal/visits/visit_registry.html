@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h3>Visit Registry</h3>
+
+    <table class="table table-bordered table-sm mt-3">
+        <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Visit</th>
+                <th>CRF1</th>
+                <th>CRF2</th>
+                <th>CRF3</th>
+                <th>CRF4</th>
+                <th>CRF5</th>
+                <th>CRF6</th>
+                <th>CRF7</th>
+                <th>Completed</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for item in visits %}
+            <tr>
+                <td>{{ item.visit.enrollment.screening.subject.subject_id }}</td>
+                <td>{{ item.visit.visit_day.code }}</td>
+
+                {% for key, value in item.crfs.items %}
+                    <td>
+                        {% if value %}
+                            <span class="badge bg-success">✔</span>
+                        {% else %}
+                            <span class="badge bg-danger">✘</span>
+                        {% endif %}
+                    </td>
+                {% endfor %}
+
+                <td>
+                    <strong>{{ item.completed }}/{{ item.total }}</strong>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+{% endblock %}

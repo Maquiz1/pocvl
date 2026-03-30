@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h3>Visit Day Summary</h3>
+
+    <div class="row">
+
+        {% for day in summary %}
+        <div class="col-md-4 mb-4">
+
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+
+                    <h5 class="card-title">
+                        {{ day.visit_day.code }}
+                    </h5>
+
+                    <p>
+                        Total Visits:
+                        <span class="badge bg-primary">
+                            {{ day.total_visits }}
+                        </span>
+                    </p>
+
+                    <hr>
+
+                    <ul class="list-unstyled">
+                        <li>CRF1: <span class="badge bg-success">{{ day.crf1 }}</span></li>
+                        <li>CRF2: <span class="badge bg-success">{{ day.crf2 }}</span></li>
+                        <li>CRF3: <span class="badge bg-success">{{ day.crf3 }}</span></li>
+                        <li>CRF4: <span class="badge bg-success">{{ day.crf4 }}</span></li>
+                        <li>CRF5: <span class="badge bg-success">{{ day.crf5 }}</span></li>
+                        <li>CRF6: <span class="badge bg-success">{{ day.crf6 }}</span></li>
+                        <li>CRF7: <span class="badge bg-success">{{ day.crf7 }}</span></li>
+                    </ul>
+
+                </div>
+            </div>
+
+        </div>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

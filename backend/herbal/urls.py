@@ -21,6 +21,10 @@ from .views.visits.unscheduled_create_view import unscheduled_create_view
 from .views.visits.unscheduled_update_view import unscheduled_update_view
 from .views.visits.visit_start_view import visit_start_view
 from .views.visits.visit_update_view import visit_update_view
+from .views.visits.visit_registry_view import visit_registry_view
+from .views.visits.visit_day_summary_view import visit_day_summary_view
+
+
 from .views.crfs.crf1.crf1_create_view import crf1_create_view
 from .views.crfs.crf1.crf1_update_view import crf1_update_view
 from .views.crfs.crf1.crf1_form_view import crf1_form_view
@@ -85,6 +89,10 @@ urlpatterns = [
     path("unscheduled/update/<int:pk>/", unscheduled_update_view, name="unscheduled-update"),
     path("visits/<int:pk>/start/", visit_update_view, name="visit-start"),
     path("visits/<int:pk>/update/", visit_update_view, name="visit-update"),
+    
+    path("registry-visits/visits/", visit_registry_view, name="registry-visits"),
+    path("summary-visits/visits/", visit_day_summary_view, name="summary-visits"),
+
     # CRFS
     path("registry-crfs/crfs/", crf_registry_view, name="registry-crfs"),
     path("list-crfs/crfs/", crf_list_view, name="list-crfs"),
