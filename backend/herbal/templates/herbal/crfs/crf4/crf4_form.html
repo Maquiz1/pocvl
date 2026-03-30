@@ -585,20 +585,66 @@
                 <div class="mb-4">
                     <h6 class="fw-bold text-primary mb-3">🧬 Cancer Screening</h6>
 
-                    <div class="row g-3">
+                    <!-- Cancer -->
+                    <div class="row g-3 mb-3">
 
-                        <div class="col-md-6">
-                            <label class="form-label">{{ form.cancer.label }}</label>
+                        <!-- Done -->
+                        <div class="col-md-4">
+                            <label class="form-label">{{ form.cancer_test.label }}</label>
                             <div class="form-check">
-                                {{ form.cancer }}
+                                {{ form.cancer_test }}
                             </div>
+                            {% if form.cancer_test.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ form.cancer_test.errors }}
+                                </div>
+                            {% endif %}
                         </div>
 
-                        <div class="col-md-6">
-                            <label class="form-label">{{ form.prostate.label }}</label>
-                            <div class="form-check">
-                                {{ form.prostate }}
+                        <!-- Value -->
+                        <div class="col-md-8">
+                            <label class="form-label">{{ form.cancer.label }}</label>
+                            <div class="input-group">
+                                {{ form.cancer }}
+                                <span class="input-group-text">U/ml</span>
                             </div>
+                            {% if form.cancer.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ form.cancer.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                    </div>
+
+                    <!-- Prostate -->
+                    <div class="row g-3">
+
+                        <!-- Done -->
+                        <div class="col-md-4">
+                            <label class="form-label">{{ form.prostate_test.label }}</label>
+                            <div class="form-check">
+                                {{ form.prostate_test }}
+                            </div>
+                            {% if form.prostate_test.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ form.prostate_test.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Value -->
+                        <div class="col-md-8">
+                            <label class="form-label">{{ form.prostate.label }}</label>
+                            <div class="input-group">
+                                {{ form.prostate }}
+                                <span class="input-group-text">ng/ml</span>
+                            </div>
+                            {% if form.prostate.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ form.prostate.errors }}
+                                </div>
+                            {% endif %}
                         </div>
 
                     </div>
