@@ -14,16 +14,16 @@ class CRF6(BaseModel):
 
     termination_date = models.DateField()
 
-    # reason = models.CharField(
-    #     max_length=50,
-    #     choices=[
-    #         ("completed","Completed Study"),
-    #         ("ltf","Lost To Follow Up"),
-    #         ("withdrawn","Participant Withdrew"),
-    #         ("transfer_out","Transferred Out"),
-    #         ("medical_reason","Medical Reason"),
-    #     ]
-    # )
+    reason = models.CharField(
+        max_length=50,
+        choices=[
+            ("completed","Completed Study"),
+            ("ltf","Lost To Follow Up"),
+            ("withdrawn","Participant Withdrew"),
+            ("transfer_out","Transferred Out"),
+            ("medical_reason","Medical Reason"),
+        ]
+    )
 
     # comments = models.TextField(blank=True)
     
