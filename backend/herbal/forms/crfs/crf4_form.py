@@ -58,7 +58,9 @@ class CRF4Form(forms.ModelForm):
             "mch", "mch_grade",
 
             # --- Imaging ---
+            "cancer_test",
             "cancer",
+            "prostate_test",
             "prostate",
             
             "chest_xray", "chest_specify",
@@ -86,7 +88,9 @@ class CRF4Form(forms.ModelForm):
             "renal_egfr_grade":"eGFR Grade",
             
             "cancer":"Cancer",
+            # "cancer":"Cancer",
             "prostate":"Prostate",
+            # "prostate":"Prostate",
         }
 
         widgets = {

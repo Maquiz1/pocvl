@@ -3,7 +3,7 @@
 from django.db import models
 from ...visits.visit_schedule_model import VisitSchedule
 from core.models import BaseModel
-from choices.models import Grade,Appearance
+from choices.models import Grade,Appearance,DoneNotDone
 
 
 class CRF4(BaseModel):
@@ -118,7 +118,9 @@ class CRF4(BaseModel):
     mch_grade = models.ForeignKey(Grade, null=True, blank=True, on_delete=models.SET_NULL, related_name="mch_grades")
 
     # --- Imaging / Cancer ---
+    cancer_test = models.ForeignKey(DoneNotDone, null=True, blank=True, on_delete=models.SET_NULL, related_name="+")
     cancer = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
+    prostate_test = models.ForeignKey(DoneNotDone, null=True, blank=True, on_delete=models.SET_NULL, related_name="+")
     prostate = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
 
     chest_xray = models.ForeignKey(Appearance, null=True, blank=True, on_delete=models.SET_NULL,related_name="+")
