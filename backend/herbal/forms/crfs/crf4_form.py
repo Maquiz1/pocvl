@@ -137,10 +137,10 @@ class CRF4Form(forms.ModelForm):
         cancer_test = cleaned_data.get("cancer_test")
         cancer = cleaned_data.get("cancer")
 
-        if cancer_test == 1 and not cancer:
-            self.add_error("cancer", "Cancer value is required when test is done")
-
-        if cancer_test != 1:
+        if cancer_test and cancer_test.id == 1:
+            if not cancer:
+                self.add_error("cancer", "Cancer value is required when test is done")
+        else:
             cleaned_data["cancer"] = None
 
         # =============================
@@ -149,23 +149,35 @@ class CRF4Form(forms.ModelForm):
         prostate_test = cleaned_data.get("prostate_test")
         prostate = cleaned_data.get("prostate")
 
-        if prostate_test == 1 and not prostate:
-            self.add_error("prostate", "Prostate value is required when test is done")
-
-        if prostate_test != 1:
+        if prostate_test and prostate_test.id == 1:
+            if not prostate:
+                self.add_error("prostate", "Prostate value is required when test is done")
+        else:
             cleaned_data["prostate"] = None
 
         # =============================
         # Imaging
         # =============================
-        if cleaned_data.get("chest_xray") == 2 and not cleaned_data.get("chest_specify"):
-            self.add_error("chest_specify", "Please specify chest X-ray findings")
+        chest_xray = cleaned_data.get("chest_xray")
+        if chest_xray and chest_xray.id == 2:
+            if not cleaned_data.get("chest_specify", "").strip():
+                self.add_error("chest_specify", "Please specify chest X-ray findings")
+        else:
+            cleaned_data["chest_specify"] = ""
 
-        if cleaned_data.get("ct_chest") == 2 and not cleaned_data.get("ct_chest_specify"):
-            self.add_error("ct_chest_specify", "Please specify CT chest findings")
+        ct_chest = cleaned_data.get("ct_chest")
+        if ct_chest and ct_chest.id == 2:
+            if not cleaned_data.get("ct_chest_specify", "").strip():
+                self.add_error("ct_chest_specify", "Please specify CT chest findings")
+        else:
+            cleaned_data["ct_chest_specify"] = ""
 
-        if cleaned_data.get("ultrasound") == 2 and not cleaned_data.get("ultrasound_specify"):
-            self.add_error("ultrasound_specify", "Please specify ultrasound findings")
+        ultrasound = cleaned_data.get("ultrasound")
+        if ultrasound and ultrasound.id == 2:
+            if not cleaned_data.get("ultrasound_specify", "").strip():
+                self.add_error("ultrasound_specify", "Please specify ultrasound findings")
+        else:
+            cleaned_data["ultrasound_specify"] = ""
 
         # =============================
         # Grades (GLOBAL RULE)
@@ -213,20 +225,24 @@ class CRF4Form(forms.ModelForm):
             value = cleaned_data.get(value_field)
             grade = cleaned_data.get(grade_field)
 
-            if value is not None and value != "":
+            if value not in [None, ""]:
                 if not grade:
                     self.add_error(grade_field, "Grade is required when value is provided")
 
-        # ----------------------------
-        # REQUIRED SYMPTOMS
-        # ----------------------------
+        # =============================
+        # Required Fields
+        # =============================
         required_fields = [
-            "sample_date", "cancer_test", "prostate_test", "chest_xray", "ct_chest",
-            "ultrasound"
+            "sample_date",
+            "cancer_test",
+            "prostate_test",
+            "chest_xray",
+            "ct_chest",
+            "ultrasound",
         ]
 
         for field in required_fields:
-            if not cleaned_data.get(field):
+            if cleaned_data.get(field) is None:
                 self.add_error(field, "This field is required.")
-                
+
         return cleaned_data
