@@ -26,6 +26,17 @@ def visit_day_summary_view(request):
         # Indirect CRFs (via enrollment)
         # crf5=Count("enrollment__crf5", filter=Q(enrollment__crf5__isnull=False)),
         # crf6=Count("enrollment__crf6", filter=Q(enrollment__crf6__isnull=False)),
+        
+        # crf5=Count(
+        #     "enrollment__crf5",
+        #     filter=Q(enrollment__crf5__isnull=False),
+        #     distinct=True
+        # ),
+        # crf6=Count(
+        #     "enrollment__crf6",
+        #     filter=Q(enrollment__crf6__isnull=False),
+        #     distinct=True
+        # ),
     )
     .order_by("visit_day__id")
 )

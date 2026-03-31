@@ -14,7 +14,7 @@ class CRF1Chemotherapy(models.Model):
     chemotherapy_end = models.DateField(null=True, blank=True)
     chemotherapy_dose = models.DecimalField(max_digits=10,decimal_places=2,null=True,blank=True)
     chemotherapy_frequency = models.IntegerField(
-        validators=[MinValueValidator(1), MaxValueValidator(255)],
+        validators=[MinValueValidator(1), MaxValueValidator(10000)],
         null=True,
         blank=True
     )
