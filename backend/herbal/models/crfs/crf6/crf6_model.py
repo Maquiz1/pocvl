@@ -3,6 +3,7 @@
 from django.db import models
 from ...enrollments.enrollment_model import Enrollment
 from core.models import BaseModel
+from choices.models import YesNoUnk
 
 class CRF6(BaseModel):
 
@@ -12,7 +13,15 @@ class CRF6(BaseModel):
         related_name="termination"
     )
 
-    termination_date = models.DateField()
+    today_date = models.DateField(null=True, blank=True)
+
+    termination_date = models.DateField(null=True, blank=True)
+    terminate_date = models.DateField(null=True, blank=True)
+
+    completed120days = models.BooleanField(default=False)
+    completed120days22 = models.BooleanField(default=False)
+
+    completed120days1 = models.ForeignKey(YesNoUnk, null=True, blank=True, on_delete=models.SET_NULL,related_name="+")
 
     reason = models.CharField(
         max_length=50,
@@ -31,11 +40,7 @@ class CRF6(BaseModel):
     
     
     
-    today_date = models.DateField(null=True, blank=True)
 
-    terminate_date = models.DateField(null=True, blank=True)
-
-    completed120days = models.BooleanField(default=False)
 
     reported_dead = models.BooleanField(default=False)
 
