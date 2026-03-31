@@ -148,6 +148,40 @@ class EnrollmentForm(forms.ModelForm):
                     "treatment_other", "Not allowed for previously treated patients."
                 )
 
+
+        # =========================
+        # ✅ BOTH (pt_type = 4)
+        # =========================
+        elif pt_type.id == 4:
+
+            # ---------------------
+            # NEW TREATMENT REQUIRED
+            # ---------------------
+            if not treatment_type:
+                self.add_error("treatment_type", "Treatment type is required.")
+
+            if treatment_type and treatment_type.id in VALID_TYPES:
+                if not treatment_date:
+                    self.add_error("treatment_date", "Treatment date is required.")
+
+            if treatment_type and treatment_type.id == OTHER:
+                if not treatment_other:
+                    self.add_error("treatment_other", "Please specify other treatment.")
+
+            # ---------------------
+            # PREVIOUS REQUIRED
+            # ---------------------
+            if not previous_treatment:
+                self.add_error("previous_treatment", "Previous treatment is required.")
+
+            if previous_treatment and previous_treatment.id in VALID_TYPES:
+                if not previous_date:
+                    self.add_error("previous_date", "Previous date is required.")
+
+            if previous_treatment and previous_treatment.id == OTHER:
+                if not previous_other:
+                    self.add_error("previous_other", "Please specify other treatment.")
+            
         # =========================
         # ✅ Cycle validation
         # =========================

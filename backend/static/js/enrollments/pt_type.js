@@ -32,6 +32,11 @@ $(document).ready(function () {
             // $("#id_previous_date").val("");
             // $("#id_total_cycle").val("");
             // $("#id_cycle_number").val("");
+        } else if (ptType === 4) {
+            // 🔥 NEW CASE → BOTH
+            $("#new-section").show();
+            $("#previous-section").show();
+            $("#cycle-section").show(); // optional (depends on your logic)
         }
     }
 

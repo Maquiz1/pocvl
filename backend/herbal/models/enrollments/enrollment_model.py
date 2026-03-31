@@ -200,6 +200,48 @@ class Enrollment(BaseModel):
                     "treatment_other": "Not allowed for previously treated patients."
                 })
 
+      
+        elif self.pt_type.id == 4:
+            # Require previous treatment
+            if not self.previous_treatment:
+                raise ValidationError({
+                    "treatment_type": "Treatment type is required."
+                })
+                
+            if not self.previous_treatment:
+                raise ValidationError({
+                    "previous_treatment": "Previous treatment is required."
+                })
+                
+                
+            # Require date if type in 1–6
+            if self.treatment_type and self.treatment_type.id in VALID_TYPES:
+                if not self.treatment_date:
+                    raise ValidationError({
+                        "treatment_date": "Treatment date is required."
+                    })
+
+            # Require OTHER text
+            if self.treatment_type and self.treatment_type.id == OTHER:
+                if not self.treatment_other:
+                    raise ValidationError({
+                        "treatment_other": "Please specify other treatment."
+                    })
+                    
+            # Require date if type in 1–6
+            if self.previous_treatment and self.previous_treatment.id in VALID_TYPES:
+                if not self.previous_date:
+                    raise ValidationError({
+                        "previous_date": "Previous date is required."
+                    })
+
+            # Require OTHER text
+            if self.previous_treatment and self.previous_treatment.id == OTHER:
+                if not self.previous_other:
+                    raise ValidationError({
+                        "previous_other": "Please specify other treatment."
+                    })
+
         # =========================
         # ✅ Cycle logic
         # =========================
