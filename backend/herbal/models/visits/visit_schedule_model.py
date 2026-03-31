@@ -28,7 +28,8 @@ class VisitSchedule(BaseModel):
     visit_day = models.ForeignKey(
         VisitDay,
         on_delete=models.PROTECT,
-        related_name="visit_schedules"
+        related_name="visit_schedules",
+        db_index=True
     )
 
     scheduled_date = models.DateField()
