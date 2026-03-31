@@ -22,6 +22,7 @@ class CRF6(BaseModel):
     completed120days22 = models.BooleanField(default=False)
 
     completed120days1 = models.ForeignKey(YesNoUnk, null=True, blank=True, on_delete=models.SET_NULL,related_name="+")
+    completed120days2 = models.ForeignKey(YesNoUnk, null=True, blank=True, on_delete=models.SET_NULL,related_name="+")
 
     reason = models.CharField(
         max_length=50,
