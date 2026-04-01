@@ -24,13 +24,13 @@ class CRF5Form(forms.ModelForm):
             "ae_action_taken",
             "ae_relationship",
             "ae_staff",
-            "ae_date",
             "remarks",
         ]
 
         widgets = {
             "date_reported": forms.DateInput(attrs={"type": "date", "class": "form-control"}),
             "after_visit": forms.Select(attrs={"class": "form-control"}),
+            "ae_staff": forms.Select(attrs={"class": "form-control"}),
 
             "ae_description": forms.Textarea(attrs={"class": "form-control", "rows": 3}),
 
@@ -47,10 +47,6 @@ class CRF5Form(forms.ModelForm):
             "ae_end_date": forms.DateInput(attrs={"type": "date", "class": "form-control"}),
             "ae_ongoing": forms.Select(attrs={"class": "form-control"}),
 
-            "ae_staff": forms.Select(attrs={"class": "form-control"}),
-
-            "ae_date": forms.DateInput(attrs={"type": "date", "class": "form-control"}),
-
             "remarks": forms.Textarea(attrs={"class": "form-control", "rows": 2}),
         }
 
@@ -60,6 +56,20 @@ class CRF5Form(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         enrollment = kwargs.pop("enrollment", None)
         super().__init__(*args, **kwargs)
+
+        self.fields["date_reported"].required = True
+        self.fields["ae_description"].required = True
+        self.fields["after_visit"].required = True
+        self.fields["ae_category"].required = True
+        self.fields["ae_severity"].required = True
+        self.fields["ae_serious"].required = True
+        self.fields["ae_expected"].required = True
+        self.fields["ae_relationship"].required = True
+        self.fields["ae_treatment"].required = True
+        self.fields["ae_action_taken"].required = True
+        self.fields["ae_outcome"].required = True
+        self.fields["ae_start_date"].required = True
+        self.fields["ae_ongoing"].required = True
 
         # Filter visits
         if enrollment:
@@ -117,12 +127,6 @@ class CRF5Form(forms.ModelForm):
             raise forms.ValidationError("Please select reporting staff.")
         return self.cleaned_data.get("ae_staff")
 
-    def clean_ae_date(self):
-        value = self.cleaned_data.get("ae_date")
-        if not value:
-            raise forms.ValidationError("AE date is required.")
-        return value
-
     # =============================
     # CROSS FIELD VALIDATION
     # =============================
@@ -133,7 +137,6 @@ class CRF5Form(forms.ModelForm):
         end = cleaned_data.get("ae_end_date")
         ongoing = cleaned_data.get("ae_ongoing")
         reported = cleaned_data.get("date_reported")
-        ae_date = cleaned_data.get("ae_date")
 
         # Ongoing logic
         if ongoing and hasattr(ongoing, "value"):
@@ -146,8 +149,5 @@ class CRF5Form(forms.ModelForm):
         # Date logic
         if start and end and end < start:
             self.add_error("ae_end_date", "End date cannot be before start date.")
-
-        if reported and ae_date and ae_date > reported:
-            self.add_error("ae_date", "AE date cannot be after reported date.")
 
         return cleaned_data

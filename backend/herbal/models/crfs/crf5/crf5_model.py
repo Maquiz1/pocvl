@@ -63,9 +63,4 @@ class CRF5(BaseModel):
         limit_choices_to={'site__isnull': False},  # basic safety
     )
     
-    ae_date = models.DateField(
-        blank=True,
-        null=True
-    )
-    
     remarks = models.TextField(blank=True)

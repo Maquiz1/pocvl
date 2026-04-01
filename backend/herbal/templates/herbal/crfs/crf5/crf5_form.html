@@ -37,14 +37,14 @@
                 {% endif %}
             </div>
 
+            <!-- ================= STAFF ================= -->
             <div class="col-md-4">
-                {{ form.ae_date.label_tag }}
-                {{ form.ae_date }}
-                {% if form.ae_date.errors %}
-                    <div class="text-danger small">{{ form.ae_date.errors }}</div>
+                {{ form.ae_staff.label_tag }}
+                {{ form.ae_staff }}
+                {% if form.ae_staff.errors %}
+                    <div class="text-danger small">{{ form.ae_staff.errors }}</div>
                 {% endif %}
             </div>
-
             <!-- ================= DESCRIPTION ================= -->
             <div class="col-md-12">
                 {{ form.ae_description.label_tag }}
@@ -56,6 +56,32 @@
 
             <hr>
 
+            <!-- ================= TIMELINE ================= -->
+            <div class="col-md-4">
+                {{ form.ae_start_date.label_tag }}
+                {{ form.ae_start_date }}
+                {% if form.ae_start_date.errors %}
+                    <div class="text-danger small">{{ form.ae_start_date.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-4">
+                {{ form.ae_ongoing.label_tag }}
+                {{ form.ae_ongoing }}
+                {% if form.ae_ongoing.errors %}
+                    <div class="text-danger small">{{ form.ae_ongoing.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-4">
+                {{ form.ae_end_date.label_tag }}
+                {{ form.ae_end_date }}
+                {% if form.ae_end_date.errors %}
+                    <div class="text-danger small">{{ form.ae_end_date.errors }}</div>
+                {% endif %}
+            </div>
+
+            <hr>
             <!-- ================= AE DETAILS ================= -->
             <div class="col-md-3">
                 {{ form.ae_category.label_tag }}
@@ -121,43 +147,7 @@
                 {% endif %}
             </div>
 
-            <hr>
-
-            <!-- ================= TIMELINE ================= -->
-            <div class="col-md-4">
-                {{ form.ae_start_date.label_tag }}
-                {{ form.ae_start_date }}
-                {% if form.ae_start_date.errors %}
-                    <div class="text-danger small">{{ form.ae_start_date.errors }}</div>
-                {% endif %}
-            </div>
-
-            <div class="col-md-4">
-                {{ form.ae_ongoing.label_tag }}
-                {{ form.ae_ongoing }}
-                {% if form.ae_ongoing.errors %}
-                    <div class="text-danger small">{{ form.ae_ongoing.errors }}</div>
-                {% endif %}
-            </div>
-
-            <div class="col-md-4">
-                {{ form.ae_end_date.label_tag }}
-                {{ form.ae_end_date }}
-                {% if form.ae_end_date.errors %}
-                    <div class="text-danger small">{{ form.ae_end_date.errors }}</div>
-                {% endif %}
-            </div>
-
-            <hr>
-
-            <!-- ================= STAFF ================= -->
-            <div class="col-md-6">
-                {{ form.ae_staff.label_tag }}
-                {{ form.ae_staff }}
-                {% if form.ae_staff.errors %}
-                    <div class="text-danger small">{{ form.ae_staff.errors }}</div>
-                {% endif %}
-            </div>
+            <hr>            
 
             <!-- ================= REMARKS ================= -->
             <div class="col-md-12">
