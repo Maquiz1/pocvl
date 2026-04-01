@@ -70,7 +70,7 @@
                 {% endif %}
             </div>
 
-            <div class="col-md-4 mb-3">
+            <div class="col-md-4 mb-3" id="div_reason_date_fields">
                 <label>Reason Date</label>
                 {{ form.reason_date }}
                 {% if form.reason_date.errors %}
@@ -153,7 +153,7 @@
                 {% endif %}
             </div>
 
-            <div class="col-md-4 mb-3">
+            <div class="col-md-4 mb-3" id="div_outcome_date">
                 <label>Outcome Date</label>
                 {{ form.outcome_date }}
                 {% if form.outcome_date.errors %}
@@ -209,5 +209,7 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="{% static 'js/crfs/crf6.js' %}"></script>
+<script src="{% static 'js/crfs/crf6/reason.js' %}"></script>
+<script src="{% static 'js/crfs/crf6/withdraw.js' %}"></script>
+<script src="{% static 'js/crfs/crf6/outcome.js' %}"></script>
 {% endblock %}
