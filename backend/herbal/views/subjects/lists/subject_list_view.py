@@ -113,7 +113,7 @@ def subject_list_view(request):
         ltf_count=Count(
             "id",
             filter=Q(
-                screening__enrollment__termination__reason="ltf"
+                screening__enrollment__termination__reason=2
             ),
             distinct=True
         ),
@@ -156,7 +156,7 @@ def subject_list_view(request):
 
     elif status == "ltf":
         subjects = subjects.filter(
-            screening__enrollment__termination__reason="ltf"
+            screening__enrollment__termination__reason=2
         )
 
     # ---------------- PAGINATION ----------------

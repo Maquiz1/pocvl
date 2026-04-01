@@ -13,16 +13,16 @@ class CRF7Form(forms.ModelForm):
             "usual_active",
             "pain",
             "anxiety",
-            "fdate",
+            # "fdate",
             "cpersid",
-            "cdate",
+            # "cdate",
             "remarks",
         ]
         
         labels={
             "tdate":"Tarehe ya Leo",
-            "cdate":"DATE FORM CHECKED",
-            "fdate":"DATE FORM COMPLETED",
+            # "cdate":"DATE FORM CHECKED",
+            # "fdate":"DATE FORM COMPLETED",
             "cpersid":"NAME OF PERSON CHECKING FORM:",
             "mobility":"A. Uwezo wa kutembea",
             "self_care":"B. Uwezo wa kujihudumia",
@@ -34,8 +34,8 @@ class CRF7Form(forms.ModelForm):
 
         widgets = {
             "tdate": forms.DateInput(attrs={"type": "date", "class": "form-control"}),
-            "fdate": forms.DateInput(attrs={"type": "date", "class": "form-control"}),
-            "cdate": forms.DateInput(attrs={"type": "date", "class": "form-control"}),
+            # "fdate": forms.DateInput(attrs={"type": "date", "class": "form-control"}),
+            # "cdate": forms.DateInput(attrs={"type": "date", "class": "form-control"}),
             "cpersid": forms.Select(attrs={"class": "form-control"}),
             # ✅ FK → SELECT
             "mobility": forms.Select(attrs={"class": "form-control"}),

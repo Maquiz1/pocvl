@@ -14,8 +14,8 @@ class CRF7(BaseModel):
     )
 
     tdate = models.DateField(null=True, blank=True)
-    fdate = models.DateField(null=True, blank=True)
-    cdate = models.DateField(null=True, blank=True)
+    # fdate = models.DateField(null=True, blank=True)
+    # cdate = models.DateField(null=True, blank=True)
 
     cpersid = models.ForeignKey(
         "accounts.StaffProfile",   # 🔥 string reference (NO import)
