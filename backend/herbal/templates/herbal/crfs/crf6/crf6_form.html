@@ -5,26 +5,162 @@
 <div class="container">
 
     <h3>
-
         {% if is_update %}
         Edit CRF6
         {% else %}
         Create CRF6
         {% endif %}
-
         — Subject {{ enrollment.screening.subject.subject_id }}
-
     </h3>
 
-    <form method="post">
-
+    <form method="post" novalidate>
         {% csrf_token %}
 
-        {{ form.as_p }}
+        <!-- 🔴 NON-FIELD ERRORS -->
+        {% if form.non_field_errors %}
+        <div class="alert alert-danger">
+            {{ form.non_field_errors }}
+        </div>
+        {% endif %}
 
-        <button class="btn btn-success">
-            Save
-        </button>
+        <!-- ========================= -->
+        <!-- DATES -->
+        <!-- ========================= -->
+        <div class="row">
+
+            <div class="col-md-4 mb-3">
+                <label>Today's Date *</label>
+                {{ form.today_date }}
+                <div class="text-danger small">{{ form.today_date.errors }}</div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label>Termination Date *</label>
+                {{ form.termination_date }}
+                <div class="text-danger small">{{ form.termination_date.errors }}</div>
+            </div>
+
+            <!-- ========================= -->
+            <!-- CLINICIAN -->
+            <!-- ========================= -->
+            <div class="col-md-4 mb-3">
+                <label>Responsible Clinician</label>
+                {{ form.clinician_name }}
+                <div class="text-danger small">{{ form.clinician_name.errors }}</div>
+            </div>
+        </div>
+
+        <!-- ========================= -->
+        <!-- TERMINATION REASON -->
+        <!-- ========================= -->
+        <hr>
+        <div class="row">
+
+            <div class="col-md-4 mb-3">
+                <label>Reason for Termination *</label>
+                {{ form.reason }}
+                <div class="text-danger small">{{ form.reason.errors }}</div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label>Reason Date</label>
+                {{ form.reason_date }}
+                <div class="text-danger small">{{ form.reason_date.errors }}</div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label>Other Reason</label>
+                {{ form.reason_other }}
+                <div class="text-danger small">{{ form.reason_other.errors }}</div>
+            </div>
+        </div>
+        <hr>
+
+        <!-- ========================= -->
+        <!-- WITHDRAW -->
+        <!-- ========================= -->
+        <div class="row">
+
+            <div class="col-md-6 mb-3">
+                <label>Withdrawal Reason</label>
+                {{ form.withdrew_reason }}
+                <div class="text-danger small">{{ form.withdrew_reason.errors }}</div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label>Other Withdrawal Reason</label>
+                {{ form.withdrew_other }}
+                <div class="text-danger small">{{ form.withdrew_other.errors }}</div>
+            </div>
+
+        </div>
+        <hr>
+
+        <!-- ========================= -->
+        <!-- DEATH -->
+        <!-- ========================= -->
+        <div class="row">
+
+            <div class="col-md-6 mb-3">
+                <label>Primary Cause</label>
+                {{ form.primary_cause }}
+                <div class="text-danger small">{{ form.primary_cause.errors }}</div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label>Secondary Cause</label>
+                {{ form.secondary_cause }}
+                <div class="text-danger small">{{ form.secondary_cause.errors }}</div>
+            </div>
+
+        </div>
+        <hr>
+
+        <!-- ========================= -->
+        <!-- OUTCOME -->
+        <!-- ========================= -->
+        <div class="row">
+
+            <div class="col-md-4 mb-3">
+                <label>Outcome</label>
+                {{ form.outcome }}
+                <div class="text-danger small">{{ form.outcome.errors }}</div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label>Outcome Date</label>
+                {{ form.outcome_date }}
+                <div class="text-danger small">{{ form.outcome_date.errors }}</div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label>Other Outcome</label>
+                {{ form.outcome_other }}
+                <div class="text-danger small">{{ form.outcome_other.errors }}</div>
+            </div>
+
+        </div>
+        <hr>
+
+        <!-- ========================= -->
+        <!-- SUMMARY -->
+        <!-- ========================= -->
+        <div class="mb-3">
+            <label>Summary</label>
+            {{ form.summary }}
+            <div class="text-danger small">{{ form.summary.errors }}</div>
+        </div>
+
+        <div class="mb-3">
+            <label>Remarks</label>
+            {{ form.remarks }}
+            <div class="text-danger small">{{ form.remarks.errors }}</div>
+        </div>
+
+        <!-- ========================= -->
+        <!-- ACTIONS -->
+        <!-- ========================= -->
+        <button class="btn btn-success">Save</button>
 
         <a href="{% url 'herbal:subjects-detail' enrollment.screening.subject.pk %}" class="btn btn-secondary">
             Cancel
