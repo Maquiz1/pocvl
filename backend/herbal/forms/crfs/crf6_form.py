@@ -11,7 +11,9 @@ class CRF6Form(forms.ModelForm):
         fields = [
             "termination_date",
             "reason",
-            # "comments",
+            "summary",
+            "remarks",
+            "clinician_name",
         ]
 
         widgets = {
@@ -19,5 +21,7 @@ class CRF6Form(forms.ModelForm):
                 attrs={"type": "date", "class": "form-control"}
             ),
             "reason": forms.Select(attrs={"class": "form-control"}),
-            # "comments": forms.Textarea(attrs={"class": "form-control"}),
+            "summary": forms.Textarea(attrs={"class": "form-control","rows":3}),
+            "remarks": forms.Textarea(attrs={"class": "form-control","rows":3}),
+            "clinician_name": forms.Textarea(attrs={"class": "form-control","rows":3}),
         }
