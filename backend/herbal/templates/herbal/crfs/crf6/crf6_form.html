@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
 
@@ -6,9 +7,9 @@
 
     <h3>
         {% if is_update %}
-        Edit CRF6
+            Edit CRF6
         {% else %}
-        Create CRF6
+            Create CRF6
         {% endif %}
         — Subject {{ enrollment.screening.subject.subject_id }}
     </h3>
@@ -31,89 +32,112 @@
             <div class="col-md-4 mb-3">
                 <label>Today's Date *</label>
                 {{ form.today_date }}
-                <div class="text-danger small">{{ form.today_date.errors }}</div>
+                {% if form.today_date.errors %}
+                    <div class="text-danger small">{{ form.today_date.errors.0 }}</div>
+                {% endif %}
             </div>
 
             <div class="col-md-4 mb-3">
                 <label>Termination Date *</label>
                 {{ form.termination_date }}
-                <div class="text-danger small">{{ form.termination_date.errors }}</div>
+                {% if form.termination_date.errors %}
+                    <div class="text-danger small">{{ form.termination_date.errors.0 }}</div>
+                {% endif %}
             </div>
 
-            <!-- ========================= -->
-            <!-- CLINICIAN -->
-            <!-- ========================= -->
             <div class="col-md-4 mb-3">
                 <label>Responsible Clinician</label>
                 {{ form.clinician_name }}
-                <div class="text-danger small">{{ form.clinician_name.errors }}</div>
+                {% if form.clinician_name.errors %}
+                    <div class="text-danger small">{{ form.clinician_name.errors.0 }}</div>
+                {% endif %}
             </div>
+
         </div>
+
+        <hr>
 
         <!-- ========================= -->
         <!-- TERMINATION REASON -->
         <!-- ========================= -->
-        <hr>
         <div class="row">
 
             <div class="col-md-4 mb-3">
                 <label>Reason for Termination *</label>
                 {{ form.reason }}
-                <div class="text-danger small">{{ form.reason.errors }}</div>
+                {% if form.reason.errors %}
+                    <div class="text-danger small">{{ form.reason.errors.0 }}</div>
+                {% endif %}
             </div>
 
             <div class="col-md-4 mb-3">
                 <label>Reason Date</label>
                 {{ form.reason_date }}
-                <div class="text-danger small">{{ form.reason_date.errors }}</div>
+                {% if form.reason_date.errors %}
+                    <div class="text-danger small">{{ form.reason_date.errors.0 }}</div>
+                {% endif %}
             </div>
 
-            <div class="col-md-4 mb-3">
+            <div class="col-md-4 mb-3" id="div_reason_other">
                 <label>Other Reason</label>
                 {{ form.reason_other }}
-                <div class="text-danger small">{{ form.reason_other.errors }}</div>
+                {% if form.reason_other.errors %}
+                    <div class="text-danger small">{{ form.reason_other.errors.0 }}</div>
+                {% endif %}
             </div>
+
         </div>
+
         <hr>
 
         <!-- ========================= -->
         <!-- WITHDRAW -->
         <!-- ========================= -->
-        <div class="row">
+        <div class="row" id="div_withdraw_section">
 
-            <div class="col-md-6 mb-3">
+            <div class="col-md-6 mb-3" id="div_withdrew_reason">
                 <label>Withdrawal Reason</label>
                 {{ form.withdrew_reason }}
-                <div class="text-danger small">{{ form.withdrew_reason.errors }}</div>
+                {% if form.withdrew_reason.errors %}
+                    <div class="text-danger small">{{ form.withdrew_reason.errors.0 }}</div>
+                {% endif %}
             </div>
 
-            <div class="col-md-6 mb-3">
+            <div class="col-md-6 mb-3" id="div_withdrew_other">
                 <label>Other Withdrawal Reason</label>
                 {{ form.withdrew_other }}
-                <div class="text-danger small">{{ form.withdrew_other.errors }}</div>
+                {% if form.withdrew_other.errors %}
+                    <div class="text-danger small">{{ form.withdrew_other.errors.0 }}</div>
+                {% endif %}
             </div>
 
         </div>
+
         <hr>
 
         <!-- ========================= -->
         <!-- DEATH -->
         <!-- ========================= -->
-        <div class="row">
+        <div class="row" id="div_death_fields">
 
             <div class="col-md-6 mb-3">
                 <label>Primary Cause</label>
                 {{ form.primary_cause }}
-                <div class="text-danger small">{{ form.primary_cause.errors }}</div>
+                {% if form.primary_cause.errors %}
+                    <div class="text-danger small">{{ form.primary_cause.errors.0 }}</div>
+                {% endif %}
             </div>
 
             <div class="col-md-6 mb-3">
                 <label>Secondary Cause</label>
                 {{ form.secondary_cause }}
-                <div class="text-danger small">{{ form.secondary_cause.errors }}</div>
+                {% if form.secondary_cause.errors %}
+                    <div class="text-danger small">{{ form.secondary_cause.errors.0 }}</div>
+                {% endif %}
             </div>
 
         </div>
+
         <hr>
 
         <!-- ========================= -->
@@ -124,22 +148,29 @@
             <div class="col-md-4 mb-3">
                 <label>Outcome</label>
                 {{ form.outcome }}
-                <div class="text-danger small">{{ form.outcome.errors }}</div>
+                {% if form.outcome.errors %}
+                    <div class="text-danger small">{{ form.outcome.errors.0 }}</div>
+                {% endif %}
             </div>
 
             <div class="col-md-4 mb-3">
                 <label>Outcome Date</label>
                 {{ form.outcome_date }}
-                <div class="text-danger small">{{ form.outcome_date.errors }}</div>
+                {% if form.outcome_date.errors %}
+                    <div class="text-danger small">{{ form.outcome_date.errors.0 }}</div>
+                {% endif %}
             </div>
 
-            <div class="col-md-4 mb-3">
+            <div class="col-md-4 mb-3" id="div_outcome_other">
                 <label>Other Outcome</label>
                 {{ form.outcome_other }}
-                <div class="text-danger small">{{ form.outcome_other.errors }}</div>
+                {% if form.outcome_other.errors %}
+                    <div class="text-danger small">{{ form.outcome_other.errors.0 }}</div>
+                {% endif %}
             </div>
 
         </div>
+
         <hr>
 
         <!-- ========================= -->
@@ -148,13 +179,17 @@
         <div class="mb-3">
             <label>Summary</label>
             {{ form.summary }}
-            <div class="text-danger small">{{ form.summary.errors }}</div>
+            {% if form.summary.errors %}
+                <div class="text-danger small">{{ form.summary.errors.0 }}</div>
+            {% endif %}
         </div>
 
         <div class="mb-3">
             <label>Remarks</label>
             {{ form.remarks }}
-            <div class="text-danger small">{{ form.remarks.errors }}</div>
+            {% if form.remarks.errors %}
+                <div class="text-danger small">{{ form.remarks.errors.0 }}</div>
+            {% endif %}
         </div>
 
         <!-- ========================= -->
@@ -162,7 +197,8 @@
         <!-- ========================= -->
         <button class="btn btn-success">Save</button>
 
-        <a href="{% url 'herbal:subjects-detail' enrollment.screening.subject.pk %}" class="btn btn-secondary">
+        <a href="{% url 'herbal:subjects-detail' enrollment.screening.subject.pk %}" 
+           class="btn btn-secondary">
             Cancel
         </a>
 
@@ -170,4 +206,8 @@
 
 </div>
 
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/crfs/crf6.js' %}"></script>
 {% endblock %}
