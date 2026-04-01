@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<div class="row mb-3">
+
+    <div class="col-md-3">
+        <div class="card bg-danger text-white">
+            <div class="card-body">
+                <h5>Overdue</h5>
+                <h3>{{ overdue_count }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card bg-warning">
+            <div class="card-body">
+                <h5>Today</h5>
+                <h3>{{ today_count }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <h5>Upcoming</h5>
+                <h3>{{ upcoming_count }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card bg-dark text-white">
+            <div class="card-body">
+                <h5>Incomplete</h5>
+                <h3>{{ incomplete_count }}</h3>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Subject</th>
+            <th>Visit</th>
+            <th>Date</th>
+            <th>Progress</th>
+            <th>Missing CRFs</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+
+    {% for item in visits %}
+        <tr class="
+            {% if item.is_overdue %}table-danger
+            {% elif item.is_today %}table-warning
+            {% else %}table-light
+            {% endif %}
+        ">
+
+            <td>{{ item.visit.enrollment.screening.subject.subject_id }}</td>
+            <td>{{ item.visit.visit_day.name }}</td>
+            <td>{{ item.visit.scheduled_date }}</td>
+
+            <td>
+                {{ item.percent }}%
+                <div class="progress">
+                    <div class="progress-bar"
+                         style="width: {{ item.percent }}%;">
+                    </div>
+                </div>
+            </td>
+
+            <td>
+                {% for crf in item.missing_crfs %}
+                    <span class="badge bg-danger">{{ crf }}</span>
+                {% empty %}
+                    <span class="badge bg-success">Complete</span>
+                {% endfor %}
+            </td>
+
+            <td>
+                <!-- <a href="{#{% url 'visit_detail' item.visit.id %}#}" class="btn btn-sm btn-primary">Open</a> -->
+            </td>
+
+        </tr>
+    {% endfor %}
+
+    </tbody>
+</table>
+
+{% endblock %}

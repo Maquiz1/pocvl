@@ -140,12 +140,12 @@ class CRF6Form(forms.ModelForm):
         # =========================
         # 4. OUTCOME VALIDATION
         # =========================
-        if outcome:
-            if not outcome_date:
-                self.add_error("outcome_date", "Outcome date is required.")
+        # if outcome:
+        #     if not outcome_date:
+        #         self.add_error("outcome_date", "Outcome date is required.")
 
-            if (outcome.code or "").upper() == "OTHER" and not outcome_other:
-                self.add_error("outcome_other", "Please specify other outcome.")
+        #     if (outcome.code or "").upper() == "OTHER" and not outcome_other:
+        #         self.add_error("outcome_other", "Please specify other outcome.")
 
         # =========================
         # 5. CONSISTENCY CHECK

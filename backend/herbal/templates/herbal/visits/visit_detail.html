@@ -1,0 +1,210 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-4">
+
+    <!-- ========================= -->
+    <!-- 🧾 VISIT HEADER -->
+    <!-- ========================= -->
+    <div class="card mb-3">
+        <div class="card-body">
+
+            <h4>
+                Visit: {{ visit.visit_day.name }}
+            </h4>
+
+            <p>
+                <strong>Subject:</strong>
+                {{ visit.enrollment.screening.subject.subject_id }}
+            </p>
+
+            <p>
+                <strong>Scheduled Date:</strong>
+                {{ visit.scheduled_date }}
+            </p>
+
+            <p>
+                <strong>Status:</strong>
+                <span class="
+                    {% if visit.status == 'completed' %}badge bg-success
+                    {% elif visit.scheduled_date < today %}badge bg-danger
+                    {% else %}badge bg-warning
+                    {% endif %}
+                ">
+                    {{ visit.status }}
+                </span>
+            </p>
+
+        </div>
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- 📊 CRF STATUS -->
+    <!-- ========================= -->
+    <div class="card mb-3">
+        <div class="card-body">
+
+            <h5>CRF Completion</h5>
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>CRF</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <!-- CRF1 -->
+                    <tr>
+                        <td>CRF1</td>
+                        <td>
+                            {% if visit.crf1 %}
+                                <span class="badge bg-success">Completed</span>
+                            {% else %}
+                                <span class="badge bg-danger">Missing</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if visit.crf1 %}
+                                <a href="{% url 'crf1_update' visit.crf1.id %}" class="btn btn-sm btn-warning">Edit</a>
+                            {% else %}
+                                <a href="{% url 'crf1_create' visit.id %}" class="btn btn-sm btn-success">Fill</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                    <!-- CRF2 -->
+                    <tr>
+                        <td>CRF2</td>
+                        <td>
+                            {% if visit.crf2 %}
+                                <span class="badge bg-success">Completed</span>
+                            {% else %}
+                                <span class="badge bg-danger">Missing</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if visit.crf2 %}
+                                <a href="{% url 'crf2_update' visit.crf2.id %}" class="btn btn-sm btn-warning">Edit</a>
+                            {% else %}
+                                <a href="{% url 'crf2_create' visit.id %}" class="btn btn-sm btn-success">Fill</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                    <!-- CRF3 -->
+                    <tr>
+                        <td>CRF3</td>
+                        <td>
+                            {% if visit.crf3 %}
+                                <span class="badge bg-success">Completed</span>
+                            {% else %}
+                                <span class="badge bg-danger">Missing</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if visit.crf3 %}
+                                <a href="{% url 'crf3_update' visit.crf3.id %}" class="btn btn-sm btn-warning">Edit</a>
+                            {% else %}
+                                <a href="{% url 'crf3_create' visit.id %}" class="btn btn-sm btn-success">Fill</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                    <!-- CRF4 -->
+                    <tr>
+                        <td>CRF4</td>
+                        <td>
+                            {% if visit.crf4 %}
+                                <span class="badge bg-success">Completed</span>
+                            {% else %}
+                                <span class="badge bg-danger">Missing</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if visit.crf4 %}
+                                <a href="{% url 'crf4_update' visit.crf4.id %}" class="btn btn-sm btn-warning">Edit</a>
+                            {% else %}
+                                <a href="{% url 'crf4_create' visit.id %}" class="btn btn-sm btn-success">Fill</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                    <!-- CRF5 (Enrollment-based) -->
+                    <tr>
+                        <td>CRF5</td>
+                        <td>
+                            {% if visit.enrollment.crf5 %}
+                                <span class="badge bg-success">Completed</span>
+                            {% else %}
+                                <span class="badge bg-danger">Missing</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if visit.enrollment.crf5 %}
+                                <a href="{% url 'crf5_update' visit.enrollment.crf5.id %}" class="btn btn-sm btn-warning">Edit</a>
+                            {% else %}
+                                <a href="{% url 'crf5_create' visit.enrollment.id %}" class="btn btn-sm btn-success">Fill</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                    <!-- CRF6 -->
+                    <tr>
+                        <td>CRF6</td>
+                        <td>
+                            {% if visit.enrollment.crf6 %}
+                                <span class="badge bg-success">Completed</span>
+                            {% else %}
+                                <span class="badge bg-danger">Missing</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if visit.enrollment.crf6 %}
+                                <a href="{% url 'crf6_update' visit.enrollment.crf6.id %}" class="btn btn-sm btn-warning">Edit</a>
+                            {% else %}
+                                <a href="{% url 'crf6_create' visit.enrollment.id %}" class="btn btn-sm btn-success">Fill</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                    <!-- CRF7 -->
+                    <tr>
+                        <td>CRF7</td>
+                        <td>
+                            {% if visit.crf7 %}
+                                <span class="badge bg-success">Completed</span>
+                            {% else %}
+                                <span class="badge bg-danger">Missing</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if visit.crf7 %}
+                                <a href="{% url 'crf7_update' visit.crf7.id %}" class="btn btn-sm btn-warning">Edit</a>
+                            {% else %}
+                                <a href="{% url 'crf7_create' visit.id %}" class="btn btn-sm btn-success">Fill</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- 🔙 NAVIGATION -->
+    <!-- ========================= -->
+    <a href="{% url 'monitoring' %}" class="btn btn-secondary">
+        ← Back to Monitoring
+    </a>
+
+</div>
+
+{% endblock %}
