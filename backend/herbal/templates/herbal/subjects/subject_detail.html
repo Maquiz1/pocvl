@@ -274,6 +274,7 @@
                                     <th>Event</th>
                                     <th>After Visit</th>
                                     <th>Start Date</th>
+                                    <th>Ongoing ?</th>
                                     <th>End Date</th>
                                     <th>Severity</th>
                                     <th style="width:120px;">Actions</th>
@@ -283,7 +284,7 @@
                             <tbody>
                                 {% for ae in adverse_events %}
                                 <tr>
-                                    <td>{{ ae.event_description|truncatechars:40 }}</td>
+                                    <td>{{ ae.ae_description|truncatechars:40 }}</td>
 
                                     <td>
                                         {% if ae.after_visit %}
@@ -291,13 +292,14 @@
                                         {% else %}-{% endif %}
                                     </td>
 
-                                    <td>{{ ae.start_date }}</td>
-                                    <td>{{ ae.end_date|default:"-" }}</td>
+                                    <td>{{ ae.ae_start_date }}</td>
+                                    <td>{{ ae.ae_ongoing }}</td>
+                                    <td>{{ ae.ae_end_date|default:"-" }}</td>
 
                                     <td>
-                                        {% if ae.severity == "Mild" %}
+                                        {% if ae.ae_severity == "Mild" %}
                                         <span class="badge bg-success">Mild</span>
-                                        {% elif ae.severity == "Moderate" %}
+                                        {% elif ae.ae_severity == "Moderate" %}
                                         <span class="badge bg-warning text-dark">Moderate</span>
                                         {% else %}
                                         <span class="badge bg-danger">Severe</span>

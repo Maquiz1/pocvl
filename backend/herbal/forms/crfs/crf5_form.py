@@ -26,6 +26,22 @@ class CRF5Form(forms.ModelForm):
             "ae_staff",
             "remarks",
         ]
+        
+        labels={
+            "ae_staff": "Staff",
+            "ae_description": "Adverse Event Description",
+            "ae_category": "Adverse Event Category",
+            "ae_start_date": "Start date",
+            "ae_ongoing": "Ongoing ?",
+            "ae_end_date": "End date",
+            "ae_outcome": "Outcome",
+            "ae_severity": "Severity",
+            "ae_serious": "Serious",
+            "ae_expected": "Expected",
+            "ae_treatment": "Treatment",
+            "ae_action_taken": "Action Taken",
+            "ae_relationship": "Relationship to study teatment",
+        }
 
         widgets = {
             "date_reported": forms.DateInput(attrs={"type": "date", "class": "form-control"}),
