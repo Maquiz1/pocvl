@@ -3,7 +3,7 @@
 from django.db import models
 from ...enrollments.enrollment_model import Enrollment
 from core.models import BaseModel
-from choices.models import TerminationReason,OutCome,WithdrewReason
+from choices.models import YesNoUnk,TerminationReason,OutCome,WithdrewReason
 
 class CRF6(BaseModel):
 
@@ -17,9 +17,15 @@ class CRF6(BaseModel):
     termination_date = models.DateField(null=True, blank=True)
     
     reason = models.ForeignKey(TerminationReason, null=True, blank=True, on_delete=models.SET_NULL,related_name="+")
-    reason_date = models.DateField(null=True, blank=True)
     reason_other = models.CharField(max_length=255,blank=True)
     
+    completed120days = models.ForeignKey(YesNoUnk, null=True, blank=True, on_delete=models.SET_NULL,related_name="+")
+    reported_dead = models.ForeignKey(YesNoUnk, null=True, blank=True, on_delete=models.SET_NULL,related_name="+")
+    withdrew_consent = models.ForeignKey(YesNoUnk, null=True, blank=True, on_delete=models.SET_NULL,related_name="+")
+    start_date = models.DateField(null=True, blank=True)
+    end_date = models.DateField(null=True, blank=True)
+
+    date_death = models.DateField(null=True, blank=True)
     primary_cause = models.CharField(max_length=255, blank=True)
     secondary_cause = models.CharField(max_length=255, blank=True)
     
