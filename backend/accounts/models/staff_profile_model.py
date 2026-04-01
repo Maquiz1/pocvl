@@ -19,7 +19,7 @@ class Prefix(BaseChoiceModel):
     # e.g. Dr., Mr., Ms., Prof., Nurse
 
     def __str__(self):
-        return self.name
+        return f"{self.id} - {self.code} - {self.name}"
 
 
 class Position(BaseChoiceModel):
@@ -27,7 +27,7 @@ class Position(BaseChoiceModel):
     # e.g. Cardiologist, Study Coordinator, Nurse
 
     def __str__(self):
-        return self.name
+        return f"{self.id} - {self.code} - {self.name}"
 
 class StaffProfile(models.Model):
 
