@@ -71,6 +71,8 @@ class CRF6Form(forms.ModelForm):
         self.fields["today_date"].required = True
         self.fields["termination_date"].required = True
         self.fields["reason"].required = True
+        self.fields["clinician_name"].required = True
+        self.fields["outcome"].required = True
 
     # ✅ CENTRALIZED DATA QUALITY VALIDATION
     def clean(self):
@@ -114,7 +116,7 @@ class CRF6Form(forms.ModelForm):
             code = (reason.code or "").upper()
 
             # WITHDRAW
-            if code == "WITHDRAW":
+            if code == "WITHDRAWN":
                 if not withdrew_reason:
                     self.add_error("withdrew_reason", "Withdrawal reason is required.")
 
