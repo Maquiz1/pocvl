@@ -11,7 +11,7 @@
 
     <div class="mb-3">
         <label>Reason</label>
-        <select name="reason" class="form-control" required>
+        <!-- <select name="reason" class="form-control" required>
             <option value="">Select reason</option>
             <option value="patient_unavailable">Patient Unavailable</option>
             <option value="patient_refused">Patient Refused</option>
@@ -20,11 +20,20 @@
             <option value="medical_reason">Medical Reason</option>
             <option value="changed_location">Changed Location</option>
             <option value="other">Other</option>
+        </select> -->
+        <select name="reason" class="form-control" required>
+            <option value="">Select reason</option>
+
+            {% for r in reasons %}
+                <option value="{{ r.code }}">
+                    {{ r.name }}
+                </option>
+            {% endfor %}
         </select>
     </div>
 
-    <div class="mb-3">
-        <label>Comment (optional)</label>
+    <div class="mb-3" id="comment_div" style="display:none;">
+        <label>Comment (required if Other)</label>
         <textarea name="comment" class="form-control"></textarea>
     </div>
 
@@ -32,4 +41,24 @@
 
 </form>
 
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const select = document.querySelector('[name="reason"]');
+    const commentDiv = document.getElementById("comment_div");
+
+    function toggleComment() {
+        if (select.value === "other") {
+            commentDiv.style.display = "block";
+        } else {
+            commentDiv.style.display = "none";
+        }
+    }
+
+    select.addEventListener("change", toggleComment);
+
+    // run on load
+    toggleComment();
+});
+</script>
 {% endblock %}

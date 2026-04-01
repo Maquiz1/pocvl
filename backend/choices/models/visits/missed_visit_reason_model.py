@@ -8,3 +8,4 @@ class MissedVisitReason(BaseChoiceModel):
     class Meta:
         verbose_name = "Missed Visit Reason"
         verbose_name_plural = "Missed Visit Reasons"
+        

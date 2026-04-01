@@ -12,6 +12,7 @@ def visit_mark_missed(request, pk):
     # ❌ DO NOT allow NA visits to be changed
     if visit.status == "na":
         return redirect("herbal:subjects-detail", pk=visit.subject.pk)
+    reasons = MissedVisitReason.objects.all()  # ✅ ADD THIS
 
     if request.method == "POST":
 
@@ -33,5 +34,8 @@ def visit_mark_missed(request, pk):
     return render(
         request,
         "herbal/visits/mark_missed.html",
-        {"visit": visit}
+        {
+            "visit": visit,
+            "reasons": reasons,  # ✅ PASS HERE
+        }
     )
