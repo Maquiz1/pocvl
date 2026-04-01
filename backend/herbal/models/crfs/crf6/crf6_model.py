@@ -16,6 +16,9 @@ class CRF6(BaseModel):
     today_date = models.DateField(null=True, blank=True)
     termination_date = models.DateField(null=True, blank=True)
     
+    reason = models.ForeignKey(TerminationReason, null=True, blank=True, on_delete=models.SET_NULL,related_name="+")
+    reason_other = models.CharField(max_length=255,blank=True)
+    
     completed120days = models.ForeignKey(YesNoUnk, null=True, blank=True, on_delete=models.SET_NULL,related_name="+")
     reported_dead = models.ForeignKey(YesNoUnk, null=True, blank=True, on_delete=models.SET_NULL,related_name="+")
     withdrew_consent = models.ForeignKey(YesNoUnk, null=True, blank=True, on_delete=models.SET_NULL,related_name="+")
@@ -27,14 +30,12 @@ class CRF6(BaseModel):
     secondary_cause = models.CharField(max_length=255, blank=True)
     
     withdrew_reason = models.ForeignKey(WithdrewReason, null=True, blank=True, on_delete=models.SET_NULL,related_name="+")
-
-    withdrew_other = models.TextField(blank=True)
-    
-    reason = models.ForeignKey(TerminationReason, null=True, blank=True, on_delete=models.SET_NULL,related_name="+")
+    withdrew_other = models.CharField(max_length=255,blank=True)
 
     outcome = models.ForeignKey(OutCome, null=True, blank=True, on_delete=models.SET_NULL,related_name="+")
     outcome_date = models.DateField(null=True, blank=True)
-    
+    outcome_other = models.CharField(max_length=255,blank=True)
+
     summary = models.TextField(blank=True)
     
     clinician_name = models.ForeignKey(
