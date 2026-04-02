@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<button id="exportBtn" class="btn btn-primary">Export Data</button>
+
+<div id="progressBox" style="display:none;">
+    <p id="statusText">Starting...</p>
+    <progress id="progressBar" value="0" max="100"></progress>
+</div>
+
+<script>
+document.getElementById("exportBtn").onclick = function () {
+    let btn = this;
+    btn.disabled = true;
+    btn.innerText = "Processing...";
+
+    fetch("{% url 'exports:start_export' %}")
+        .then(res => res.json())
+        .then(data => {
+            let taskId = data.task_id;
+
+            document.getElementById("progressBox").style.display = "block";
+
+            let interval = setInterval(() => {
+                fetch(`/export/status/${taskId}/`)
+                    .then(res => res.json())
+                    .then(data => {
+
+                        document.getElementById("progressBar").value = data.progress;
+
+                        if (data.status === "PENDING") {
+                            document.getElementById("statusText").innerText = "Queued...";
+                        }
+                        else if (data.status === "PROGRESS") {
+                            document.getElementById("statusText").innerText = `Processing ${data.progress}%`;
+                        }
+                        else if (data.status === "SUCCESS") {
+                            clearInterval(interval);
+
+                            document.getElementById("statusText").innerText = "Completed";
+                            btn.disabled = false;
+                            btn.innerText = "Download Ready";
+
+                            // ✅ THIS triggers download
+                            window.location.href = data.file;
+                        }
+                        else {
+                            document.getElementById("statusText").innerText = "Error occurred";
+                            btn.disabled = false;
+                            btn.innerText = "Retry";
+                        }
+
+                    });
+            }, 2000);
+        });
+};
+</script>
+
+{% endblock %}

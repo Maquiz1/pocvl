@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Export Nimregenin Study Data</h2>
+<p>Click the button below to export all data to Excel. The file will download automatically.</p>
+<form method="get" action="{% url 'exports:export_models' %}">
+    <button type="submit" class="btn btn-primary">Export Data</button>
+</form>
+{% endblock %}
