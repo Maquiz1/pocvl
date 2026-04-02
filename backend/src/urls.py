@@ -27,5 +27,7 @@ urlpatterns = [
     path("herbal/", include("herbal.urls")),
     
     
-    path("locations/", include("locations.urls"))
+    path("locations/", include("locations.urls")),
+    
+    path("exports/", include("exports.urls")),
 ]

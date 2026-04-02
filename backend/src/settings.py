@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     'constants.apps.ConstantsConfig',
     'locations.apps.LocationsConfig',
     'choices.apps.ChoicesConfig',
+    'exports.apps.ExportsConfig',
 ]
 
 AUTH_USER_MODEL = "accounts.User"
