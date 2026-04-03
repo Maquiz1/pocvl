@@ -56,6 +56,12 @@ class VisitSchedule(BaseModel):
         null=True,
         blank=True
     )
+    
+    # ✅ ADD IT HERE
+    last_reminder_sent = models.DateField(
+        null=True,
+        blank=True
+    )
 
     class Meta:
         ordering = ["scheduled_date"]

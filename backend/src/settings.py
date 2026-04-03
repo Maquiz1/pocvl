@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     'locations.apps.LocationsConfig',
     'choices.apps.ChoicesConfig',
     'exports.apps.ExportsConfig',
+    'reports.apps.ReportsConfig',
 ]
 
 AUTH_USER_MODEL = "accounts.User"
@@ -250,7 +251,7 @@ CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 # CELERY_TIMEZONE = 'Africa/Dar_es_Salaam'
-
+# CELERY_RESULT_BACKEND = 'django-db'
 
 # settings.py
 ADMIN_EMAILS = [
