@@ -241,7 +241,7 @@ AT_API_KEY = env("AT_API_KEY")
 
 
 SITE_URL = LOGBOOK_URL
-
+BASE_URL = "https://yourdomain.com"
 
 # INSTALLED_APPS += ["django_celery_beat"]
 

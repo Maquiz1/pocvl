@@ -6,6 +6,17 @@
     <a href="{% url 'dashboard:monitoring' %}" class="list-group-item list-group-item-action">
         Monitoring
     </a>
+        <a href="#">
+        <i class="fas fa-envelope-open-text"></i><span> Logs Dashboard</span>
+    </a>
+
+    <a href="{% url 'utils:email_recipient_list' %}">
+        <i class="fas fa-envelope"></i><span> Email Recipients</span>
+    </a>
+
+    <a href="{% url 'utils:site_configuration_list' %}">
+        <i class="fas fa-cogs"></i><span> Site Configurations</span>
+    </a>
     {% if request.user.is_superuser %}
 
     <a href="{% url 'dashboard:monitor_dashboard_view' %}" class="list-group-item list-group-item-action">

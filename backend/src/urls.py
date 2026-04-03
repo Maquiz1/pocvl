@@ -31,6 +31,8 @@ urlpatterns = [
     path("locations/", include("locations.urls")),
     
     path("exports/", include("exports.urls")),
+    
+    path("utils/",include("utils.urls")),
 ]
 
 if settings.DEBUG:

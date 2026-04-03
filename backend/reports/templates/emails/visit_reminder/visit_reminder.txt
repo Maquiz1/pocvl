@@ -1,0 +1,13 @@
+VISIT REMINDER
+
+Patient ID: {{ subject_id }}
+Visit: {{ visit_name }}
+Scheduled Date: {{ scheduled_date }}
+Site: {{ site_name }}
+
+Reminder Type: {{ reminder_type }}
+
+Please follow up accordingly.
+
+---
+This is an automated message.
