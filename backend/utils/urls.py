@@ -1,4 +1,6 @@
 from django.urls import path
+
+from utils.views.logs.list import email_logs_dashboard
 from .views import (
     EmailRecipientListView,
     EmailRecipientCreateView,
@@ -23,5 +25,8 @@ urlpatterns = [
     path("site-config/add/", SiteConfigurationCreateView.as_view(), name="site_config_add"),
     path("site-config/<int:pk>/edit/", SiteConfigurationUpdateView.as_view(), name="site_config_edit"),
     path("site-config/<int:pk>/delete/", SiteConfigurationDeleteView.as_view(), name="site_config_delete"), 
+    
+    path("mentorship/email-logs/", email_logs_dashboard, name="email-logs-dashboard"),
+
 ]
 

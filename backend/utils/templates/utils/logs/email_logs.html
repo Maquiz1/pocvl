@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <h2>Email Logs Dashboard</h2>
+
+    <div class="mb-3">
+        <strong>Total:</strong> {{ total }} |
+        <strong>Sent:</strong> <span class="text-success">{{ sent_count }}</span> |
+        <strong>Failed:</strong> <span class="text-danger">{{ failed_count }}</span>
+    </div>
+
+    <div class="mb-3">
+        <a href="?status=sent" class="btn btn-sm btn-success">Sent</a>
+        <a href="?status=failed" class="btn btn-sm btn-danger">Failed</a>
+        <a href="?" class="btn btn-sm btn-secondary">All</a>
+    </div>
+    <form method="get" class="row g-3 mb-4">
+
+        <!-- Search -->
+        <div class="col-md-4">
+            <input type="text" name="search" class="form-control" placeholder="Search recipient or subject..."
+                value="{{ search_query }}">
+        </div>
+
+        <!-- Start Date -->
+        <div class="col-md-3">
+            <input type="date" name="start_date" class="form-control" value="{{ start_date }}">
+        </div>
+
+        <!-- End Date -->
+        <div class="col-md-3">
+            <input type="date" name="end_date" class="form-control" value="{{ end_date }}">
+        </div>
+
+        <!-- Submit -->
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary w-100">
+                Filter
+            </button>
+        </div>
+
+    </form>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Recipient</th>
+                <th>Subject</th>
+                <th>Status</th>
+                <th>Error</th>
+                <th>Task Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for log in page_obj %}
+            <tr>
+                <td>{{ log.created_at }}</td>
+                <td>{{ log.recipient }}</td>
+                <td>{{ log.subject }}</td>
+                <td>
+                    {% if log.status == "sent" %}
+                    <span class="badge bg-success">Sent</span>
+                    {% else %}
+                    <span class="badge bg-danger">Failed</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if log.error_message %}
+                    {{ log.error_message|truncatechars:50 }}
+                    {% else %}
+                    -
+                    {% endif %}
+                </td>
+                <td>{{ log.task_type }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" class="text-center">No logs found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link"
+            href="?page={{ page_obj.next_page_number }}
+            {% if search_query %}&search={{ search_query }}{% endif %}
+            {% if start_date %}&start_date={{ start_date }}{% endif %}
+            {% if end_date %}&end_date={{ end_date }}{% endif %}
+            {% if status %}&status={{ status }}{% endif %}">
+                First
+            </a>
+        </li>
+        <li class="page-item">
+            <a class="page-link"
+            href="?page={{ page_obj.next_page_number }}
+            {% if search_query %}&search={{ search_query }}{% endif %}
+            {% if start_date %}&start_date={{ start_date }}{% endif %}
+            {% if end_date %}&end_date={{ end_date }}{% endif %}
+            {% if status %}&status={{ status }}{% endif %}">
+                Previous
+            </a>
+        </li>
+        {% endif %}
+
+        <li class="page-item active">
+            <span class="page-link">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+            </span>
+        </li>
+
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a class="page-link"
+            href="?page={{ page_obj.next_page_number }}
+            {% if search_query %}&search={{ search_query }}{% endif %}
+            {% if start_date %}&start_date={{ start_date }}{% endif %}
+            {% if end_date %}&end_date={{ end_date }}{% endif %}
+            {% if status %}&status={{ status }}{% endif %}">
+                Next
+            </a>
+        </li>
+        <li class="page-item">
+            <a class="page-link"
+            href="?page={{ page_obj.next_page_number }}
+            {% if search_query %}&search={{ search_query }}{% endif %}
+            {% if start_date %}&start_date={{ start_date }}{% endif %}
+            {% if end_date %}&end_date={{ end_date }}{% endif %}
+            {% if status %}&status={{ status }}{% endif %}">
+                Last
+            </a>
+        </li>
+        {% endif %}
+
+    </ul>
+</nav>
+{% endblock %}
