@@ -1,1 +1,2 @@
+from .send_visit_reminders import send_visit_reminders
 from .send_visit_email_task import send_visit_email_task

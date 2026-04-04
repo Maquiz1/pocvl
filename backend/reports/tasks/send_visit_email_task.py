@@ -1,5 +1,3 @@
-# reports/tasks/send_visit_email_task.py
-
 from celery import shared_task
 from reports.tasks.send_visit_email import send_visit_email
 

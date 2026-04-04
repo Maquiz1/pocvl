@@ -5,7 +5,9 @@ from django.conf import settings
 
 from reports.tasks.reminder_log import mark_sent, already_sent
 from reports.tasks.get_site_staff_emails import get_site_staff_emails
-from utils.sites import get_active_site_url  # ✅ your util
+from utils.sites import get_active_site_url
+
+from utils.models import EmailLog  # ✅ ADD THIS
 
 logger = logging.getLogger(__name__)
 
@@ -23,13 +25,11 @@ def send_visit_email(visit, reminder_type):
         visit_name = getattr(visit.visit_day, "name", "N/A")
         site_name = getattr(getattr(subject_obj, "site", None), "name", "N/A")
 
-        # ✅ Get base URL (DB or settings fallback)
         base_url = get_active_site_url()
 
         if base_url == "#":
-            logger.warning("No active SiteConfiguration found, using fallback URL")
+            logger.warning("No active SiteConfiguration found")
 
-        # ✅ Build subject URL safely
         subject_url = f"{base_url}/subjects/{subject_obj.id}/"
 
         subject = f"[Visit Reminder] {visit_name} - {subject_id}"
@@ -40,10 +40,9 @@ def send_visit_email(visit, reminder_type):
             "scheduled_date": visit.scheduled_date,
             "site_name": site_name,
             "reminder_type": reminder_type,
-            "subject_url": subject_url,  # ✅ added
+            "subject_url": subject_url,
         }
 
-        # ✅ Render templates
         text_content = render_to_string(
             "emails/visit_reminder/visit_reminder.txt",
             context
@@ -54,7 +53,6 @@ def send_visit_email(visit, reminder_type):
             context
         )
 
-        # ✅ Get recipients
         recipient_list = get_site_staff_emails(visit)
 
         if not recipient_list:
@@ -72,12 +70,41 @@ def send_visit_email(visit, reminder_type):
         email.attach_alternative(html_content, "text/html")
         email.send()
 
-        # ✅ Mark as sent
+        # ✅ Mark as sent (your existing logic)
         mark_sent(visit, reminder_type)
+
+        # ✅ LOG SUCCESS (loop recipients)
+        for recipient in recipient_list:
+            EmailLog.objects.create(
+                recipient=recipient,
+                subject=subject,
+                status="sent",
+                task_type=f"visit_reminder_{reminder_type}",
+            )
 
         logger.info(
             f"Email sent for visit {visit.id} ({reminder_type}) to {len(recipient_list)} recipients"
         )
 
     except Exception as e:
-        logger.error(f"Email failed for visit {visit.id}: {str(e)}", exc_info=True)
+        error_msg = str(e)
+
+        logger.error(
+            f"Email failed for visit {visit.id}: {error_msg}",
+            exc_info=True
+        )
+
+        # ✅ LOG FAILURE (loop recipients if available)
+        try:
+            recipient_list = get_site_staff_emails(visit)
+        except Exception:
+            recipient_list = []
+
+        for recipient in recipient_list or ["unknown"]:
+            EmailLog.objects.create(
+                recipient=recipient,
+                subject=f"[Visit Reminder Failed] Visit {visit.id}",
+                status="failed",
+                error_message=error_msg,
+                task_type=f"visit_reminder_{reminder_type}",
+            )
