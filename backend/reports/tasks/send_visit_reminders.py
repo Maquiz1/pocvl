@@ -19,9 +19,7 @@ def send_visit_reminders():
 
         if days_diff == 3:
             send_visit_email_task.delay(visit.id, "3_day")
-
         elif days_diff == 1:
             send_visit_email_task.delay(visit.id, "1_day")
-
         elif days_diff == 0:
             send_visit_email_task.delay(visit.id, "same_day")

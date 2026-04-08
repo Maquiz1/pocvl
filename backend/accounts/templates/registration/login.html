@@ -1,0 +1,54 @@
+{% extends "base_public.html" %}
+{% load widget_tweaks %}
+{% block title %}Herbal Trial - App{% endblock %}
+
+{% block content %}
+
+<div class="card shadow-sm p-4" style="max-width: 420px; margin: auto;">
+    <h2 class="text-center mb-4">Herbal Trial Login - Login</h2>
+
+    <form method="post" novalidate>
+        {% csrf_token %}
+
+        {# Username field #}
+        <div class="mb-3">
+            <label for="id_username" class="form-label">Email Address</label>
+            {{ form.username|attr:"class:form-control rounded-pill" }}
+        </div>
+
+        {# Password field with eye toggle #}
+        <div class="mb-3">
+            <label for="id_password" class="form-label">Password</label>
+            <div class="input-group">
+                {{ form.password|attr:"class:form-control rounded-pill" }}
+                <button type="button" class="btn btn-outline-secondary rounded-pill" onclick="togglePassword('id_password', this)">
+                    <i class="bi bi-eye"></i>
+                </button>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100 rounded-pill">Login</button>
+    </form>
+
+    <div class="mt-3 text-center">
+        <a href="{% url 'accounts:password_reset' %}">Forgot your password?</a>
+    </div>
+</div>
+
+<script>
+function togglePassword(fieldId, btn) {
+    const input = document.getElementById(fieldId);
+    const icon = btn.querySelector("i");
+    if (input.type === "password") {
+        input.type = "text";
+        icon.classList.remove("bi-eye");
+        icon.classList.add("bi-eye-slash");
+    } else {
+        input.type = "password";
+        icon.classList.remove("bi-eye-slash");
+        icon.classList.add("bi-eye");
+    }
+}
+</script>
+
+{% endblock %}

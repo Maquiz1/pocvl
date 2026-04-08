@@ -1,16 +1,47 @@
-from django.urls import path
-from django.contrib.auth.views import LogoutView
+from django.urls import path, reverse_lazy
+from django.contrib.auth import views as auth_views
+from django.views.generic import TemplateView
 
-from .views import login_view
-
+from accounts.views import CustomLoginView, force_logout, CustomPasswordResetView
 
 app_name = "accounts"
 
-
 urlpatterns = [
+    path("login/", CustomLoginView.as_view(), name="login"),
+    path("logout/", force_logout, name="logout"),
 
-    path("login/", login_view, name="login"),
+    path("password_reset/", CustomPasswordResetView.as_view(), name="password_reset"),
 
-    path("logout/", LogoutView.as_view(next_page="accounts:login"), name="logout"),
+    path(
+        "password_reset/done/",
+        auth_views.PasswordResetDoneView.as_view(
+            template_name="registration/password_reset_done.html"
+        ),
+        name="password_reset_done",
+    ),
 
+    path(
+        "reset/<uidb64>/<token>/",
+        auth_views.PasswordResetConfirmView.as_view(
+            template_name="registration/password_reset_confirm.html",
+            success_url=reverse_lazy("accounts:password_reset_complete"),
+        ),
+        name="password_reset_confirm",
+    ),
+
+    path(
+        "reset/done/",
+        auth_views.PasswordResetCompleteView.as_view(
+            template_name="registration/password_reset_complete.html",
+        ),
+        name="password_reset_complete",
+    ),
+
+    path(
+        "session-expired/",
+        TemplateView.as_view(
+            template_name="registration/session_expired.html"
+        ),
+        name="session_expired",
+    ),
 ]
