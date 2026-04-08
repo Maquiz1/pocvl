@@ -200,7 +200,7 @@ else:
 
 REPORT_CC = env("REPORT_CC", default="").split(",")  # list of emails
 REPORT_BCC = env("REPORT_BCC", default="").split(",")
-LOGBOOK_URL = env("LOGBOOK_URL", default="http://localhost:8000")
+HERBAL_URL = env("LOGBOOK_URL", default="http://localhost:8000")
 
 LOGGING = {
     "version": 1,
@@ -241,8 +241,8 @@ AT_API_KEY = env("AT_API_KEY")
 
 
 
-SITE_URL = LOGBOOK_URL
-BASE_URL = "https://yourdomain.com"
+SITE_URL = HERBAL_URL
+BASE_URL = HERBAL_URL
 
 # INSTALLED_APPS += ["django_celery_beat"]
 
