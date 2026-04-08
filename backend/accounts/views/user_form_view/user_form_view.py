@@ -12,13 +12,13 @@ from django.conf import settings
 
 User = get_user_model()
 
-def send_credentials_email(email, password, request):
+def send_credentials_email(user, password, request):
     protocol = getattr(settings, 'PROTOCOL', 'https')
     domain = getattr(settings, 'DOMAIN_NAME', 'logbook.apps.nimr.or.tz')
     login_url = f"{protocol}://{domain}/accounts/login/"
+    email = user.email
     
     subject = "Your Herbal Trial Credentials"
-    user = User.objects.get(email=email)
     html_message = render_to_string('registration/credential_email.html', {
         'email': email,
         'password': password,
@@ -112,7 +112,7 @@ class StaffCreateUpdateView(FormView):
         elif is_new:
             password = User.objects.make_random_password()
             user.set_password(password)
-            send_credentials_email(email, password, self.request)
+            send_credentials_email(user, password, self.request)
             credentials_sent = True
             
         user.save()
@@ -133,7 +133,7 @@ class StaffCreateUpdateView(FormView):
             if not credentials_sent:
                 # If password was provided, still send an email so they have their link
                 try:
-                    send_credentials_email(email, password, self.request)
+                    send_credentials_email(user, password, self.request)
                 except Exception as e:
                     pass
             messages.success(self.request, f"Staff member '{email}' created successfully! Credentials emailed.")

@@ -14,7 +14,7 @@ def resend_credentials_view(request, pk):
         user.save()
         
         try:
-            send_credentials_email(user.email, password, request)
+            send_credentials_email(user, password, request)
             messages.success(request, f"New credentials generated & sent to {user.email}.")
         except Exception as e:
             messages.error(request, f"Failed to send email to {user.email}: {e}")
