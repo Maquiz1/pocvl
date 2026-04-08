@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.shortcuts import render
 from django.utils import timezone
-from django.db.models import Count, Q
 
 from herbal.models.visits.visit_schedule_model import VisitSchedule
 
@@ -81,11 +81,15 @@ def monitoring_view(request):
 
     incomplete_count = sum(1 for v in monitoring_data if v["percent"] < 100)
 
+    paginator = Paginator(monitoring_data, 10)
+    page_number = request.GET.get("page", 1)
+    paginated_visits = paginator.get_page(page_number)
+
     # =========================
     # RESPONSE
     # =========================
     return render(request, "dashboard/monitoring_dashboard.html", {
-        "visits": monitoring_data,
+        "visits": paginated_visits,
 
         # KPIs
         "total_visits": total_visits,

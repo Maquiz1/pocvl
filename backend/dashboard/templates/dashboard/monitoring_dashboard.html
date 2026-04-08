@@ -91,9 +91,33 @@
             </td>
 
         </tr>
+    {% empty %}
+        <tr>
+            <td colspan="6" class="text-center text-muted py-4">No monitoring visits found.</td>
+        </tr>
     {% endfor %}
 
     </tbody>
 </table>
+
+{% if visits.paginator.num_pages > 1 %}
+<nav aria-label="Monitoring pagination">
+    <ul class="pagination pagination-sm justify-content-center">
+        {% if visits.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ visits.previous_page_number }}">Previous</a>
+        </li>
+        {% endif %}
+        <li class="page-item disabled">
+            <span class="page-link">Page {{ visits.number }} of {{ visits.paginator.num_pages }}</span>
+        </li>
+        {% if visits.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ visits.next_page_number }}">Next</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
 
 {% endblock %}

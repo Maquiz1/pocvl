@@ -6,6 +6,7 @@ class TodayVisitsListView(ListView):
     model = VisitSchedule
     template_name = "herbal/visits/today_visits.html"
     context_object_name = "visits"
+    paginate_by = 10
 
     def get_queryset(self):
         today = timezone.now().date()
