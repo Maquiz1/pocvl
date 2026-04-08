@@ -3,10 +3,12 @@
         --bs-accordion-bg: transparent;
         --bs-accordion-border-width: 0;
     }
+
     .custom-sidebar .accordion-item {
         border: none;
         background: transparent;
     }
+
     .custom-sidebar .accordion-button {
         background: transparent;
         box-shadow: none;
@@ -17,54 +19,64 @@
         text-transform: uppercase;
         letter-spacing: 0.05em;
     }
+
     .custom-sidebar .accordion-button:focus {
         box-shadow: none;
     }
+
     .custom-sidebar .accordion-button:not(.collapsed) {
         background: transparent;
         color: #6c757d;
         box-shadow: none;
     }
+
     .custom-sidebar .accordion-body {
         padding: 0;
     }
+
     .custom-sidebar .list-group-item {
         border: none;
         padding: 0.6rem 1.25rem 0.6rem 1.5rem;
         margin-bottom: 0.15rem;
         border-radius: 8px;
         font-weight: 500;
-        color: #495057;
+        color: #b2ceea;
         transition: all 0.2s ease-in-out;
         display: flex;
         align-items: center;
         gap: 12px;
         background: transparent;
     }
+
     .custom-sidebar .list-group-item:hover {
         background-color: #f1f3f5;
         color: #0d6efd;
         transform: translateX(4px);
     }
+
     /* Active Link Styles */
     .custom-sidebar .list-group-item.active-link {
         background-color: #e9ecef;
         color: #0d6efd;
         font-weight: 600;
     }
+
     .custom-sidebar .list-group-item-warning {
         color: #856404;
     }
+
     .custom-sidebar .list-group-item-warning:hover {
         background-color: #ffe8a1;
         color: #856404;
     }
+
     .custom-sidebar i {
         width: 24px;
         text-align: center;
         font-size: 1.1rem;
         opacity: 0.7;
     }
+
     .custom-sidebar .list-group-item:hover i,
     .custom-sidebar .list-group-item.active-link i {
         opacity: 1;
@@ -76,20 +88,29 @@
     <!-- MAIN NAVIGATION -->
     <div class="accordion-item">
         <h2 class="accordion-header" id="headingMain">
-            <button class="accordion-button {% if 'dashboard' in request.path or 'subjects' in request.path %}{% else %}collapsed{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMain" aria-expanded="{% if 'dashboard' in request.path or 'subjects' in request.path %}true{% else %}false{% endif %}" aria-controls="collapseMain">
+            <button
+                class="accordion-button {% if 'dashboard' in request.path or 'subjects' in request.path %}{% else %}collapsed{% endif %}"
+                type="button" data-bs-toggle="collapse" data-bs-target="#collapseMain"
+                aria-expanded="{% if 'dashboard' in request.path or 'subjects' in request.path %}true{% else %}false{% endif %}"
+                aria-controls="collapseMain">
                 Main Navigation
             </button>
         </h2>
-        <div id="collapseMain" class="accordion-collapse collapse {% if 'dashboard' in request.path or 'subjects' in request.path %}show{% endif %}" aria-labelledby="headingMain">
+        <div id="collapseMain"
+            class="accordion-collapse collapse {% if 'dashboard' in request.path or 'subjects' in request.path %}show{% endif %}"
+            aria-labelledby="headingMain">
             <div class="accordion-body">
                 <div class="list-group">
-                    <a href="{% url 'dashboard:dashboard' %}" class="list-group-item list-group-item-action {% if request.path == '/' or '/dashboard/' in request.path %}active-link{% endif %}">
+                    <a href="{% url 'dashboard:dashboard' %}"
+                        class="list-group-item list-group-item-action {% if request.path == '/' or '/dashboard/' in request.path %}active-link{% endif %}">
                         <i class="fas fa-tachometer-alt"></i><span> Dashboard</span>
                     </a>
-                    <a href="{% url 'dashboard:monitoring' %}" class="list-group-item list-group-item-action {% if 'monitoring' in request.path %}active-link{% endif %}">
+                    <a href="{% url 'dashboard:monitoring' %}"
+                        class="list-group-item list-group-item-action {% if 'monitoring' in request.path %}active-link{% endif %}">
                         <i class="fas fa-desktop"></i><span> Monitoring</span>
                     </a>
-                    <a href="{% url 'herbal:subjects-list' %}" class="list-group-item list-group-item-action {% if 'subjects' in request.path %}active-link{% endif %}">
+                    <a href="{% url 'herbal:subjects-list' %}"
+                        class="list-group-item list-group-item-action {% if 'subjects' in request.path %}active-link{% endif %}">
                         <i class="fas fa-user-injured"></i><span> Subjects</span>
                     </a>
                 </div>
@@ -100,24 +121,34 @@
     <!-- SYSTEM & UTILS -->
     <div class="accordion-item">
         <h2 class="accordion-header" id="headingUtils">
-            <button class="accordion-button {% if 'utils' in request.path or 'monitor_dashboard' in request.path %}{% else %}collapsed{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseUtils" aria-expanded="{% if 'utils' in request.path or 'monitor_dashboard' in request.path %}true{% else %}false{% endif %}" aria-controls="collapseUtils">
+            <button
+                class="accordion-button {% if 'utils' in request.path or 'monitor_dashboard' in request.path %}{% else %}collapsed{% endif %}"
+                type="button" data-bs-toggle="collapse" data-bs-target="#collapseUtils"
+                aria-expanded="{% if 'utils' in request.path or 'monitor_dashboard' in request.path %}true{% else %}false{% endif %}"
+                aria-controls="collapseUtils">
                 System & Utils
             </button>
         </h2>
-        <div id="collapseUtils" class="accordion-collapse collapse {% if 'utils' in request.path or 'monitor_dashboard' in request.path %}show{% endif %}" aria-labelledby="headingUtils">
+        <div id="collapseUtils"
+            class="accordion-collapse collapse {% if 'utils' in request.path or 'monitor_dashboard' in request.path %}show{% endif %}"
+            aria-labelledby="headingUtils">
             <div class="accordion-body">
                 <div class="list-group">
-                    <a href="{% url 'utils:email-logs-dashboard' %}" class="list-group-item list-group-item-action {% if 'email-logs-dashboard' in request.path %}active-link{% endif %}">
+                    <a href="{% url 'utils:email-logs-dashboard' %}"
+                        class="list-group-item list-group-item-action {% if 'email-logs-dashboard' in request.path %}active-link{% endif %}">
                         <i class="fas fa-envelope-open-text"></i><span> Logs Dashboard</span>
                     </a>
-                    <a href="{% url 'utils:email_recipient_list' %}" class="list-group-item list-group-item-action {% if 'email_recipient' in request.path %}active-link{% endif %}">
+                    <a href="{% url 'utils:email_recipient_list' %}"
+                        class="list-group-item list-group-item-action {% if 'email_recipient' in request.path %}active-link{% endif %}">
                         <i class="fas fa-envelope"></i><span> Email Recipients</span>
                     </a>
-                    <a href="{% url 'utils:site_configuration_list' %}" class="list-group-item list-group-item-action {% if 'site_configuration' in request.path %}active-link{% endif %}">
+                    <a href="{% url 'utils:site_configuration_list' %}"
+                        class="list-group-item list-group-item-action {% if 'site_configuration' in request.path %}active-link{% endif %}">
                         <i class="fas fa-cogs"></i><span> Site Configurations</span>
                     </a>
                     {% if request.user.is_superuser %}
-                    <a href="{% url 'dashboard:monitor_dashboard_view' %}" class="list-group-item list-group-item-action {% if 'monitor_dashboard' in request.path %}active-link{% endif %}">
+                    <a href="{% url 'dashboard:monitor_dashboard_view' %}"
+                        class="list-group-item list-group-item-action {% if 'monitor_dashboard' in request.path %}active-link{% endif %}">
                         <i class="fas fa-tv"></i><span> Monitor</span>
                     </a>
                     {% endif %}
@@ -130,11 +161,17 @@
     <!-- CLINICAL DATA -->
     <div class="accordion-item">
         <h2 class="accordion-header" id="headingClinical">
-            <button class="accordion-button {% if 'visit' in request.path or 'crfs' in request.path or 'registry' in request.path %}{% else %}collapsed{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseClinical" aria-expanded="{% if 'visit' in request.path or 'crfs' in request.path or 'registry' in request.path %}true{% else %}false{% endif %}" aria-controls="collapseClinical">
+            <button
+                class="accordion-button {% if 'visit' in request.path or 'crfs' in request.path or 'registry' in request.path %}{% else %}collapsed{% endif %}"
+                type="button" data-bs-toggle="collapse" data-bs-target="#collapseClinical"
+                aria-expanded="{% if 'visit' in request.path or 'crfs' in request.path or 'registry' in request.path %}true{% else %}false{% endif %}"
+                aria-controls="collapseClinical">
                 Clinical Data
             </button>
         </h2>
-        <div id="collapseClinical" class="accordion-collapse collapse {% if 'visit' in request.path or 'crfs' in request.path or 'registry' in request.path %}show{% endif %}" aria-labelledby="headingClinical">
+        <div id="collapseClinical"
+            class="accordion-collapse collapse {% if 'visit' in request.path or 'crfs' in request.path or 'registry' in request.path %}show{% endif %}"
+            aria-labelledby="headingClinical">
             <div class="accordion-body">
                 <div class="list-group">
                     <a href="#" class="list-group-item list-group-item-action">
@@ -143,22 +180,28 @@
                     <a href="#" class="list-group-item list-group-item-action">
                         <i class="fas fa-user-check"></i><span> Enrollments</span>
                     </a>
-                    <a href="{% url 'herbal:visit-dashboard' %}" class="list-group-item list-group-item-action {% if 'visit-dashboard' in request.path %}active-link{% endif %}">
+                    <a href="{% url 'herbal:visit-dashboard' %}"
+                        class="list-group-item list-group-item-action {% if 'visit-dashboard' in request.path %}active-link{% endif %}">
                         <i class="fas fa-calendar-check"></i><span> Visits</span>
                     </a>
-                    <a href="{% url 'dashboard:visit-dashboard' %}" class="list-group-item list-group-item-action {% if 'dashboard/visit' in request.path %}active-link{% endif %}">
+                    <a href="{% url 'dashboard:visit-dashboard' %}"
+                        class="list-group-item list-group-item-action {% if 'dashboard/visit' in request.path %}active-link{% endif %}">
                         <i class="fas fa-chart-line"></i><span> Visits Dashboard</span>
                     </a>
-                    <a href="{% url 'herbal:today-visits' %}" class="list-group-item list-group-item-action {% if 'visits/today' in request.path %}active-link{% endif %}">
+                    <a href="{% url 'herbal:today-visits' %}"
+                        class="list-group-item list-group-item-action {% if 'visits/today' in request.path %}active-link{% endif %}">
                         <i class="fas fa-calendar-day text-warning"></i><span> Today's Visits</span>
                     </a>
-                    <a href="{% url 'herbal:registry-crfs' %}" class="list-group-item list-group-item-action {% if 'crf' in request.path %}active-link{% endif %}">
+                    <a href="{% url 'herbal:registry-crfs' %}"
+                        class="list-group-item list-group-item-action {% if 'crf' in request.path %}active-link{% endif %}">
                         <i class="fas fa-file-medical"></i><span> CRFS</span>
                     </a>
-                    <a href="{% url 'herbal:registry-visits' %}" class="list-group-item list-group-item-action {% if 'registry-visits' in request.path %}active-link{% endif %}">
+                    <a href="{% url 'herbal:registry-visits' %}"
+                        class="list-group-item list-group-item-action {% if 'registry-visits' in request.path %}active-link{% endif %}">
                         <i class="fas fa-clock"></i><span> VISITS Registry</span>
                     </a>
-                    <a href="{% url 'herbal:summary-visits' %}" class="list-group-item list-group-item-action {% if 'summary-visits' in request.path %}active-link{% endif %}">
+                    <a href="{% url 'herbal:summary-visits' %}"
+                        class="list-group-item list-group-item-action {% if 'summary-visits' in request.path %}active-link{% endif %}">
                         <i class="fas fa-calendar-alt"></i><span> VISITS Summary</span>
                     </a>
                 </div>
@@ -169,20 +212,26 @@
     <!-- REPORTING -->
     <div class="accordion-item">
         <h2 class="accordion-header" id="headingReporting">
-            <button class="accordion-button {% if 'export' in request.path %}{% else %}collapsed{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseReporting" aria-expanded="{% if 'export' in request.path %}true{% else %}false{% endif %}" aria-controls="collapseReporting">
+            <button class="accordion-button {% if 'export' in request.path %}{% else %}collapsed{% endif %}"
+                type="button" data-bs-toggle="collapse" data-bs-target="#collapseReporting"
+                aria-expanded="{% if 'export' in request.path %}true{% else %}false{% endif %}"
+                aria-controls="collapseReporting">
                 Reporting
             </button>
         </h2>
-        <div id="collapseReporting" class="accordion-collapse collapse {% if 'export' in request.path %}show{% endif %}" aria-labelledby="headingReporting">
+        <div id="collapseReporting" class="accordion-collapse collapse {% if 'export' in request.path %}show{% endif %}"
+            aria-labelledby="headingReporting">
             <div class="accordion-body">
                 <div class="list-group">
                     <a href="#" class="list-group-item list-group-item-action">
                         <i class="fas fa-chart-pie"></i><span> Reports</span>
                     </a>
-                    <a href="{% url 'exports:export_list' %}" class="list-group-item list-group-item-action {% if 'export_list' in request.path %}active-link{% endif %}">
+                    <a href="{% url 'exports:export_list' %}"
+                        class="list-group-item list-group-item-action {% if 'export_list' in request.path %}active-link{% endif %}">
                         <i class="fas fa-file-export"></i><span> Export Data</span>
                     </a>
-                    <a href="{% url 'exports:export_page' %}" class="list-group-item list-group-item-action {% if 'export_page' in request.path %}active-link{% endif %}">
+                    <a href="{% url 'exports:export_page' %}"
+                        class="list-group-item list-group-item-action {% if 'export_page' in request.path %}active-link{% endif %}">
                         <i class="fas fa-file-download"></i><span> Export Data 2</span>
                     </a>
                 </div>
@@ -193,17 +242,25 @@
     <!-- ADMINISTRATION -->
     <div class="accordion-item">
         <h2 class="accordion-header" id="headingAdmin">
-            <button class="accordion-button {% if 'account' in request.path or 'admin' in request.path %}{% else %}collapsed{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAdmin" aria-expanded="{% if 'account' in request.path or 'admin' in request.path %}true{% else %}false{% endif %}" aria-controls="collapseAdmin">
+            <button
+                class="accordion-button {% if 'account' in request.path or 'admin' in request.path %}{% else %}collapsed{% endif %}"
+                type="button" data-bs-toggle="collapse" data-bs-target="#collapseAdmin"
+                aria-expanded="{% if 'account' in request.path or 'admin' in request.path %}true{% else %}false{% endif %}"
+                aria-controls="collapseAdmin">
                 Administration
             </button>
         </h2>
-        <div id="collapseAdmin" class="accordion-collapse collapse {% if 'account' in request.path or 'admin' in request.path %}show{% endif %}" aria-labelledby="headingAdmin">
+        <div id="collapseAdmin"
+            class="accordion-collapse collapse {% if 'account' in request.path or 'admin' in request.path %}show{% endif %}"
+            aria-labelledby="headingAdmin">
             <div class="accordion-body">
                 <div class="list-group">
-                    <a href="{% url 'accounts:staff_list' %}" class="list-group-item list-group-item-action {% if 'staff' in request.path %}active-link{% endif %}">
+                    <a href="{% url 'accounts:staff_list' %}"
+                        class="list-group-item list-group-item-action {% if 'staff' in request.path %}active-link{% endif %}">
                         <i class="fas fa-users"></i><span> Staff Members</span>
                     </a>
-                    <a href="{% url 'admin:index' %}" class="list-group-item list-group-item-action list-group-item-warning mt-2 {% if 'admin' in request.path %}active-link{% endif %}">
+                    <a href="{% url 'admin:index' %}"
+                        class="list-group-item list-group-item-action list-group-item-warning mt-2 {% if 'admin' in request.path %}active-link{% endif %}">
                         <i class="fas fa-user-shield"></i><span> Admin Panel</span>
                     </a>
                 </div>
