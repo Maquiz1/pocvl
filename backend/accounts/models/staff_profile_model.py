@@ -1,3 +1,6 @@
+# accounts/models/staff_profile_model.py
+
+
 from django.db import models
 from django.conf import settings
 from herbal.models import Site

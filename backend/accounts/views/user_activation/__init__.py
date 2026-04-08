@@ -1,5 +1,3 @@
-# from .user_email_resend_activation import ResendActivationEmailView
+from .user_activate import ActivateAccountView
 
-# __all__ = [
-#     "ResendActivationEmailView",
-# ]
+__all__ = ["ActivateAccountView"]

@@ -1,5 +1,3 @@
-# from .user_detail_view import StaffDetailView
+from .user_detail_view import StaffDetailView
 
-# __all__ = [
-#     "StaffDetailView",
-# ]
+__all__ = ["StaffDetailView"]

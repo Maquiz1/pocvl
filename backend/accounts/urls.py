@@ -8,7 +8,9 @@ from accounts.views import (
     CustomPasswordResetView,
     StaffListView,
     StaffCreateUpdateView,
-    resend_credentials_view
+    resend_credentials_view,
+    StaffDetailView,
+    ActivateAccountView
 )
 
 app_name = "accounts"
@@ -20,8 +22,11 @@ urlpatterns = [
     # User Management
     path('staff/', StaffListView.as_view(), name='staff_list'),
     path('staff/create/', StaffCreateUpdateView.as_view(), name='staff_create'),
+    path('staff/<int:pk>/', StaffDetailView.as_view(), name='staff_detail'),
     path('staff/<int:pk>/update/', StaffCreateUpdateView.as_view(), name='staff_update'),
     path('staff/<int:pk>/resend-credentials/', resend_credentials_view, name='resend_credentials'),
+    
+    path('activate/<uidb64>/<token>/', ActivateAccountView.as_view(), name='activate_account'),
 
     path("password_reset/", CustomPasswordResetView.as_view(), name="password_reset"),
 

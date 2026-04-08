@@ -47,7 +47,7 @@ CSRF_TRUSTED_ORIGINS = [
 # Application definition
 
 INSTALLED_APPS = [
-    # CUSTOME APPS
+    # CUSTOM APPS
     'accounts.apps.AccountsConfig',
     
     # DJANGO DEFAULT APPS

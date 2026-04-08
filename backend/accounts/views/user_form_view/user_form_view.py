@@ -9,26 +9,38 @@ from accounts.forms import StaffForm
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.conf import settings
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+from django.contrib.auth.tokens import default_token_generator
+from django.urls import reverse
 
 User = get_user_model()
 
 def send_credentials_email(user, password, request):
     protocol = getattr(settings, 'PROTOCOL', 'https')
     domain = getattr(settings, 'DOMAIN_NAME', 'logbook.apps.nimr.or.tz')
-    login_url = f"{protocol}://{domain}/accounts/login/"
     email = user.email
     
-    subject = "Your Herbal Trial Credentials"
+    if user.is_active:
+        action_url = f"{protocol}://{domain}{reverse('accounts:login')}"
+        subject = "Your Herbal Trial Credentials"
+    else:
+        uid = urlsafe_base64_encode(force_bytes(user.pk))
+        token = default_token_generator.make_token(user)
+        action_url = f"{protocol}://{domain}{reverse('accounts:activate_account', kwargs={'uidb64': uid, 'token': token})}"
+        subject = "Your Herbal Trial Activation & Credentials"
+        
     html_message = render_to_string('registration/credential_email.html', {
         'email': email,
         'password': password,
-        'login_url': login_url,
-        'user': user
+        'action_url': action_url,
+        'user': user,
+        'is_active': user.is_active
     })
     
     send_mail(
         subject=subject,
-        message=f"Hello,\n\nYour account has been created/updated.\nEmail: {email}\nPassword: {password}\nLogin at: {login_url}",
+        message=f"Hello,\n\nEmail: {email}\nPassword: {password}\nAccess Link: {action_url}",
         from_email=getattr(settings, 'DEFAULT_FROM_EMAIL', 'noreply@nimr.or.tz'),
         recipient_list=[email],
         fail_silently=False,
@@ -104,7 +116,11 @@ class StaffCreateUpdateView(FormView):
         user.first_name = first_name
         user.last_name = last_name
         user.is_staff = is_staff
-        user.is_active = is_active
+        
+        if is_new:
+            user.is_active = False
+        else:
+            user.is_active = is_active
         
         credentials_sent = False
         if password:

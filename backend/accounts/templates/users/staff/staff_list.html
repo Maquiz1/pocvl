@@ -76,6 +76,7 @@
       <th>Site</th>
       <th>Zone</th>
       <th>Group</th>
+      <th>Last Login</th>
       <th>Status</th>
       <th>Actions</th>
     </tr>
@@ -88,11 +89,12 @@
       <td>{{ user.username }}</td>
       <td>{{ user.get_full_name }}</td>
       <td>{{ user.email }}</td>
-      <td>{% if user.profile and user.profile.prefix %}{{ user.profile.prefix.name }}{% else %}-{% endif %}</td>
-      <td>{% if user.profile and user.profile.position %}{{ user.profile.position.name }}{% else %}-{% endif %}</td>
-      <td>{% if user.profile and user.profile.site %}{{ user.profile.site.name }}{% else %}-{% endif %}</td>
-      <td>{% if user.profile and user.profile.site and user.profile.site.district and user.profile.site.district.region and user.profile.site.district.region.country.zone %}{{ user.profile.site.district.region.country.zone.name }}{% else %}-{% endif %}</td>
+      <td>{% if user.staff_profile and user.staff_profile.prefix %}{{ user.staff_profile.prefix.name }}{% else %}-{% endif %}</td>
+      <td>{% if user.staff_profile and user.staff_profile.position %}{{ user.staff_profile.position.name }}{% else %}-{% endif %}</td>
+      <td>{% if user.staff_profile and user.staff_profile.site %}{{ user.staff_profile.site.name }}{% else %}-{% endif %}</td>
+      <td>{% if user.staff_profile and user.staff_profile.site and user.staff_profile.site.district and user.staff_profile.site.district.region and user.staff_profile.site.district.region.country.zone %}{{ user.staff_profile.site.district.region.country.zone.name }}{% else %}-{% endif %}</td>
       <td>{% if user.groups.all %}{{ user.groups.all|join:", " }}{% else %}-{% endif %}</td>
+      <td>{{ user.last_login|date:"M d, Y H:i"|default:"Never" }}</td>
       <td>
         {% if user.is_active %}
           <span class="badge bg-success">Active</span>
@@ -101,7 +103,7 @@
         {% endif %}
       </td>
       <td>
-        <!-- <a href="#" class="btn btn-sm btn-primary">View</a><br><hr> -->
+        <a href="{% url 'accounts:staff_detail' user.id %}" class="btn btn-sm btn-primary mb-1">View</a>
         <a href="{% url 'accounts:staff_update' user.id %}" class="btn btn-sm btn-warning mb-1">Update</a>
         <form method="post" action="{% url 'accounts:resend_credentials' user.id %}" style="display:inline;" onsubmit="return confirm('Generate and email new credentials to this user? This will overwrite their current password.');">
           {% csrf_token %}
