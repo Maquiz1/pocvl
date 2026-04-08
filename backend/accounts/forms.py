@@ -167,133 +167,110 @@ class CustomPasswordResetForm(PasswordResetForm):
     
     
     
-# class StaffForm(forms.Form):
-#     # User fields
-#     username = forms.CharField(
-#         max_length=150,
-#         required=True,
-#         label="Username",
-#         widget=forms.TextInput(attrs={"class": "form-control"})
-#     )
-#     password = forms.CharField(
-#         required=False,  # Only required for new user in view
-#         label="Password",
-#         widget=forms.PasswordInput(attrs={"class": "form-control"})
-#     )
-#     email = forms.EmailField(
-#         required=False,
-#         label="Email",
-#         widget=forms.EmailInput(attrs={"class": "form-control"})
-#     )
-#     first_name = forms.CharField(
-#         max_length=150,
-#         required=False,
-#         label="First Name",
-#         widget=forms.TextInput(attrs={"class": "form-control"})
-#     )
-#     middle_name = forms.CharField(
-#         max_length=150,
-#         required=False,
-#         label="Middle Name",
-#         widget=forms.TextInput(attrs={"class": "form-control"})
-#     )
-#     last_name = forms.CharField(
-#         max_length=150,
-#         required=False,
-#         label="Last Name",
-#         widget=forms.TextInput(attrs={"class": "form-control"})
-#     )
+
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group
+from accounts.models import StaffProfile, Prefix, Position
+from herbal.models import Site
+
+User = get_user_model()
+
+class StaffForm(forms.Form):
+    # User fields
+    email = forms.EmailField(
+        required=True,
+        label="Email",
+        widget=forms.EmailInput(attrs={"class": "form-control"})
+    )
+    password = forms.CharField(
+        required=False,
+        label="Password (leave blank to auto-generate)",
+        widget=forms.PasswordInput(attrs={"class": "form-control"})
+    )
+    first_name = forms.CharField(
+        max_length=150,
+        required=False,
+        label="First Name",
+        widget=forms.TextInput(attrs={"class": "form-control"})
+    )
+    middle_name = forms.CharField(
+        max_length=150,
+        required=False,
+        label="Middle Name",
+        widget=forms.TextInput(attrs={"class": "form-control"})
+    )
+    last_name = forms.CharField(
+        max_length=150,
+        required=False,
+        label="Last Name",
+        widget=forms.TextInput(attrs={"class": "form-control"})
+    )
     
-#     is_active = forms.BooleanField(
-#         required=False,
-#         label="Is Active",
-#         initial=True,
-#         widget=forms.CheckboxInput()
-#     )
+    is_active = forms.BooleanField(
+        required=False,
+        label="Is Active",
+        initial=True,
+        widget=forms.CheckboxInput()
+    )
         
-#     is_staff = forms.BooleanField(
-#         required=False,
-#         label="Is Staff",
-#         initial=False,
-#         widget=forms.CheckboxInput()
-#     )
-    
-    
+    is_staff = forms.BooleanField(
+        required=False,
+        label="Is Staff",
+        initial=False,
+        widget=forms.CheckboxInput()
+    )
 
-#     # Profile fields
-#     prefix = forms.ModelChoiceField(
-#         queryset=Prefix.objects.all(),
-#         required=False,
-#         label="Prefix",
-#         widget=forms.Select(attrs={"class": "form-control"})
-#     )
-#     position = forms.ModelChoiceField(
-#         queryset=Position.objects.all(),
-#         required=False,
-#         label="Position",
-#         widget=forms.Select(attrs={"class": "form-control"})
-#     )
-#     site = forms.ModelChoiceField(
-#         queryset=Site.objects.all(),
-#         required=False,
-#         label="Site",
-#         widget=forms.Select(attrs={"class": "form-control"})
-#     )
-#     phone_number = forms.CharField(
-#         required=False,
-#         label="Phone Number",
-#         widget=forms.TextInput(attrs={"class": "form-control"})
-#     )
-#     description = forms.CharField(
-#         required=False,
-#         label="Description",
-#         widget=forms.Textarea(attrs={"class": "form-control", "rows": 3})
-#     )
+    # Profile fields
+    role = forms.ChoiceField(
+        choices=[("", "---------")] + [
+            ("admin", "Admin"),
+            ("data_manager", "Data Manager"),
+            ("monitor", "Monitor"),
+            ("coordinator", "Coordinator"),
+            ("data_clerk", "Data Clerk"),
+            ("reviewer", "Reviewer"),
+            ("pi", "Principal Investigator"),
+        ],
+        required=True,
+        label="Role",
+        widget=forms.Select(attrs={"class": "form-control"})
+    )
+    prefix = forms.ModelChoiceField(
+        queryset=Prefix.objects.all(),
+        required=False,
+        label="Prefix",
+        widget=forms.Select(attrs={"class": "form-control"})
+    )
+    position = forms.ModelChoiceField(
+        queryset=Position.objects.all(),
+        required=False,
+        label="Position",
+        widget=forms.Select(attrs={"class": "form-control"})
+    )
+    site = forms.ModelChoiceField(
+        queryset=Site.objects.all(),
+        required=False,
+        label="Site",
+        widget=forms.Select(attrs={"class": "form-control"})
+    )
+    phone = forms.CharField(
+        required=False,
+        label="Phone Number",
+        widget=forms.TextInput(attrs={"class": "form-control"})
+    )
     
-#     groups = forms.ModelMultipleChoiceField(
-#         queryset=Group.objects.all(),
-#         required=False,
-#         widget=forms.CheckboxSelectMultiple
-#     )
+    groups = forms.ModelMultipleChoiceField(
+        queryset=Group.objects.all(),
+        required=False,
+        widget=forms.CheckboxSelectMultiple
+    )
 
-#     def clean_username(self):
-#         username = self.cleaned_data["username"]
-#         if " " in username:
-#             raise forms.ValidationError("Username cannot contain spaces.")
-#         return username
-    
-#     def clean_email(self):
-#         email = self.cleaned_data.get("email")
-#         if email:
-#             qs = User.objects.filter(email__iexact=email)
-#             # Exclude current user if updating
-#             if getattr(self, "instance", None):
-#                 qs = qs.exclude(pk=self.instance.pk)
-#             if qs.exists():
-#                 raise forms.ValidationError("This email address is already registered.")
-#         return email
-    
-#     def clean_phone_number(self):
-#         phone = self.cleaned_data.get("phone_number")
-#         if phone:
-#             try:
-#                 number = parse(phone, "TZ")  # Tanzania region, change as needed
-#                 if not is_valid_number(number):
-#                     raise forms.ValidationError("Enter a valid Tanzanian phone number.")
-#             except NumberParseException:
-#                 raise forms.ValidationError("Enter a valid phone number.")
-#         return phone
-    
-#     # def clean_phone_number(self):
-#     #     phone = self.cleaned_data.get('phone_number')
-
-#     #     # Validate format (Tanzanian format example)
-#     #     if phone:
-#     #         if not re.match(r'^(?:\+255|0)[67]\d{8}$', phone):
-#     #             raise ValidationError("Enter a valid Tanzanian phone number (e.g., 0652821433 or +255652821433).")
-
-#     #         # Check uniqueness
-#     #         if User.objects.filter(phone_number=phone).exclude(pk=self.instance.pk).exists():
-#     #             raise ValidationError("This phone number is already registered.")
-
-#     #     return phone
+    def clean_email(self):
+        email = self.cleaned_data.get("email")
+        if email:
+            qs = User.objects.filter(email__iexact=email)
+            if getattr(self, "instance", None):
+                qs = qs.exclude(pk=self.instance.pk)
+            if qs.exists():
+                raise forms.ValidationError("This email address is already registered.")
+        return email

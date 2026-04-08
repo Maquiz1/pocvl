@@ -1,5 +1,5 @@
-# from .user_form_view import StaffCreateUpdateView
+from .user_form_view import StaffCreateUpdateView
 
-# __all__ = [
-#    "StaffCreateUpdateView",
-# ]
+__all__ = [
+   "StaffCreateUpdateView",
+]

@@ -5,7 +5,7 @@
 
 <p><strong>Total Staff:</strong> {{ page_obj.paginator.count }}</p>
 
-<a href="{% url 'users:staff_add' %}" class="btn btn-success mb-3">+ Add New Staff</a>
+<a href="{% url 'accounts:staff_create' %}" class="btn btn-success mb-3">+ Add New Staff</a>
 
 <!-- FILTER FORM -->
 <form method="get" class="row g-2 mb-3" id="filterForm">
@@ -60,7 +60,7 @@
   </div>
   <div class="col-md-1 d-flex gap-1">
     <button type="submit" class="btn btn-primary w-100">Filter</button>
-    <a href="{% url 'users:staff_list' %}" class="btn btn-secondary w-100">Reset</a>
+    <a href="{% url 'accounts:staff_list' %}" class="btn btn-secondary w-100">Reset</a>
   </div>
 </form>
 
@@ -101,8 +101,12 @@
         {% endif %}
       </td>
       <td>
-        <a href="{% url 'users:staff_detail' user.id %}" class="btn btn-sm btn-primary">View</a><br><hr>
-        <a href="{% url 'users:staff_update' user.id %}" class="btn btn-sm btn-warning">Update</a>
+        <!-- <a href="#" class="btn btn-sm btn-primary">View</a><br><hr> -->
+        <a href="{% url 'accounts:staff_update' user.id %}" class="btn btn-sm btn-warning mb-1">Update</a>
+        <form method="post" action="{% url 'accounts:resend_credentials' user.id %}" style="display:inline;" onsubmit="return confirm('Generate and email new credentials to this user? This will overwrite their current password.');">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-sm btn-danger">Resend Credentials</button>
+        </form>
       </td>
     </tr>
     {% endif %}

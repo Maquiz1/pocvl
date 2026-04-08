@@ -22,14 +22,7 @@
       <!-- SECTION 1: Account Info -->
       <h5 class="mb-3 border-bottom pb-2">Account Information</h5>
       <div class="row mb-3">
-        <!-- Username -->
-        <div class="col-md-3">
-          <label class="form-label">Username <span class="text-danger">*</span></label>
-          {{ form.username }}
-          {% for error in form.username.errors %}
-            <div class="text-danger small">{{ error }}</div>
-          {% endfor %}
-        </div>
+
 
         <!-- Password -->
         <div class="col-md-3">
@@ -116,8 +109,8 @@
       <h5 class="mb-3 border-bottom pb-2">Additional Information</h5>
       <div class="row mb-3">
         <div class="col-md-6">
-          <label class="form-label">Description</label>
-          {{ form.description }}
+          <label class="form-label">Role</label>
+          {{ form.role }}
         </div>
         <div class="col-md-3 form-check d-flex align-items-center">
           {{ form.is_active }}
@@ -137,7 +130,7 @@
           Create Staff
         {% endif %}
       </button>
-      <a href="{% url 'users:staff_list' %}" class="btn btn-secondary">Cancel</a>
+      <a href="{% url 'accounts:staff_list' %}" class="btn btn-secondary">Cancel</a>
 
     </form>
   </div>

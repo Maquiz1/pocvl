@@ -1,5 +1,5 @@
-# from .user_list_view import StaffListView
+from .user_list_view import StaffListView
 
-# __all__ = [
-#     "StaffListView",
-# ]
+__all__ = [
+    "StaffListView",
+]
