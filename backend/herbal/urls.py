@@ -10,6 +10,8 @@ from .views.visits.visit_dashboard_view import visit_dashboard_view
 from .views.visits.visit_mark_missed_view import visit_mark_missed
 from .views.visits.visit_mark_pending import visit_mark_pending
 from .views.visits.today_visits_view import today_visits_view
+from .views.visits.visit_before_view import visit_before_view
+from .views.visits.visit_after_view import visit_after_view
 
 from .views.screening.screening_form_view import screening_form_view
 from .views.screening.screening_update_view import screening_update_view
@@ -85,6 +87,8 @@ urlpatterns = [
     ),
     # VISITS
     path("visits/dashboard/", visit_dashboard_view, name="visit-dashboard"),
+    path("visits/before/", visit_before_view, name="visit-before"),
+    path("visits/after/", visit_after_view, name="visit-after"),
     path("visits/today/", today_visits_view, name="today-visits"),
     path("visits/<int:pk>/missed/", visit_mark_missed, name="visit-mark-missed"),
     path("visits/<int:pk>/pending/", visit_mark_pending, name="visit-mark-pending"),

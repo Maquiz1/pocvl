@@ -180,9 +180,17 @@
                     <a href="#" class="list-group-item list-group-item-action">
                         <i class="fas fa-user-check"></i><span> Enrollments</span>
                     </a>
+                    <a href="{% url 'herbal:visit-before' %}"
+                        class="list-group-item list-group-item-action {% if 'visit-before' in request.path %}active-link{% endif %}">
+                        <i class="fas fa-calendar-minus"></i><span> Visit Before</span>
+                    </a>
                     <a href="{% url 'herbal:visit-dashboard' %}"
                         class="list-group-item list-group-item-action {% if 'visit-dashboard' in request.path %}active-link{% endif %}">
                         <i class="fas fa-calendar-check"></i><span> Visits</span>
+                    </a>
+                    <a href="{% url 'herbal:visit-after' %}"
+                        class="list-group-item list-group-item-action {% if 'visit-after' in request.path %}active-link{% endif %}">
+                        <i class="fas fa-calendar-plus"></i><span> Visit After</span>
                     </a>
                     <a href="{% url 'dashboard:visit-dashboard' %}"
                         class="list-group-item list-group-item-action {% if 'dashboard/visit' in request.path %}active-link{% endif %}">
