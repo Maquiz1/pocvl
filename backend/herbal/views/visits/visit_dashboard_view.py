@@ -11,10 +11,12 @@ def visit_dashboard_view(request):
     today = timezone.now().date()
     one_day_before_date = today - timedelta(days=1)
     three_days_before_date = today - timedelta(days=3)
+    one_day_after_date = today + timedelta(days=1)
+    three_days_after_date = today + timedelta(days=3)
 
     visits = VisitSchedule.objects.select_related(
-        "enrollment",
-        # "screening__enrollment__subject"
+        "enrollment__screening__subject",
+        "visit_day"
     )
 
     due_today = visits.filter(
@@ -29,6 +31,16 @@ def visit_dashboard_view(request):
 
     three_days_before = visits.filter(
         scheduled_date=three_days_before_date,
+        status="pending"
+    )
+
+    one_day_after = visits.filter(
+        scheduled_date=one_day_after_date,
+        status="pending"
+    )
+
+    three_days_after = visits.filter(
+        scheduled_date=three_days_after_date,
         status="pending"
     )
 
@@ -55,6 +67,8 @@ def visit_dashboard_view(request):
     due_today_page = paginate(due_today, "due_today_page")
     one_day_before_page = paginate(one_day_before, "one_day_before_page")
     three_days_before_page = paginate(three_days_before, "three_days_before_page")
+    one_day_after_page = paginate(one_day_after, "one_day_after_page")
+    three_days_after_page = paginate(three_days_after, "three_days_after_page")
     upcoming_page = paginate(upcoming, "upcoming_page")
     completed_page = paginate(completed, "completed_page")
 
@@ -62,6 +76,8 @@ def visit_dashboard_view(request):
         "due_today": due_today_page,
         "one_day_before": one_day_before_page,
         "three_days_before": three_days_before_page,
+        "one_day_after": one_day_after_page,
+        "three_days_after": three_days_after_page,
         "overdue": overdue_page,
         "upcoming": upcoming_page,
         "completed": completed_page,
@@ -69,6 +85,8 @@ def visit_dashboard_view(request):
         "due_today_count": due_today.count(),
         "one_day_before_count": one_day_before.count(),
         "three_days_before_count": three_days_before.count(),
+        "one_day_after_count": one_day_after.count(),
+        "three_days_after_count": three_days_after.count(),
         "overdue_count": overdue.count(),
         "upcoming_count": upcoming.count(),
         "completed_count": completed.count(),

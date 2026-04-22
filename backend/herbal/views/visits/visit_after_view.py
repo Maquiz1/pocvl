@@ -11,7 +11,7 @@ class VisitAfterListView(ListView):
     def get_queryset(self):
         today = timezone.now().date()
         return VisitSchedule.objects.select_related(
-            "enrollment", "visit_day", "subject"
+            "enrollment__screening__subject", "visit_day"
         ).filter(
             scheduled_date__gt=today,
             status="pending"

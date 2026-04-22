@@ -157,7 +157,6 @@
     </div>
     {% endif %}
 
-    {% if request.user.is_superuser %}
     <!-- CLINICAL DATA -->
     <div class="accordion-item">
         <h2 class="accordion-header" id="headingClinical">
@@ -174,16 +173,19 @@
             aria-labelledby="headingClinical">
             <div class="accordion-body">
                 <div class="list-group">
+                    {% if request.user.is_superuser %}
                     <a href="#" class="list-group-item list-group-item-action">
                         <i class="fas fa-stethoscope"></i><span> Screening</span>
                     </a>
                     <a href="#" class="list-group-item list-group-item-action">
                         <i class="fas fa-user-check"></i><span> Enrollments</span>
                     </a>
+                    {% endif %}
                     <a href="{% url 'herbal:visit-before' %}"
                         class="list-group-item list-group-item-action {% if 'visit-before' in request.path %}active-link{% endif %}">
                         <i class="fas fa-calendar-minus"></i><span> Visit Before</span>
                     </a>
+                    {% if request.user.is_superuser %}
                     <a href="{% url 'herbal:visit-dashboard' %}"
                         class="list-group-item list-group-item-action {% if 'visit-dashboard' in request.path %}active-link{% endif %}">
                         <i class="fas fa-calendar-check"></i><span> Visits</span>
@@ -212,11 +214,13 @@
                         class="list-group-item list-group-item-action {% if 'summary-visits' in request.path %}active-link{% endif %}">
                         <i class="fas fa-calendar-alt"></i><span> VISITS Summary</span>
                     </a>
+                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
 
+    {% if request.user.is_superuser %}
     <!-- REPORTING -->
     <div class="accordion-item">
         <h2 class="accordion-header" id="headingReporting">
