@@ -33,6 +33,8 @@ urlpatterns = [
     path("exports/", include("exports.urls")),
     
     path("utils/",include("utils.urls")),
+
+    path("reports/", include("reports.urls", namespace="reports")),
 ]
 
 if settings.DEBUG:

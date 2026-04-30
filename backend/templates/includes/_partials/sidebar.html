@@ -224,18 +224,19 @@
     <!-- REPORTING -->
     <div class="accordion-item">
         <h2 class="accordion-header" id="headingReporting">
-            <button class="accordion-button {% if 'export' in request.path %}{% else %}collapsed{% endif %}"
+            <button class="accordion-button {% if 'report' in request.path or 'export' in request.path %}{% else %}collapsed{% endif %}"
                 type="button" data-bs-toggle="collapse" data-bs-target="#collapseReporting"
-                aria-expanded="{% if 'export' in request.path %}true{% else %}false{% endif %}"
+                aria-expanded="{% if 'report' in request.path or 'export' in request.path %}true{% else %}false{% endif %}"
                 aria-controls="collapseReporting">
                 Reporting
             </button>
         </h2>
-        <div id="collapseReporting" class="accordion-collapse collapse {% if 'export' in request.path %}show{% endif %}"
+        <div id="collapseReporting" class="accordion-collapse collapse {% if 'report' in request.path or 'export' in request.path %}show{% endif %}"
             aria-labelledby="headingReporting">
             <div class="accordion-body">
                 <div class="list-group">
-                    <a href="#" class="list-group-item list-group-item-action">
+                    <a href="{% url 'reports:monthly_report' %}" 
+                       class="list-group-item list-group-item-action {% if 'monthly' in request.path %}active-link{% endif %}">
                         <i class="fas fa-chart-pie"></i><span> Reports</span>
                     </a>
                     <a href="{% url 'exports:export_list' %}"
