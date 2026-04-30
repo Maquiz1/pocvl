@@ -131,10 +131,36 @@
         </div>
     </div>
 
+    <!-- ✅ Charts Row for Sites -->
+    <div class="row mt-4 mb-4">
+        <div class="col-lg-6 col-md-12 mb-4">
+            <div class="card shadow-sm border-0 h-100 rounded-3">
+                <div class="card-header bg-dark text-white rounded-top-3 py-3">
+                    <h5 class="card-title mb-0"><i class="fas fa-building me-2"></i>Enrollments Grouped by Site</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="siteEnrollmentChart" height="250"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-12 mb-4">
+            <div class="card shadow-sm border-0 h-100 rounded-3">
+                <div class="card-header bg-primary text-white rounded-top-3 py-3">
+                    <h5 class="card-title mb-0"><i class="fas fa-hospital me-2"></i>Visits Grouped by Site</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="siteVisitChart" height="250"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 {{ enrollment_chart_data|json_script:"enrollment-data" }}
 {{ visit_chart_data|json_script:"visit-data" }}
+{{ site_enrollment_chart_data|json_script:"site-enrollment-data" }}
+{{ site_visit_chart_data|json_script:"site-visit-data" }}
 
 {% endblock %}
 
@@ -144,6 +170,8 @@
 document.addEventListener("DOMContentLoaded", function() {
     const enrollData = JSON.parse(document.getElementById('enrollment-data').textContent);
     const visitData = JSON.parse(document.getElementById('visit-data').textContent);
+    const siteEnrollData = JSON.parse(document.getElementById('site-enrollment-data').textContent);
+    const siteVisitData = JSON.parse(document.getElementById('site-visit-data').textContent);
 
     if (enrollData.length > 0) {
         new Chart(document.getElementById('enrollmentChart'), {
@@ -182,6 +210,49 @@ document.addEventListener("DOMContentLoaded", function() {
                     { label: 'Missed', data: visitData.map(d => d.missed), backgroundColor: '#dc3545' },
                     { label: 'Pending', data: visitData.map(d => d.pending), backgroundColor: '#ffc107' },
                     { label: 'Overdue', data: visitData.map(d => d.overdue), backgroundColor: '#d63384' }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: { 
+                    x: { stacked: false }, 
+                    y: { stacked: false, beginAtZero: true, ticks: { precision: 0 } }
+                }
+            }
+        });
+    }
+
+    if (siteEnrollData.length > 0) {
+        new Chart(document.getElementById('siteEnrollmentChart'), {
+            type: 'bar',
+            data: {
+                labels: siteEnrollData.map(d => d.site),
+                datasets: [{
+                    label: 'Total Enrolled',
+                    data: siteEnrollData.map(d => d.count),
+                    backgroundColor: '#212529',
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'x', /* Set to 'y' for horizontal bar chart */
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true, ticks: { precision: 0 } } }
+            }
+        });
+    }
+
+    if (siteVisitData.length > 0) {
+        new Chart(document.getElementById('siteVisitChart'), {
+            type: 'bar',
+            data: {
+                labels: siteVisitData.map(d => d.site),
+                datasets: [
+                    { label: 'Total Expected', data: siteVisitData.map(d => d.total), backgroundColor: '#6c757d', borderRadius: 4 },
+                    { label: 'Completed', data: siteVisitData.map(d => d.completed), backgroundColor: '#198754', borderRadius: 4 }
                 ]
             },
             options: {

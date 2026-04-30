@@ -68,6 +68,31 @@ def monthly_report(request):
             'overdue': stat['overdue']
         })
 
+    # Data for Per-Site Charts
+    site_stats_enrollment = enrollments_qs.values('screening__subject__site__name').annotate(
+        count=Count('id')
+    ).order_by('-count')
+    
+    site_data_enrollment = []
+    for stat in site_stats_enrollment:
+        site_data_enrollment.append({
+            'site': stat['screening__subject__site__name'] or 'Unknown',
+            'count': stat['count']
+        })
+        
+    site_stats_visits = visits_qs.values('enrollment__screening__subject__site__name').annotate(
+        total=Count('id'),
+        completed=Count('id', filter=Q(status='completed'))
+    ).order_by('-total')
+    
+    site_data_visits = []
+    for stat in site_stats_visits:
+        site_data_visits.append({
+            'site': stat['enrollment__screening__subject__site__name'] or 'Unknown',
+            'total': stat['total'],
+            'completed': stat['completed']
+        })
+
     context = {
         'sites': sites,
         'selected_site': site_id,
@@ -76,5 +101,7 @@ def monthly_report(request):
         'visit_stats': visit_stats,
         'enrollment_chart_data': enrollment_data,
         'visit_chart_data': visit_data,
+        'site_enrollment_chart_data': site_data_enrollment,
+        'site_visit_chart_data': site_data_visits,
     }
     return render(request, 'reports/monthly_report.html', context)
